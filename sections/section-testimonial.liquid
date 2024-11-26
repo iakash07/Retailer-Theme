@@ -1,0 +1,180 @@
+<!--=================== Testimonial & Brand ===================-->
+<section class="testimonials {% if section.settings.testi_section_gap_check %} paira-gap-2 {% endif %}" id="testimonialsection--{{ section.id }}">
+<div class="container-fluid padding-fixed {% if section.settings.testi_full_width_check %} full-width {% endif %}">
+    <div class="row {% if section.settings.testi_full_width_check %} margin-clear {% endif %}">
+        <div class="testimonial">
+            <!--=================== Testimonial ===================-->
+            <div class="col-md-12">
+                <div class="pull-left full-width">
+                    {% if section.settings.parallax_banner_heading != blank %}
+                    <div class="row margin-clear">
+                        <div class="heading">
+                            <h1 class="page-header margin-bottom-0 text-left"><span>{{section.settings.parallax_banner_heading}}</span></h1>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="testimonial-wrap">
+                        <div class="swiper-container s5">
+                            <div class="swiper-wrapper">
+                                {% for block in section.blocks %}
+                                <div class="swiper-slide margin-top-30">
+                                {% if block.settings.testi_img_check != blank %}
+                                    <div class="col-md-3 col-sm-3 col-xs-3 padding-left-0">
+                                        {% if block.settings.testimonial == blank %}
+                                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place height-100 margin-bottom-10' }}
+                                        {% else %}
+                                        <img src="{{ block.settings.testimonial | img_url: 'thumb' }}" data-srcset="{% if block.settings.testimonial == blank %}{{ 'testimonial-small.jpg' | asset_url }}{% else %}{{ block.settings.testimonial | img_url: 'thumb' }}{% endif %} 50w, {% if block.settings.testimonial == blank %}{{ 'testimonial-small.jpg' | asset_url }}{% else %}{{ block.settings.testimonial | img_url: 'master' }}{% endif %} 100w" data-src="{% if block.settings.testimonial == blank %}{{ 'testimonial-small.jpg' | asset_url }}{% else %}{{ block.settings.testimonial | img_url: 'master' }}{% endif %}" alt="{{block.settings.parallax_banner_heading}}" data-sizes="auto" class="lazyload blur-up img-responsive margin-bottom-0">
+                                        {% endif %}
+                                    </div>
+                                      {% endif %}
+                                    <div class="{% if block.settings.testi_img_check != blank %} col-md-9{% else %} col-md-12 padding-clear{% endif %} col-sm-9 col-xs-9 padding-clear">{{ block.settings.testimonial_texts }}</div>
+                                </div>
+                                {% endfor %}
+                                {% if section.blocks == blank %}
+                                <div class="margin-top-30 padding-right-15">
+                                    <div class="col-md-3 col-sm-3 col-xs-3 padding-left-0">
+                                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place margin-bottom-10' }}
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-9 padding-clear"><p>"We really liked the design of this theme which works well with our brand and have had lots of positive feedback.." - by <strong>John Core</strong></p></div>
+                                </div>
+                                <div class="margin-top-30 padding-right-15">
+                                    <div class="col-md-3 col-sm-3 col-xs-3 padding-left-0">
+                                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place margin-bottom-10' }}
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-9 padding-clear"><p>"We really liked the design of this theme which works well with our brand and have had lots of positive feedback." - by <strong>John abraham</strong></p></div>
+                                </div>
+                                <div class="margin-top-30 padding-right-15">
+                                    <div class="col-md-3 col-sm-3 col-xs-3 padding-left-0">
+                                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place margin-bottom-10' }}
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-9 padding-clear"><p>"We really liked the design of this theme which works well with our brand and have had lots of positive feedback." - by <strong>Frank david</strong></p></div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="another-btn">
+                        <div class="swiper-button-prev swiper-button-prev-5--{{ section.id }} margin-top-0"><i class="fa fa-angle-left"></i></div>
+                        <div class="swiper-button-next swiper-button-next-5--{{ section.id }} margin-top-0"><i class="fa fa-angle-right"></i></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<script>
+    $(function() {
+        var swiper = new Swiper('.s5', {
+            navigation: {
+                nextEl: '.swiper-button-next-5--{{ section.id }}',
+                prevEl: '.swiper-button-prev-5--{{ section.id }}'
+            },
+            slidesPerView: {{ section.settings.visable_test_limit }},
+            spaceBetween: 30,
+            freeMode: true,
+            breakpoints: {
+                1024: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                },
+                767: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                480: {
+                    slidesPerView: 1,
+                    spaceBetween: 30
+                }
+            }
+        });
+    });
+</script>
+{% schema %}
+{
+"name": "Testimonial Slider",
+"class": "index-section index-section--testimonialsection",
+"max_blocks": 12,
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "testi_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "testi_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Testimonial Heading"
+},
+{
+"type": "text",
+"id": "parallax_banner_heading",
+"label": "Heading/Title",
+"default": "What our customers say"
+},
+{
+"type": "header",
+"content": "Visible Testimonial"
+},
+{
+"type": "range",
+"id": "visable_test_limit",
+"label": "Visible Testimonial Limit",
+"min":       1,
+"max":       3,
+"default":   3
+}
+],
+"blocks": [
+{
+"type": "image",
+"name": "Image & Text",
+"settings": [
+{
+"type": "checkbox",
+"id": "testi_img_check",
+"label": "Enable Testimonial Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "testimonial",
+"label": "Image",
+"info": "For best results, upload image : 100px x 100px recommended"
+},
+{
+"type": "richtext",
+"id": "testimonial_texts",
+"default": "<p>\"We really liked the design of this theme which works well with our brand and have had lots of positive feedback. Great theme and easy to customise. Excellent support when I needed to do something different.\" - by John Core</p>",
+"label": "Comments"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Testimonial Slider",
+"category": "Slider"
+}
+]
+}
+{% endschema %}
+

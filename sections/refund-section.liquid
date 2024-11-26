@@ -1,0 +1,68 @@
+<div class="main-refund-section pt-120">
+  <div class="ctm-container">
+    <h2 class="ctm-head">{{ section.settings.mtitle }}</h2>
+    <h6>{{ section.settings.stitle }}</h6>
+    <div class="reunf-info">
+      {{ section.settings.topd }}
+    </div>
+    <div class="reunf-table">
+      <ul>
+        <li>
+          <div class="f-col c-col">UNDER INR 10,000/-</div>
+          <div class="s-col c-col">INR 750/-</div>
+        </li>
+        <li>
+          <div class="f-col c-col">ABOVE INR 10,000/-</div>
+          <div class="s-col c-col">5%</div>
+        </li>
+        <li>
+          <div class="f-col c-col">Booking amount/ advances</div>
+          <div class="s-col c-col">5%</div>
+        </li>
+        <li>
+          <div class="f-col c-col">Cancellation from our side</div>
+          <div class="s-col c-col">No Charges</div>
+        </li>
+      </ul>
+    </div>
+    <div class="reunf-info">
+      {{ section.settings.bottomd }}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Refund Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "mtitle",
+        "label": "Add Main Heading"
+      },
+      {
+        "type": "text",
+        "id": "stitle",
+        "label": "Add Sub Heading"
+      },
+      {
+        "type": "html",
+        "id": "topd",
+        "label": "Add Top Description",
+        "info": "Add Info between <p></p> Tag"
+      },
+      {
+        "type": "html",
+        "id": "bottomd",
+        "label": "Add Bottom Description",
+        "info": "Add Info between <p></p> Tag"
+      }
+    ],
+    "presets":[
+      {
+        "name": "Refund Section"
+      }
+    ]
+  }
+{% endschema %}

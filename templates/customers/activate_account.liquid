@@ -1,0 +1,28 @@
+<!--=================== Page Template ===================-->
+<main class="default-page {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}">
+    <section class="page-content paira-gap-3 paira-gap-2">
+        <div class="container-fluid padding-fixed">
+            <div class="row margin-clear page-back">
+                <div class="container">
+                    <div class="col-md-12 text-center">
+                        <div class="heading pull-left full-width">
+                            <h1 class="page-header margin-bottom-30 text-left pull-left"><span>{{ 'customer.activate_account.title' | t }}</span></h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-offset-3 ">
+                        <p class="font-size-14 margin-bottom-10"><strong>{{ 'customer.activate_account.subtext' | t }}</strong></p>
+                        {% form 'activate_customer_password' %}
+                        {{ form.errors | default_errors }}
+                        <label>{{ 'customer.activate_account.password' | t }}</label>
+                        <input type="password" value="" name="customer[password]" id="customer_password" class="form-control margin-bottom-10" size="16" />
+                        <label>{{ 'customer.activate_account.password_confirm' | t }}</label>
+                        <input type="password" value="" name="customer[password_confirmation]" id="customer_password_confirmation" class="form-control margin-bottom-10" size="16" />
+                        <input class="btn btn-default" type="submit" value="{{ 'customer.activate_account.submit' | t }}" />
+                        <a class="btn btn-danger margin-left-10" href="/">{{ 'customer.activate_account.cancel' | t }}</a>
+                        {% endform %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

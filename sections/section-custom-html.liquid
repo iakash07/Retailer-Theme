@@ -1,0 +1,81 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebPage",
+  "name": "{{ page.title | escape }}",
+  "description": "{{ page.content | strip_html | escape }}",
+  "url": "{{ shop.url }}/pages/{{ page.handle }}",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Confidential Couture",
+    "url": "{{ shop.url }}",
+    "logo": "https://cdn.shopify.com/s/files/1/0643/7958/4700/files/confidential_couture_logo.jpg?v=1720514785"
+  }
+}
+</script>
+
+<section id="customsection--{{ section.id }}" class="{% if section.settings.section_gap_check %}paira-gap-2{% endif %} custom-html">
+    {% if section.settings.custom_html == blank %}
+    <div class="container-fluid padding-fixed {% if section.settings.col_pro_full_width_check %} full-width {% endif %}">
+        <div class="row {% if section.settings.col_pro_full_width_check %} margin-clear {% endif %}">
+            <div class="col-md-12">
+                <div class="heading pull-left full-width">
+                    <h1 class="page-header margin-bottom-20 text-left pull-left"><span>Custom Html</span></h1>
+                </div>
+                <p class="margin-bottom-20">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                <p class="margin-bottom-20">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+                <p class="margin-bottom-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    {{ section.settings.custom_html }}
+    {% endif %}
+</section>
+{% schema %}
+{
+"name": "Custom Html",
+"class": "index-section index-section--customsection",
+"settings": [
+{
+"type": "header",
+"content": "Section gap"
+},
+{
+"type": "checkbox",
+"id": "section_gap_check",
+"label": "Enable section gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "col_pro_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Custom Html Content"
+},
+{
+"type": "textarea",
+"id": "custom_html",
+"label": "Paste custom Html code"
+},
+{
+"type": "paragraph",
+"content": "Or create content with [Bootstrap](https:\/\/getbootstrap.com\/docs\/3.3\/getting-started\/)."
+}
+],
+"presets": [
+{
+"name": "Custom Html",
+"category": "Custom Html"
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,204 @@
+<!--=================== Collection Products ===================-->
+{% assign separate_countdown = 'top_seller' %}
+<section class="collection-products collection-products-slide {% if section.settings.col_pro_section_gap_check %} paira-gap-2 {% endif %}" id="collectionproductsection--{{ section.id }}">
+    <div class="container-fluid padding-fixed {% if section.settings.col_pro_full_width_check %} full-width {% endif %}">
+        <div class="row {% if section.settings.col_pro_full_width_check %} margin-clear {% endif %}">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                {% if section.settings.collection_products_title != blank %}
+                <div class="heading pull-left full-width text-center">
+                    <h1 class="page-header margin-bottom-30 text-left pull-left"><span>{{section.settings.collection_products_title}}</span></h1>
+                </div>
+                {% endif %}
+                <div class="another-style">
+                    {% if section.settings.top_sellers != blank %}
+                    {% assign collection_product = collections[section.settings.top_sellers] %}
+                    <div class="product-widget swiper-container s8 swiper-containers">
+                        <div class="products-wrapper products-wrapper-2 swiper-wrapper">
+                            {% for product in collection_product.products limit: section.settings.collection_products_limit %}
+                            <div class="swiper-slide">
+                                {% include 'product' %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="another-btn">
+                        <div class="swiper-button-prev swiper-button-prev-1--{{ section.id }}"><i class="fa fa-angle-left"></i></div>
+                        <div class="swiper-button-next swiper-button-next-1--{{ section.id }}"><i class="fa fa-angle-right"></i></div>
+                    </div>
+                    {% else %}
+                    <div class="another-style row">
+                        <div class="product-widget">
+                            <div class="products-wrapper products-wrapper-2">
+                                {% for product in (1..section.settings.collection_products_limit) %}
+                                <div class="margin-top-0 col-md-2">
+                                    <div class="product img text-center">
+                                        <div class="overflow-h pro-im position-r" data-value="0">
+                                            <a href="#" class="overflow-h full-width">
+                                                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                            </a>
+                                            <div class="product-hover hidden-xs">
+                                                <div class="paira-wish-compare-con">
+                                                    <a href="#" class="add-to-compare"><i class="fa fa-balance-scale"></i></a>
+                                                    <a href="#" class="add-to-compare "><i class="fa fa-heart-o"></i></a>
+                                                    <a href="#" class="quick-view add-to-compare"><i class="fa fa-eye"></i></a>
+                                                    <a href="#" class="selectss">
+                                                        <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                                                            <g>
+                                                                <g>
+                                                                    <defs>
+                                                                        <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"></rect>
+                                                                    </defs>
+                                                                    <clipPath id="SVGID_2_">
+                                                                        <use xlink:href="#SVGID_1_" overflow="visible"></use>
+                                                                    </clipPath>
+                                                                    <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                                                        c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                                                        c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                                                        C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                                                        L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                                                        c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                                                        c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"></path>
+                                                                </g>
+                                                                <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                                                                    C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                                                                    c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                                                                    L180.578,106.665z M180.578,106.665"></path>
+                                                                <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                                                                    c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                                                                    C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"></path>
+                                                                <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                                                                    z M89.914,112.012"></path>
+                                                                <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                                                                    H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"></path>
+                                                            </g>
+                                                            </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-views">
+                                            <div class="product-title-price">
+                                                <h2 class="margin-top-5 margin-bottom-0"><a href="#" title="Contrast Shawl Collar" class="paira-product-title">Your product's name</a></h2>
+                                                <div class="text-center margin-top-5" style="margin-bottom: 3px">
+                                                    <span class="money" data-currency-usd="$480.00" data-currency="USD">$480.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="another-btn">
+                            <div class="swiper-button-prev swiper-button-prev-1--{{ section.id }}"><i class="fa fa-angle-left"></i></div>
+                            <div class="swiper-button-next swiper-button-next-1--{{ section.id }}"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function() {
+        var swiper = new Swiper('.swiper-containers.s8', {
+            navigation: {
+                nextEl: '.swiper-button-next-1--{{ section.id }}',
+                prevEl: '.swiper-button-prev-1--{{ section.id }}'
+            },
+            freeMode: true,
+            breakpoints: {
+            1920: {
+                slidesPerView: {{ section.settings.visable_pro_limit }},
+                spaceBetween: 30
+            },
+            1200: {
+                slidesPerView: 5,
+                spaceBetween: 30
+            },
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 15
+            },
+            991: {
+                slidesPerView: 3,
+                spaceBetween: 15
+            },
+            767: {
+                slidesPerView: 2,
+                spaceBetween: 15
+            },
+            480: {
+                slidesPerView: 2,
+                spaceBetween: 15
+            }
+        }
+    });
+    });
+</script>
+{% schema %}
+{
+"name": "Products Slider",
+"class": "index-section index-section--collectionproductsection",
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "col_pro_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "col_pro_full_width_check",
+"label": "Enable Section Full Width",
+"default": true
+},
+{
+"type": "header",
+"content": "Collection Products Content"
+},
+{
+"type": "text",
+"id": "collection_products_title",
+"label": "Collection Products Title"
+},
+{
+"type": "range",
+"id": "collection_products_limit",
+"label": "Collection Products Limit",
+"min": 4,
+"max": 32,
+"default": 6
+},
+{
+"type": "range",
+"id": "visable_pro_limit",
+"label": "Visible Products Limit",
+"min":       3,
+"max":       7,
+"default":   6
+},
+{
+"type": "collection",
+"id": "top_sellers",
+"label": "Select Collection For Products"
+}
+],
+"presets": [
+{
+"name": "Products Slider",
+"category": "Products"
+}
+]
+}
+{% endschema %}

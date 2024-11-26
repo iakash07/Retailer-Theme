@@ -1,0 +1,309 @@
+<!--=================== Article Template ===================-->
+<main id="singleblogsection--{{ section.id }}" class="blog-single-page blog-single-template {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}" data-section-id="{{ section.id }}" data-section-type="blog-single-template">
+    <section class="blog-single-content paira-gap-2">
+        <div class="container-fluid padding-fixed">
+            <div class="row">
+                {% if section.settings.blog_layout == '1' or section.settings.blog_layout == '2' %}
+                <a href="#sidebar" class="bars" id="displayTextLeft"><span>Show Sidebar</span> <i class="fa fa-plus-circle" style="display: inline-block;margin-left: 5px;"></i><i class="fa fa-minus-circle" style="display: none;margin-left: 5px;"></i></a>
+                {% endif %}
+                <div {% if section.settings.blog_layout == '1' %} class="col-lg-9 col-md-9 col-sm-8 col-xs-12 paira-gap-3 pull-right"{% endif %}{% if section.settings.blog_layout == '2' %} class="col-lg-9 col-md-9 col-sm-8 col-xs-12 paira-gap-3 pull-left"{% endif %}{% if section.settings.blog_layout == '3' %}class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paira-gap-3 full-width-collection"{% endif %}>
+                    <article>
+                        <div class="row text-left">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <h1 class="margin-clear article-title">{{ article.title }}</h1>
+                                <ul class="list-inline margin-top-10">
+                                    <li><p><i class="fa fa-calendar"></i> {{ article.published_at | date: "%B %d, %Y" }}</p></li>
+                                    <li><p><a href="#comments"> <i class="fa fa-comments-o"></i> {{article.comments_count}} {{ 'blogs.general.comments' | t }}</a></p></li>
+                                    <li><p><i class="fa fa-pencil-square-o"></i> {{article.author}}</p></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% if article.image %}
+                        <div class="featured-image">
+                            <a href="{{ article.url }}">
+                                <img src="{{ article | img_url: 'compact' }}" alt="{{ article.title }}" data-srcset="{{ article | img_url: 'compact' }} 160w, {{ article | img_url: 'medium' }} 240w, {{ article | img_url: 'master' }} 1000w" data-src="{{ article | img_url: 'master' }}" data-sizes="auto" class="lazyload blur-up img-responsive center-block margin-bottom-20"/>
+                            </a>
+                        </div>
+                        {% endif %}
+                        <div class="blog-article">
+                            {{article.content}}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 art-paddding">
+                                <ul class="pull-left list-inline blog-post-tags margin-top-10">
+                                    <li><i class="fa fa-tag"></i> <strong>{{ 'blogs.general.tags' | t }}</strong></li>
+                                    {% for tag in article.tags %}
+                                    <li class="margin-top-10"><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{tag}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                    <hr class="pull-left margin-bottom-0 margin-top-20">
+                    <div class="row margin-clear social-btns">
+                        <div class="pull-left">
+                            {% if section.settings.social_shear_art_check %}
+                            {% include 'social-share-widget'%}
+                            {% endif %}
+                        </div>
+                        <div class="art-btn pull-right">
+                            {% if blog.previous_article %}
+                            <a href="{{ blog.previous_article }}"><i class="fa fa-long-arrow-left"></i> {{ 'blogs.general.previous_post' | t }}</a>
+                            {% endif %}
+                            {% if blog.next_article %}
+                            <a href="{{ blog.next_article }}" class="margin-left-10">{{ 'blogs.general.next_post' | t }} <i class="fa fa-long-arrow-right"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if blog.comments_enabled? %}
+                    <div id="comments">
+                        {% if article.comments.size > 0 or comment.created_at %}
+                        <hr class="pull-left margin-bottom-20 margin-top-10">
+                        <div class="blog-post-comments full-width overflow-h margin-bottom-30">
+                            <h3 class="margin-clear margin-bottom-10 margin-top-10" id="comment">{{ 'blogs.general.comments' | t }}</h3>
+                            <ul class="list-unstyled">
+                                {% for comment in article.comments %}
+                                <li class="">
+                                    <img src="{{ 'comment-user-image.png' | asset_url }}">
+                                    <div class="comments-content">
+                                        <h6 class="margin-clear">{{ 'blogs.general.posted_on' | t }} {{ comment.created_at | date: "%B %d, %Y" }} {{ 'blogs.general.by_author' | t }} {{ comment.author }}</h6>
+                                        <p class="margin-top-10">{{ comment.content }}</p>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <hr class="pull-left margin-clear margin-bottom-30 margin-top-10">
+                        {% form "new_comment", article %}
+                        <div class="blog-post-form">
+                            <h2 class="margin-clear margin-bottom-20">{{ 'blogs.general.leave_a_comment' | t }}</h2>
+                            {% if form.posted_successfully? %}
+                            {% if blog.moderated? %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong><i class="fa fa-check"></i></strong> {{ 'blogs.general.success_moderated' | t }}
+                            </div>
+                            {% else %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong><i class="fa fa-check"></i></strong> {{ 'blogs.general.success' | t }}
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% if form.errors %}
+                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong><i class="fa fa-times"></i></strong> {{ 'blogs.general.moderated' | t }}
+                            </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-6 art-paddding">
+                                    <label>{{ 'blogs.general.name' | t }}</label><br>
+                                    <input type="text" class="form-control margin-bottom-20" name="comment[author]">
+                                </div>
+                                <div class="col-md-6 art-paddding">
+                                    <label>{{ 'blogs.general.email' | t }}</label>
+                                    <input type="email" class="form-control margin-bottom-20" name="comment[email]">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 art-paddding">
+                                    <label>{{ 'blogs.general.form_Comments' | t }}</label><br>
+                                    <textarea class="form-control margin-bottom-20" rows="10" name="comment[body]">{{ form.body }}</textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-default" value="Send">{{ 'blogs.general.submit_comments' | t }}</button>
+                        </div>
+                        {% endform %}
+                    </div>
+                    {% endif %}
+                </div>
+                <aside id="sidebar" class="sidebar col-lg-3 col-md-3 col-sm-4 col-xs-12 paira-gap-3" {% if section.settings.blog_layout == '1' %} style="float: left;"{% endif %}{% if section.settings.blog_layout == '2' %} style="float: right;"{% endif %}{% if section.settings.blog_layout == '3' %} style="display:none;"{% endif %}>
+                {% if section.settings.recent_post_check %}
+                <figure class="margin-bottom-30">
+                    <figcaption><h4 class="panel-heading padding-bottom-0">{{ section.settings.recent_post_title }}</h4></figcaption>
+                    <div class="blog-recent-post-widget">
+                        <ul class="list-unstyled margin-clear">
+                            {% for article in blogs[blog.handle].articles limit: section.settings.recent_post_limit %}
+                            <li>
+                                <h5 class="margin-bottom-5 margin-top-0"><a href="{{ article.url }}" class="blog-titel">{{ article.title }}</a></h5>
+                                <p class="blog_date_info margin-clear">
+                                    <span class="margin-right-15"><i class="fa fa-calendar"></i> {{ article.published_at | date: "%B %d, %Y" }}</span>
+                                    <span><a href="{{ article.url }}#comments"><i class="fa fa-comments-o"></i> {{article.comments_count}}</a></span>
+                                </p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </figure>
+                {% endif %}
+                {% if section.settings.post_tags_check %}
+                <figure class="margin-bottom-30">
+                    <figcaption><h4 class="panel-heading padding-bottom-0">{{ section.settings.post_tags_title }}</h4></figcaption>
+                    <div class="blog-tag-widget">
+                        <ul class="list-inline margin-clear">
+                            {% for tag in blog.tags limit: section.settings.tags_limit %}
+                            <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </figure>
+                {% endif %}
+                {% if section.settings.post_social_widget_check %}
+                <!--=================== Facebook Widgets ===================-->
+                {% include 'facebook-likebox' %}
+                {% endif %}
+                </aside>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    function SocialShare(url, title, w, h) {
+        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+        var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+        var top = ((height / 2) - (h / 2)) + dualScreenTop;
+        var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        if (window.focus) {
+            newWindow.focus();
+        }
+    }
+    $(function() {
+        $(document).on("click", ".sicoal-share-widget a", function(p) {
+            p.preventDefault();
+            SocialShare(this.href,'Social Share','650','350');
+            return false;
+        })
+    });
+</script>
+
+{% schema %}
+{
+"name": "Article",
+"class": "blog-single-section blog-single-section--blogsection",
+"settings": [
+{
+"type": "select",
+"id": "blog_layout",
+"label": "Blog Layout",
+"options": [
+{
+"value": "1",
+"label": "Sidebar Left"
+},
+{
+"value": "2",
+"label": "Sidebar Right"
+},
+{
+"value": "3",
+"label": "Full Width"
+}
+]
+},
+{
+"type": "checkbox",
+"id": "social_shear_art_check",
+"label": "Enable Social Sharing Buttons",
+"default": true
+},
+{
+"type": "paragraph",
+"content": "## Please Go Back To Social Links And Sharing For Enable Disable Social Share Buttons."
+},
+{
+"type": "header",
+"content": "Recent Post Widget"
+},
+{
+"type": "checkbox",
+"id": "recent_post_check",
+"label": "Enable Recent Post Widget",
+"default": true
+},
+{
+"type": "text",
+"id": "recent_post_title",
+"label": "Recent Post Widget Title",
+"default": "Recent Post"
+},
+{
+"type": "range",
+"id": "recent_post_limit",
+"label": "Limit",
+"min": 3,
+"max": 15,
+"default": 5
+},
+{
+"type": "header",
+"content": "Tags Widget"
+},
+{
+"type": "checkbox",
+"id": "post_tags_check",
+"label": "Enable Tags Widget",
+"default": true
+},
+{
+"type": "text",
+"id": "post_tags_title",
+"label": "Blog Tags Widget Title",
+"default": "Blog Tags"
+},
+{
+"type": "range",
+"id": "tags_limit",
+"label": "Limit",
+"min": 3,
+"max": 50,
+"default": 25
+},
+{
+"type": "header",
+"content": "Social Widget"
+},
+{
+"type": "checkbox",
+"id": "post_social_widget_check",
+"label": "Enable Social Widget",
+"default": true
+},
+{
+"type": "paragraph",
+"content": "## Please Go Back To Widget Settings For Setup Facebook Widget."
+},
+{
+"type": "header",
+"content": "Facebook Widget Setting"
+},
+{
+"type": "text",
+"id": "fblikeboxurl",
+"label": "Facebook Page URL",
+"default": "https:\/\/www.facebook.com\/themetidy"
+},
+{
+"type": "checkbox",
+"id": "fblikeboxface",
+"label": "Show Friend's Faces"
+},
+{
+"type": "checkbox",
+"id": "fblikeboxheader",
+"label": "Show Header",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "fblikeboxposts",
+"label": "Show Posts",
+"default": true
+}
+]
+}
+{% endschema %}

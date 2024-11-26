@@ -1,0 +1,78 @@
+<section>
+  <div class="our_address_section">
+    <div class="container">
+      <div class="our_addres_col">
+        <div class="our_address_flex">
+          <div class="our_address_box">
+            {% if section.settings.title != blank %}
+              <h3>{{ section.settings.title }}</h3>
+            {% endif %}
+          </div>
+          <div class="our_address_box">
+            {% if section.settings.name_ofc != blank %}
+              <h4>{{ section.settings.name_ofc }}</h4>
+            {% endif %}
+            {% if section.settings.company_name != blank %}
+              <h4>{{ section.settings.company_name }}</h4>
+            {% endif %}
+            {% if section.settings.address != blank %}
+              <div>{{ section.settings.address }}</div>
+            {% endif %}
+          </div>
+          <div class="our_address_box">
+            {% if section.settings.name_ofc_2 != blank %}
+              <h4>{{ section.settings.name_ofc_2 }}</h4>
+            {% endif %}
+            {% if section.settings.address2 != blank %}
+              <div>{{ section.settings.address2 }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "our_address",
+  "settings": [
+    {
+      "type":"text",
+      "id":"title",
+      "label":"Add Tile"
+    },
+    {
+      "type":"text",
+      "id":"name_ofc",
+      "label":"Add Delhi Office Name"
+    },
+    {
+      "type":"richtext",
+      "id":"address",
+      "label":"Add Delhi Address"
+    },
+     {
+      "type":"text",
+      "id":"company_name",
+      "label":"Add Comapny Name"
+    },
+    {
+      "type":"text",
+      "id":"name_ofc_2",
+      "label":"Add Mumbai Office Name"
+    },
+       {
+      "type":"richtext",
+      "id":"address2",
+      "label":"Add Mumbai Address"
+    }
+
+  ],
+  "presets": [
+    {
+      "name":"Our Address Section"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,44 @@
+<div class="signup-section" style="background-color:{{ section.settings.color }}">
+  <div class="main-signup">
+      <div class="main-signup-left">
+        <h6>{{ section.settings.title }}</h6>
+        <p>{{ section.settings.desc }}</p>
+      </div>
+      <div class="main-signup-right">
+        <button>{{ section.settings.btn }}</button>
+      </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Signup Section",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Add Background Color"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Add your Title"
+      },
+      {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Add your Description"
+      },
+      {
+        "type": "text",
+        "id": "btn",
+        "label": "Add your Button Name"
+      }
+    ],
+    "presets":[
+      {
+        "name": "Signup Section"
+      }
+    ]
+  }
+{% endschema %}

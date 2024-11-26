@@ -1,0 +1,35 @@
+<div class="top-banner">
+  {% if section.settings.img != blank %}
+    <img src="{{ section.settings.img | img_url: "master" }}">
+  {% endif %}
+  <div class="container">
+    <div class="top-info">
+      {% if template.name == 'product' %}
+        <h2 class="ctm-head">{{ product.title }}</h2>
+      {% endif %}
+      <h2 class="ctm-head">{{ page.title }}</h2>
+      {% assign temp = template | replace: '.', '-' | handle %}
+      {% if temp != blank %}
+        <h2 class="ctm-head">{{ collection.title }}</h2>
+      {% endif %}
+      {% include 'breadcrumb' %}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Top Banner Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Select Image"
+    }
+  ],
+  "presets":[
+    {
+      "name": "Top Banner Section"
+    }
+  ]
+}
+{% endschema %}

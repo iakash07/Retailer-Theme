@@ -1,0 +1,12 @@
+{% if settings.zendesk != "" and settings.zendesk_check %}
+<!--- Zendesk --->
+{{ settings.zendesk }}
+{% endif %}
+{% if settings.deskpro != "" and settings.deskpro_check %}
+<!--- Deskpro --->
+{{ settings.deskpro }}
+{% endif %}
+{% if settings.kayako != "" and settings.kayako_check %}
+<!--- Kayako --->
+{{ settings.kayako }}
+{% endif %}

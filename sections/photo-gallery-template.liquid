@@ -1,0 +1,52 @@
+<!--=================== Photo Gallery Template ===================-->
+<main class="image-gallery-page {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}">
+    <section id="imagegallerysection-{{ section.id }}" class="image-gallery-template" data-section-id="{{ section.id }}" data-section-type="image-gallery-template">
+        <div class="container-fluid padding-fixed paira-gap-3 paira-gap-2">
+            <div class="row margin-clear">
+                <div class="heading pull-left full-width">
+                    <h1 class="page-header margin-bottom-0 text-left pull-left"><span>{{ page.title }}</span></h1>
+                </div>
+                <ul class="list-inline image-gallery margin-clear">
+                    {% for block in section.blocks %}
+                    <li class="padding-clear">
+                        <div class="position-r">
+                            <a href="{{ block.settings.gallery_link }}" class="pull-left full-width">
+                                {% if block.settings.image_gal == blank %}
+                                {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg banner-images full-width' }}
+                                {% else %}
+                                <img src="{{ block.settings.image_gal | img_url: 'master' }}" class="img-responsive banner-images">
+                                {% endif %}
+                            </a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% schema %}
+{
+"name": "Photo Gallery",
+"blocks": [
+{
+"type": "image",
+"name": "Photo",
+"settings": [
+{
+"type": "image_picker",
+"id": "image_gal",
+"label": "Image"
+},
+{
+"type": "url",
+"id": "gallery_link",
+"label": "Gallery Image Link",
+"default": "\/collections\/all"
+}
+]
+}
+]
+}
+{% endschema %}

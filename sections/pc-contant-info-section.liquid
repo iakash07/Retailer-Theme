@@ -1,0 +1,88 @@
+<section>
+  <div class="contant_info_section">
+    <div class="container">
+      <div class="contant_info_col">
+        <div class="contant_info_heading">
+          {% if section.settings.heading != blank %}
+            <h2>{{ section.settings.heading }}</h2>
+          {% endif %}
+        </div>
+        <div class="contant_info_box">
+          <div class="contant_info_flex">
+            {% for block in section.blocks %}
+              <div class="contant_info_inner">
+                {% if block.settings.title != blank %}
+                  <div class="contant_box_1">
+                    <h3>{{ block.settings.title }}</h3>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.number != blank %}
+                  <div class="contant_box_1">
+                    <div>{{ block.settings.number }}</div>
+                  </div>
+                {% endif %}
+                {% if block.settings.number2 != blank %}
+                  <div class="contant_box_1">
+                    <div>{{ block.settings.number2 }}</div>
+                  </div>
+                {% endif %}
+                {% if block.settings.email != blank %}
+                  <div class="contant_box_1">
+                    <div>{{ block.settings.email }}</div>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "contant_info_section",
+  "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Add Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type":"contant_info_block",
+      "name":"Contant Info Block",
+      "settings": [
+        {
+          "type": "text",
+          "id":"title",
+          "label":"Add Title"
+        },
+        {
+          "type":"richtext",
+          "id":"number",
+          "label":"Add Head Office Phone"
+        },
+        {
+          "type":"richtext",
+          "id":"number2",
+          "label": "Add Mumbai Office Phone"
+        },
+        {
+          "type":"richtext",
+          "id":"email",
+          "label": "Add Email"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name":"Contant Info Section"
+    }
+  ]
+}
+{% endschema %}

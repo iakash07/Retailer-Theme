@@ -1,0 +1,30 @@
+<!--=================== Page Template ===================-->
+<main class="default-page {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}">
+    <section class="page-content paira-gap-3 paira-gap-2">
+        <div class="container-fluid padding-fixed">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading pull-left full-width">
+                        <h1 class="page-header margin-bottom-30 text-left pull-left"><span>{{ page.title }}</span></h1>
+                    </div>
+                    {{ page.content }}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebPage",
+  "name": "{{ page.title | escape }}",
+  "description": "{{ page.content | strip_html | escape }}",
+  "url": "{{ shop.url }}/pages/{{ page.handle }}",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Confidential Couture",
+    "url": "{{ shop.url }}",
+    "logo": "https://cdn.shopify.com/s/files/1/0643/7958/4700/files/confidential_couture_logo.jpg?v=1720514785"
+  }
+}
+</script>

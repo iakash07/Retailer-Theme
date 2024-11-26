@@ -1,0 +1,79 @@
+
+<section class="banner_section">
+  <div class="bio_cleaning_banner">
+    <div class="ctm-container">
+      <div class="bio_cleaning_banner_heading">
+        {% if section.settings.heading != blank %}
+        <h3>{{ section.settings.heading }}</h3>
+        {% endif %}
+      </div>
+      <div class="bio_cleaning_bg" style="background-image:url({% if section.settings.bg_image != blank %}{{ section.settings.bg_image | img_url:'master' }}{% endif %})">
+        <div class="bio_cleaning_inner">
+          {% if section.settings.text != blank %}
+          <h2>{{ section.settings.text }}</h2>
+          {% endif %}
+          {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+
+
+<style>
+  .bio_cleaning_inner h2{
+    color:{{section.settings.text_color}};
+  }
+  .bio_cleaning_inner p{
+    color:{{section.settings.dec_color}};
+  }
+</style>
+
+
+
+
+{% schema %}
+  {
+    "name": "Bio Cleaning Banner",
+    "settings": [
+      {
+        "type":"text",
+        "id":"heading",
+        "label":"Add Heading"
+      },
+      {
+        "type":"image_picker",
+        "id":"bg_image",
+        "label":"Add Background Image"
+      },
+      {
+        "type":"text",
+        "id":"text",
+        "label":"Add Title"
+      },
+      {
+        "type":"textarea",
+        "id":"description",
+        "label":"Add Description"
+      },
+        {
+        "type" : "color",
+        "id" : "text_color",
+        "label" : "Text Color"
+      },
+      {
+        "type":"color",
+        "id":"dec_color",
+        "label":"Description Color"
+      }
+    ],
+    "presets":[
+      {
+        "name":"Bio Cleaning Banner"
+      }
+    ]
+  }
+{% endschema %}

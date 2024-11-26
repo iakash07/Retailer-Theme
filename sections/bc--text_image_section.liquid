@@ -1,0 +1,71 @@
+<section class="bc_text_image">
+  <div class="bc_text_image_section">
+    <div class="ctm-container">
+      <div class="bc_text_image_col">
+        <div class="bc_text_image_flex">
+          <div class="bc_image_Wrapper">
+            <div class="bc_image_wrapper_inner">
+              {% if section.settings.image != blank %}
+                <img src="{{ section.settings.image | img_url:'master' }}">
+              {% endif %}
+            </div>
+          </div>
+          <div class="bc_text_wrapper">
+            <div class="bc_text_wrapper_inner">
+              {% if section.settings.text != blank %}
+                <h3>{{ section.settings.text }}</h3>
+              {% endif %}
+              {% if section.settings.description != blank %}
+                <div>{{ section.settings.description }}</div>
+              {% endif %}
+              {% if section.settings.btn_text != blank %}
+                <a href="{{ section.settings.btn_url }}">
+                  {{ section.settings.btn_text }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bc Text Image Section",
+  "settings": [
+    {
+      "type":"image_picker",
+      "id":"image",
+      "label":"Add Image"
+    },
+    {
+      "type":"text",
+      "id":"text",
+      "label":"Add Title"
+    },
+    {
+      "type":"richtext",
+      "id":"description",
+      "label":"Add Description"
+    },
+    {
+      "type":"url",
+      "id":"btn_url",
+      "label":"Add Button Url"
+    },
+    {
+      "type":"text",
+      "id":"btn_text",
+      "label":"Add Button Text"
+    }
+
+  ],
+  "presets":[
+    {
+      "name":"Bc Text Image Section"
+    }
+  ]
+}
+{% endschema %}

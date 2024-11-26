@@ -1,0 +1,62 @@
+<!--=================== Video Gallery Template ===================-->
+<main class="video-gallery-page {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}">
+    <section id="videogallerysection-{{ section.id }}" class="video-gallery-template" data-section-id="{{ section.id }}" data-section-type="video-gallery-template">
+        <div class="container-fluid padding-fixed paira-gap-3 paira-gap-2">
+            <div class="row margin-clear">
+                <div class="heading pull-left full-width">
+                    <h1 class="page-header margin-bottom-0 text-left pull-left"><span>{{ page.title }}</span></h1>
+                </div>
+                <ul class="list-inline video-gallery margin-clear">
+                    {% for block in section.blocks %}
+                    <li class="padding-clear">
+                        <div class="videos video-{{ block.id }}"></div>
+                        <script>
+                            {% if block.settings.video_url.type == 'vimeo' %}
+                            {% assign video_type = 'https://player.vimeo.com/video/' %}
+                            {% else %}
+                            {% assign video_type = 'https://www.youtube.com/embed/' %}
+                            {% endif %}
+                            $(function() {
+                                {% if block.settings.video_url.type == 'vimeo' %}
+                                $(".video-{{ block.id }}").html('<iframe src="{{ video_type }}{{ block.settings.video_url.id }}?title=0&byline=0&portrait=0" style="position:relative;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>');
+                                {% else %}
+                                $(".video-{{ block.id }}").html('<iframe src="{{ video_type }}{{ block.settings.video_url.id }}?VQ=HD720&autoplay=0&loop=1&autopause=0&showinfo=0&controls=0&title=false&portrait=false&byline=false" width="100" height="{{ block.settings.videos_height }}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+                                {% endif %}
+                            });
+                        </script>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% schema %}
+{
+"name": "Video Gallery",
+"max_blocks": 20,
+"blocks": [
+{
+"type": "image",
+"name": "Video",
+"settings": [
+{
+"type": "video_url",
+"id": "video_url",
+"info": "Ex. Link: https://www.youtube.com/watch?v=_9VUPq3SxOc",
+"label": "Video link",
+"accept": ["youtube", "vimeo"],
+"default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+},
+{
+"type": "text",
+"id": "videos_height",
+"label": "Video Height",
+"default": "500"
+}
+]
+}
+]
+}
+{% endschema %}

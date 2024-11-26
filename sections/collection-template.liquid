@@ -1,0 +1,873 @@
+<!--=================== Collection Template ===================-->
+<main id="collectionsection--{{ section.id }}" class="collection-page collection-template {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}" data-section-id="{{ section.id }}" data-section-type="collection-template">
+    <!--=================== Collections Product Section ===================-->
+    <section class="collection-content paira-gap-2">
+            <div class="container-fluid padding-clear">
+                {% if section.settings.collection_image_con_1 %}
+                <a href="{{section.settings.collection_image_link_1}}" class="display-in-b full-width">
+                    {% if section.settings.collection_image_1 == blank %}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg full-width height-300' }}
+                    {% else %}
+                    <img src="{{ section.settings.collection_image_1 | img_url: 'master' }}" class="img-responsive banner-images">
+                    {% endif %}
+                </a>
+                {% endif %}
+            </div>
+            <div class="container-fluid padding-fixed">
+                <div class="row">
+                    <aside id="sidebar" class="sidebar col-md-3 col-lg-3 col-sm-12 col-xs-12 paira-gap-3"{% if section.settings.collect_layout == '1' %} style="float: left;"{% endif %}{% if section.settings.collect_layout == '2' %} style="float: right;"{% endif %}{% if section.settings.collect_layout == '3' %} style="display:none;"{% endif %}>
+                    {% if section.settings.collection_filter_check %}
+                    <div class="filter-product paira-filter-product">
+                        {% if section.settings.collection_all_page_check %}
+                        <div class="panel-group margin-clear collection-widget-list" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="filter">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#filter_1" aria-expanded="true" aria-controls="filter_1">
+                                        {{ section.settings.collection_product_all_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="filter_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="filter">
+                                <div class="panel-body">
+                                    <ul class="list-unstyled margin-clear">
+                                        {% if collections.length > 0 %}
+                                        {% assign collect_handel = collection.handle %}
+                                        {% for collection in collections limit: section.settings.collection_product_all_limit %}
+                                        <li><a href="{{ collection.url }}" class="paira-filter-category {% if collect_handel == collection.handle %} active {% endif %}">{{ collection.title }}</a></li>
+                                        {% endfor %}
+                                        {% else %}
+                                        <p>Your Collection List Is Empty!</p>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                        {% if section.settings.shop_by_color_check %}
+                        <div class="panel-group margin-clear" id="accordion1" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="color">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion1" href="#color_1" aria-expanded="true" aria-controls="color_1">
+                                        {{ section.settings.shop_by_color_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="color_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="color">
+                                <div class="panel-body colors-temp">
+                                    <ul class="list-inline margin-clear">
+                                        {% assign tags = section.settings.shop_by_color | split: ',' %}
+                                        {% for t in tags %}
+                                        {% assign tag = t | strip %}
+                                        {% if current_tags contains tag %}
+                                        <span><label style="background:  {{ tag | downcase }}"><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"></label></span>
+                                        {% elsif collection.all_tags contains tag %}
+                                        <span><label style="background:  {{ tag | downcase }}"><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"></label></span>
+                                        {% elsif collection.handle == 'all' %}
+                                        <span><label style="background:  {{ tag | downcase }}"><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"></label></span>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                        {% if section.settings.shop_by_size_check %}
+                        <div class="panel-group margin-clear" id="accordion2" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="size">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#size_1" aria-expanded="true" aria-controls="size_1">
+                                        {{ section.settings.shop_by_size_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="size_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="size">
+                                <div class="panel-body">
+                                    <ul class="list-inline margin-clear">
+                                        {% assign tags = section.settings.shop_by_size | split: ',' %}
+                                        {% for t in tags %}
+                                        {% assign tag = t | strip %}
+                                        {% if current_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.all_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.handle == 'all' %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                        {% if section.settings.shop_by_material_check %}
+                        <div class="panel-group margin-clear" id="accordion3" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="material">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion3" href="#material_1" aria-expanded="true" aria-controls="#material_1">
+                                        {{ section.settings.shop_by_material_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="material_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="material">
+                                <div class="panel-body">
+                                    <ul class="list-inline margin-clear">
+                                        {% assign tags = section.settings.shop_by_material | split: ',' %}
+                                        {% for t in tags %}
+                                        {% assign tag = t | strip %}
+                                        {% if current_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.all_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.handle == 'all' %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                        {% if section.settings.shop_by_brand_check %}
+                        <div class="panel-group margin-clear" id="accordion4" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="brand">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion4" href="#brand_1" aria-expanded="true" aria-controls="brand_1">
+                                        {{ section.settings.shop_by_brand_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="brand_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="brand">
+                                <div class="panel-body">
+                                    <ul class="list-inline margin-clear">
+                                        {% assign tags = section.settings.shop_by_brand | split: ',' %}
+                                        {% for t in tags %}
+                                        {% assign tag = t | strip %}
+                                        {% if current_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.all_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.handle == 'all' %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                        {% if section.settings.shop_by_price_check %}
+                        <div class="panel-group margin-clear" id="accordion5" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="price">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion5" href="#price_1" aria-expanded="true" aria-controls="price_1">
+                                        {{ section.settings.shop_by_price_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="price_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="price">
+                                <div class="panel-body">
+                                    <ul class="list-inline margin-clear">
+                                        {% assign tags = section.settings.shop_by_price | split: ',' %}
+                                        {% for t in tags %}
+                                        {% assign tag = t | strip %}
+                                        {% if current_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.all_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.handle == 'all' %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                        {% if section.settings.shop_by_type_check %}
+                        <div class="panel-group margin-clear" id="accordion6" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="type">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion6" href="#type_1" aria-expanded="true" aria-controls="type_1">
+                                        {{ section.settings.shop_by_type_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="type_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="type">
+                                <div class="panel-body">
+                                    <ul class="list-inline margin-clear">
+                                        {% assign tags = section.settings.shop_by_type | split: ',' %}
+                                        {% for t in tags %}
+                                        {% assign tag = t | strip %}
+                                        {% if current_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.all_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.handle == 'all' %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                        {% if section.settings.shop_by_vendor_check %}
+                        <div class="panel-group margin-clear" id="accordion7" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="vendor">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion7" href="#vendor_1" aria-expanded="true" aria-controls="vendor_1">
+                                        {{ section.settings.shop_by_vendor_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="vendor_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="vendor">
+                                <div class="panel-body">
+                                    <ul class="list-inline margin-clear">
+                                        {% assign tags = section.settings.shop_by_vendor | split: ',' %}
+                                        {% for t in tags %}
+                                        {% assign tag = t | strip %}
+                                        {% if current_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.all_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.handle == 'all' %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                        {% if section.settings.shop_by_weight_check %}
+                        <div class="panel-group margin-clear" id="accordion8" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="weight">
+                                <h2 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion8" href="#weight_1" aria-expanded="true" aria-controls="weight_1">
+                                        {{ section.settings.shop_by_weight_title }}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="weight_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="weight">
+                                <div class="panel-body">
+                                    <ul class="list-inline margin-clear">
+                                        {% assign tags = section.settings.shop_by_weight | split: ',' %}
+                                        {% for t in tags %}
+                                        {% assign tag = t | strip %}
+                                        {% if current_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.all_tags contains tag %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% elsif collection.handle == 'all' %}
+                                        <label><input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}" value="{{ tag | handle }}" class="paira-filter-checkbox"> {{ tag }}</label>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    {% if section.settings.special_product %}
+                    <figure class="margin-bottom-30 small-products">
+                        <figcaption><h4 class="panel-heading padding-bottom-0">{{ section.settings.collection_products_title_1 }}</h4></figcaption>
+                        {% if section.settings.top_sellers_small != blank %}
+                        {% assign collection_product = collections[section.settings.top_sellers_small] %}
+                        <div class="product-widget">
+                            <div class="products-wrapper">
+                                {% for product in collection_product.products limit: section.settings.collection_products_limit_1 %}
+                                <div class="col-md-12 col-sm-4 col-xs-12 margin-top-15 padding-clear">
+                                    <!--=================== Product ===================-->
+                                    <div class="paira-product product img">
+                                        <div class="overflow-h pro-im position-r col-md-3 col-sm-3 col-xs-3 padding-clear" data-value="0">
+                                            <a href="{{ product.url }}" class="overflow-h">
+                                                {% if product.images.size >= 1%}
+                                                <img src="{{ product.featured_image | product_img_url: 'small' }}" class="paira-product-image img-responsive full-width main-product lazyload blur-up" alt="{{ product.title}}" data-srcset="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'small' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 160w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'compact' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 240w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 480w" data-src="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %}" data-sizes="auto">
+                                                {% else %}
+                                                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                                {% endif %}
+                                            </a>
+                                            <div class="sale-stock">
+                                                {% if product.compare_at_price_max > product.price %}
+                                                {% assign cal_compare_price = product.compare_at_price_max | divided_by: 100 %}
+                                                {% assign cal_price = product.price | divided_by: cal_compare_price %}
+                                                {% assign cal_price_percentage = cal_price | minus: 100 %}
+                                                <div class="product-sale"><span>{{ cal_price_percentage | round }}%</span></div>
+                                                {% endif %}
+                                                {% if product.variants.size <= 1 %}
+                                                {% for variant in product.variants %}
+                                                {% assign product_inventory_management = variant.inventory_management %}
+                                                {% assign product_inventory_policy = variant.inventory_policy %}
+                                                {% assign product_quantity_item = variant.inventory_quantity.product_quantity_item %}
+                                                {% endfor %}
+                                                {% endif %}
+                                                {% if product.variants.first.inventory_management == 'shopify' and product.variants.first.inventory_quantity <= 0 %}
+                                                <div class="product-stock-out"><span>{{ 'products.product.stock_out' | t }}</span></div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="product-title-price col-md-9 col-sm-9 col-xs-9 padding-right-0 padding-left-15 padding-top-0">
+                                            {% if settings.enable_review %}
+                                            {% if settings.enable_reviews %}
+                                            <div class="pro-reating margin-top-0 margin-bottom-5">
+                                                <div class="paira-rating-con product-rating">
+                                                    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endif %}
+                                            <h5 class="margin-bottom-0 vendor margin-top-0">{{ product.vendor }}</h5>
+                                            <h2 class="margin-top-5 margin-bottom-0"><a href="{{ product.url }}" title="{{ product.title }}" class="paira-product-title">{{ product.title | truncate: 20, '' }}</a></h2>
+                                            <div class="text-left margin-top-5">
+                                                {% if product.compare_at_price_max > product.price %}
+                                                <div class="display-in-b margin-right-5"><del><span class="money">{{ product.compare_at_price | money }}</span></del></div>
+                                                <div class="display-in-b"><span class="money">{{ product.price | money }}</span></div>
+                                                {% else %}
+                                                <span class="money">{{ product.price | money }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="product-widget">
+                            <div class="products-wrapper">
+                                {% for product in (1..section.settings.collection_products_limit_1) %}
+                                <div class="col-md-12 margin-top-20 padding-clear">
+                                    <div class="product img">
+                                        <div class="overflow-h pro-im position-r col-md-3 col-sm-3 padding-clear" data-value="0">
+                                            <a href="#" class="overflow-h">
+                                                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                            </a>
+                                        </div>
+                                        <div class="product-title-price col-md-9 col-sm-9 padding-right-0 padding-left-15 padding-top-0">
+                                            <h5 class="margin-bottom-0 vendor margin-top-0">Calvin Klein</h5>
+                                            <h2 class="margin-top-5 margin-bottom-0"><a href="#" title="Blazer Open Front" class="paira-product-title">Your product's name</a></h2>
+                                            <div class="text-left margin-top-5" style="margin-bottom: 0">
+                                                <span class="money">$100.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </figure>
+                    {% endif %}
+                    {% if section.settings.collection_image_con %}
+                    <a href="{{section.settings.collection_image_link}}" class="display-in-b margin-bottom-0">
+                        {% if section.settings.collection_image == blank %}
+                        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg height-300 full-width' }}
+                        {% else %}
+                        <img src="{{ section.settings.collection_image | img_url: 'master' }}" class="img-responsive banner-images">
+                        {% endif %}
+                    </a>
+                    {% endif %}
+                    </aside>
+                    {% if section.settings.collect_layout == '1' or section.settings.collect_layout == '2' %}
+                    <a href="#sidebar" class="bars" id="displayTextLeft"><span>Show Sidebar</span> <i class="fa fa-plus-circle" style="display: inline-block;margin-left: 5px;"></i><i class="fa fa-minus-circle" style="display: none;margin-left: 5px;"></i></a>
+                    {% endif %}
+                    <div {% if section.settings.collect_layout == '1' %} class="col-md-9 col-lg-9 col-sm-12 col-xs-12 paira-gap-3 text-center"{% endif %}{% if section.settings.collect_layout == '2' %} class="col-md-9 col-lg-9 col-sm-12 col-xs-12 paira-gap-3 text-center"{% endif %}{% if section.settings.collect_layout == '3' %}class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paira-gap-3 text-center full-width-collection"{% endif %}>
+                    <div class="paira-collection-content collection-content">
+                        <!--=================== collections image ===================-->
+                        {% paginate collection.products by section.settings.category_product_limit %}
+                        <div class="row">
+                            <div class="col-lg-6 col-md-5 col-sm-5 col-xs-6 text-left">
+                                {% if collection.url == blank  %}
+                                <h1 class="page-header margin-bottom-0 text-left">{{ 'collections.general.title' | t }}</h1>
+                                {% else %}
+                                <h1 class="page-header margin-bottom-0 text-left">{{ collection.title }}</h1>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-6 col-md-7 col-sm-7 col-xs-6 list-grid-xs">
+                                <div class="col-md-8 col-sm-8 col-xs-12 padding-clear">
+                                    <div class="form-group margin-clear mar-top-3 pull-right full-width">
+                                        <label class="margin-right-10 sx-screen display-in-b labels margin-bottom-0">{{ 'collections.sorting.title' | t }} </label>
+                                        <select class="sort-by paira-sort-by display-in-b">
+                                            <option value="manual">{{ 'collections.sorting.featured' | t }}</option>
+                                            <option value="best-selling">{{ 'collections.sorting.best_selling' | t }}</option>
+                                            <option value="title-ascending">{{ 'collections.sorting.az' | t }}</option>
+                                            <option value="title-descending">{{ 'collections.sorting.za' | t }}</option>
+                                            <option value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</option>
+                                            <option value="price-descending">{{ 'collections.sorting.price_descending' | t }}</option>
+                                            <option value="created-descending">{{ 'collections.sorting.date_descending' | t }}</option>
+                                            <option value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-6 padding-clear hidden-xs">
+                                    <div class="form-group pull-right margin-clear">
+                                        <label class="margin-right-10 sx-screen margin-bottom-0">{{ 'collections.view.view_as' | t }} </label>
+                                        <button class="paira-list-grid list-grid" data-value="list"><i class="fa fa-th-list"></i></button>
+                                        <button class="paira-list-grid list-grid active margin-left-5" data-value="grid"><i class="fa fa-th"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row paira-grid-view mar-clear">
+                            {% if collection.products.length > 0 %}
+                            {% for product in collection.products %}
+                              {% unless product.tags contains "wk_auction" %}
+                            <div class="col-md-3 margin-top-30 product-con">
+                                {% include 'product' %}
+                            </div>
+                              {% endunless %}
+                            {% endfor %}
+                            {% else %}
+                            <h3 class="text-center margin-bottom-60 margin-top-60">{{ 'collections.empty.empty' | t }}</h3>
+                            {% endif %}
+                        </div>
+                        {% if paginate.pages > 1 %}
+                        <div class="paginates">
+                            <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10 margin-bottom-0">
+                                <!--=================== pagination ===================-->
+                                <ul class="list-inline pagination margin-clear">
+                                    {% if paginate.previous %}
+                                    <li><a href="{{paginate.previous.url}}" class="next-page"><i class="fa fa-angle-left"></i></a></li>
+                                    {% else %}
+                                    <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+                                    {% endif %}
+                                    {% for part in paginate.parts %}
+                                    {% if part.is_link %}
+                                    <li><a href="{{part.url}}"><span>{{ part.title }}</span></a></li>
+                                    {% else %}
+                                    <li class="active font-bold"><span>{{ part.title }}</span></li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if paginate.next %}
+                                    <li><a href="{{paginate.next.url}}" class="prev-page"><i class=" fa fa-angle-right"></i></a></li>
+                                    {% else %}
+                                    <li class="disabled"><a><i class=" fa fa-angle-right"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endpaginate %}
+                    </div>
+                </div>
+            </div>
+        <div class="container-fluid padding-fixed collection-clear">
+            <div class="recentView-list">
+                {% if section.settings.recent_view_collec_check %}
+                {% include 'recently-view' %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</main>
+<style>
+    {% if section.settings.product_row == '3' %}
+    .collection-page .product-con, .collection-page .products-con  {
+        width: 33.33%;
+    }
+    {% endif %}
+    {% if section.settings.product_row == '4' %}
+    .collection-page .product-con, .collection-page .products-con {
+        width: 25%;
+    }
+    {% endif %}
+    {% if section.settings.product_row == '5' %}
+    .collection-page .product-con, .collection-page .products-con {
+        width: 20%;
+    }
+    {% endif %}
+    {% if section.settings.products_row == '3' %}
+    .collection-page .products-con  {
+        width: 33.33%;
+    }
+    {% endif %}
+    {% if section.settings.products_row == '4' %}
+    .collection-page .products-con {
+        width: 25%;
+    }
+    {% endif %}
+    {% if section.settings.products_row == '5' %}
+    .collection-page .products-con {
+        width: 20%;
+    }
+    {% endif %}
+</style>
+{% schema %}
+{
+"name": "Collection",
+"class": "collection-section collection-section--collectionsection",
+"settings": [
+{
+"type": "select",
+"id": "collect_layout",
+"label": "Collection Layout",
+"options": [
+{
+"value": "1",
+"label": "Sidebar Left"
+},
+{
+"value": "2",
+"label": "Sidebar Right"
+},
+{
+"value": "3",
+"label": "Full Width"
+}
+]
+},
+{
+"type": "header",
+"content": "Banner Image"
+},
+{
+"type": "checkbox",
+"id": "collection_image_con_1",
+"label": "Enable Banner Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "collection_image_1",
+"label": "Banner Image",
+"info": "Upload image : 1920 x 250px recommended."
+},
+{
+"type": "url",
+"id": "collection_image_link_1",
+"label": "Collection Image Link",
+"default": "\/collections\/all"
+},
+{
+"type": "header",
+"content": "Collection Page Product Limit"
+},
+{
+"type": "range",
+"id": "category_product_limit",
+"label": "Limit",
+"min": 3,
+"max": 100,
+"default": 12
+},
+{
+"type": "select",
+"id": "product_row",
+"label": "Product per row",
+"options": [
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}
+],
+"default": "3"
+},
+{
+"type": "header",
+"content": "Recent View Widget"
+},
+{
+"type": "checkbox",
+"id": "recent_view_collec_check",
+"label": "Recently Viewed Widget Enable",
+"default": true
+},
+{
+"type": "text",
+"id": "recent_view_collec_title",
+"label": "Recently Viewed Title",
+"default": "Recently Viewed Items"
+},
+{
+"type": "select",
+"id": "products_row",
+"label": "Recently Viewed Product Per Row",
+"options": [
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}
+],
+"default": "4"
+},
+{
+"type": "range",
+"id": "recent_view_collec_limit",
+"label": "Limit",
+"min": 4,
+"max": 8,
+"default": 4
+},
+{
+"type": "header",
+"content": "Collection List Widget"
+},
+{
+"type": "checkbox",
+"id": "collection_all_page_check",
+"label": "Enable Collection List Widget",
+"default": true
+},
+{
+"type": "text",
+"id": "collection_product_all_title",
+"label": "Collection List Title",
+"default": "Categories"
+},
+{
+"type": "range",
+"id": "collection_product_all_limit",
+"label": "Collection List Limit",
+"min": 2,
+"max": 10,
+"default": 7
+},
+{
+"type": "header",
+"content": "Filter Options Widget"
+},
+{
+"type": "checkbox",
+"id": "collection_filter_check",
+"label": "Enable Collection Filter",
+"default": true
+},
+{
+"type": "paragraph",
+"content": "## When you add any filter name then please use lowercase and if its myltiple name then use comma ','."
+},
+{
+"type": "checkbox",
+"id": "shop_by_color_check",
+"label": "Enable Shop By Color",
+"default": true
+},
+{
+"type": "text",
+"id": "shop_by_color_title",
+"label": "title",
+"default": "Shop By Color"
+},
+{
+"type": "text",
+"id": "shop_by_color",
+"label": "Shop By Color List",
+"default": "red, green, blue, grey, yellow, black, pink"
+},
+{
+"type": "checkbox",
+"id": "shop_by_size_check",
+"label": "Enable Shop By Size",
+"default": true
+},
+{
+"type": "text",
+"id": "shop_by_size_title",
+"label": "title",
+"default": "Shop By Size"
+},
+{
+"type": "text",
+"id": "shop_by_size",
+"label": "Shop By Size List",
+"default": "s, m, l, xl, 2xl, 3xl"
+},
+{
+"type": "checkbox",
+"id": "shop_by_material_check",
+"label": "Enable Shop By Material",
+"default": true
+},
+{
+"type": "text",
+"id": "shop_by_material_title",
+"label": "title",
+"default": "Shop By Material"
+},
+{
+"type": "text",
+"id": "shop_by_material",
+"label": "Shop By Material List",
+"default": "cotton, flax, wool, ramie, silk, denim, leather"
+},
+{
+"type": "checkbox",
+"id": "shop_by_brand_check",
+"label": "Enable Shop By Brand",
+"default": true
+},
+{
+"type": "text",
+"id": "shop_by_brand_title",
+"label": "title",
+"default": "Shop By Brand"
+},
+{
+"type": "text",
+"id": "shop_by_brand",
+"label": "Shop By Brand List",
+"default": "zaka, zaha, saka, yana, napa"
+},
+{
+"type": "checkbox",
+"id": "shop_by_price_check",
+"label": "Enable Shop By Price",
+"default": true
+},
+{
+"type": "text",
+"id": "shop_by_price_title",
+"label": "title",
+"default": "Shop By Price"
+},
+{
+"type": "text",
+"id": "shop_by_price",
+"label": "Shop By Price List",
+"default": "under $150, $150 - $300, above $300"
+},
+{
+"type": "checkbox",
+"id": "shop_by_type_check",
+"label": "Enable Shop By Type",
+"default": true
+},
+{
+"type": "text",
+"id": "shop_by_type_title",
+"label": "title",
+"default": "Shop By Type"
+},
+{
+"type": "text",
+"id": "shop_by_type",
+"label": "Shop By Type List",
+"default": "t-shirt, jumper, top, jeans, lingerie, nightgown"
+},
+{
+"type": "checkbox",
+"id": "shop_by_vendor_check",
+"label": "Enable Shop By Vendor",
+"default": false
+},
+{
+"type": "text",
+"id": "shop_by_vendor_title",
+"label": "title",
+"default": "Shop By Vendor"
+},
+{
+"type": "text",
+"id": "shop_by_vendor",
+"label": "Shop By Vendor List",
+"default": "themetidy, poll, rich man, tax mart, easy"
+},
+{
+"type": "checkbox",
+"id": "shop_by_weight_check",
+"label": "Enable Shop By Weight",
+"default": false
+},
+{
+"type": "text",
+"id": "shop_by_weight_title",
+"label": "title",
+"default": "Shop By Weight"
+},
+{
+"type": "text",
+"id": "shop_by_weight",
+"label": "Shop By Weight List",
+"default": "under 20g, 20g - 50g, above 50g"
+},
+{
+"type": "header",
+"content": "Special Product"
+},
+{
+"type": "checkbox",
+"id": "special_product",
+"label": "Enable Special Product",
+"default": true
+},
+{
+"type": "text",
+"id": "collection_products_title_1",
+"label": "Collection Products Title",
+"default": "New Products"
+},
+{
+"type": "range",
+"id": "collection_products_limit_1",
+"label": "Collection Products Limit",
+"min": 3,
+"max": 10,
+"default": 4
+},
+{
+"type": "collection",
+"id": "top_sellers_small",
+"label": "Select Collection For Products"
+},
+{
+"type": "header",
+"content": "Sidebar Image"
+},
+{
+"type": "checkbox",
+"id": "collection_image_con",
+"label": "Enable Sidebar Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "collection_image",
+"label": "Sidebar Image",
+"info": "Upload image : 278 x 450px recommended."
+},
+{
+"type": "url",
+"id": "collection_image_link",
+"label": "Collection Image Link",
+"default": "\/collections\/all"
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,146 @@
+<!--=================== Testimonial & Brand ===================-->
+<div class="brands container-fluid padding-fixed {% if section.settings.testi_full_width_check %} full-width {% endif %} {% if section.settings.testi_section_gap_check %} paira-gap-2 {% endif %}">
+    <div class="row {% if section.settings.testi_full_width_check %} margin-clear {% endif %}">
+        <section id="brandsection--{{ section.id }}" class="top-brand">
+            <!--=================== Brand ===================-->
+            <div class="col-md-12">
+                <div class="brand position-r">
+                    <div class="swiper-container s1 margin-bottom-0 padding-clear">
+                        <div class="swiper-wrapper">
+                            {% if section.blocks == blank %}
+                            <div class="padding-right-15">
+                                <a href="#">{{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place height-50' }}</a>
+                            </div>
+                            <div class="padding-right-15">
+                                <a href="#">{{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place height-50' }}</a>
+                            </div>
+                            <div class="padding-right-15">
+                                <a href="#">{{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place height-50' }}</a>
+                            </div>
+                            <div class="padding-right-15">
+                                <a href="#">{{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place height-50' }}</a>
+                            </div>
+                            <div class="padding-right-15">
+                                <a href="#">{{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place height-50' }}</a>
+                            </div>
+                            <div class="padding-right-15">
+                                <a href="#">{{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place height-50' }}</a>
+                            </div>
+                            {% endif %}
+                            {% for block in section.blocks %}
+                            <div class="swiper-slide">
+                                {% if block.settings.image1 == blank %}
+                                <a href="#">{{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg text-place height-50' }}</a>
+                                {% else %}
+                                <a href="{{ block.settings.brand_link }}"><img src="{{ block.settings.image1 | img_url: 'small' }}" data-srcset="{% if block.settings.image1 == blank %}{{ 'brand.jpg' | asset_url }}{% else %}{{ block.settings.image1 | img_url: 'small' }}{% endif %} 50w, {% if block.settings.image1 == blank %}{{ 'brand.jpg' | asset_url }}{% else %}{{ block.settings.image1 | img_url: 'master' }}{% endif %} 100w" data-src="{% if block.settings.image1 == blank %}{{ 'brand.jpg' | asset_url }}{% else %}{{ block.settings.image1 | img_url: 'master' }}{% endif %}" data-sizes="auto" class="lazyload blur-up img-responsive" alt="{{section.settings.brand_heading}}" /></a>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="another-btn">
+                    <div class="swiper-button-prev swiper-button-prev--{{ section.id }} {% if section.blocks == blank %}margin-top-10{% endif %}"><i class="fa fa-angle-left"></i></div>
+                    <div class="swiper-button-next swiper-button-next--{{ section.id }} {% if section.blocks == blank %}margin-top-10{% endif %}"><i class="fa fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $(function() {
+        var swiper = new Swiper('.s1', {
+            navigation: {
+                nextEl: '.swiper-button-next--{{ section.id }}',
+                prevEl: '.swiper-button-prev--{{ section.id }}'
+            },
+            slidesPerView: {{ section.settings.visable_img_limit }},
+            spaceBetween: 100,
+            freeMode: true,
+            breakpoints: {
+                1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 70
+                },
+                768: {
+                    slidesPerView: 5,
+                    spaceBetween: 50
+                },
+                767: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                },
+                480: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                }
+            }
+        });
+    });
+</script>
+{% schema %}
+{
+"name": "Image Slider",
+"class": "index-section index-section--brandsection",
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "testi_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "testi_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Image Limit"
+},
+{
+"type": "range",
+"id": "visable_img_limit",
+"label": "Visible Image Limit",
+"min":       5,
+"max":       10,
+"default":   6
+}
+],
+"blocks": [
+{
+"type": "image",
+"name": "Brand Image & Link",
+"settings": [
+{
+"type": "image_picker",
+"id": "image1",
+"label": "Image",
+"info": "Height: 50px recommended"
+},
+{
+"type": "url",
+"id": "brand_link",
+"label": "Brand Image Link",
+"default": "\/collections\/all"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Image Slider",
+"category": "Slider"
+}
+]
+}
+{% endschema %}

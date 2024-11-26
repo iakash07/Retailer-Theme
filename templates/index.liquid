@@ -1,0 +1,107 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebPage",
+  "name": "Pre-owned Luxury Designer Handbags To Buy & Sell For Women Online ",
+  "description": "India's Premier website to buy & sell designer pre owned luxury handbags online in India. Buy & Sell top brands Hermes, Gucci, Bottega Veneta &amp; many more.",
+  "url": "{{ shop.url }}/pages/{{ page.handle }}",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Confidential Couture",
+    "url": "{{ shop.url }}",
+    "logo": "https://cdn.shopify.com/s/files/1/0643/7958/4700/files/confidential_couture_logo.jpg?v=1720514785"
+  }
+}
+</script>
+<!--=================== Home Page ===================-->
+<main class="home-page {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}">
+    {{ content_for_index }}
+</main>
+{% if settings.welcome_check %}
+<!--=================== Welcome Newsletter Dialog ===================-->
+<div class="modal fade welcome-newsletter-content" id="paira-welcome-newsletter" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+                <div class="welcome-newsletter pull-left full-width text-center">
+                    <div class="col-md-6 col-sm-5 col-xs-12 back-news-img padding-clear  {% if settings.welcome_img == blank %}padding-clear{% endif %}" style="background: #ededed url({% if settings.welcome_img != blank %}{{ settings.welcome_img | img_url: 'original' }}{% endif %});background-repeat: no-repeat;border: none;box-shadow: none;position: relative;background-size: cover;min-height: 400px;border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
+                        {% if settings.welcome_img == blank %}
+                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg welcome-palce' }}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 col-sm-7 col-xs-12 text-center padding-clear">
+                        <div class="news-padding">
+                            <div class="vertical-midddle">
+                                <h1 style="font-size: {{ settings.head_sizes_1 }}px;color: {{ settings.head_color_1 }};" class="margin-clear margin-bottom-10">{{ settings.welcome_title }}</h1>
+                                <div class="margin-top-5">{{ settings.welcome_texts }}</div>
+                                {% if settings.welcome_dialog_newsletter != blank %}
+                                <form action="{{ settings.welcome_dialog_newsletter }}" method="post" target="_blank" class="margin-bottom-10">
+                                    <input type="email" value="" name="EMAIL" placeholder="{{ 'footer.newsletter.email_address' | t }}" required="" class="margin-top-10" />
+                                    <button type="submit" value="Subscribe" name="subscribe" class="margin-top-10 btn btn-primary btn-lg full-width">{{ settings.welcome_btn_text }}</button>
+                                </form>
+                                {% endif %}
+                                <ul class="list-inline margin-clear">
+                                    {% if settings.facebook_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.facebook_link }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.twitter_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.twitter_link }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.linkedin_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.linkedin_link }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.gplus_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.gplus_link }}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.instagram_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.instagram_link }}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.pinterest_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.pinterest_link }}" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.dribbble_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.dribbble_link }}" target="_blank"><i class="fa fa-dribbble"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.flickr_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.flickr_link }}" target="_blank"><i class="fa fa-flickr"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.rss_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.rss_link }}" target="_blank"><i class="fa fa-rss"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.vimeo_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.vimeo_link }}" target="_blank"><i class="fa fa-vimeo-square"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.youtube_welcome_popup %}
+                                    <li class="margin-top-10"><a href="{{ settings.youtube_link }}" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                                    {% endif %}
+                                    {% if settings.email_welcome_popup %}
+                                    <li class="margin-top-10"><a href="mailto:{{ settings.email_link }}" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .welcome-newsletter p{
+        font-size: {{ settings.para_size_1 }}px;
+    color: {{ settings.para_color_1 }};
+    }
+    .welcome-newsletter-content .modal-content button.close {
+    color: {{ settings.para_color_1 }};
+    }
+    .welcome-newsletter-content .modal-content button.close:hover {
+    color: {{ settings.link_hover_color }};
+    }
+    .overlay {
+        background: {{ settings.over_color_1 | color_modify: 'alpha', 0.35 }};
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    }
+</style>
+{% endif %}

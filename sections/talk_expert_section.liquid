@@ -1,0 +1,58 @@
+<section class="talk_expert_section">
+  <div class="talk_expert">
+    <div class="ctm-container">
+      <div class="talk_expert_col">
+        <div class="talk_expert_flex">
+          <div class="talk_expert_image">
+           <div class="talk_expert_image_inner">
+            {% if section.settings.image != blank %}
+            <img src="{{ section.settings.image | img_url:'master' }}">
+            {% endif %}
+           </div>
+          </div>
+          <div class="talk_expert_text">
+            <div class="talk_expert_text_inner">
+              {% if section.settings.text != blank %}
+              <h2>{{ section.settings.text }}</h2>
+              {% endif %}
+              <div class="contact_form">
+                <sk-form><script type="application/json" sk-forms data-id="6846305970493231">{{ shop.metafields.squadkin_form["6846305970493231"] }}</script><div class="sk-form" sk-form-block data-token="6846305970493231"></div></sk-form>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Talk Expert Section",
+    "settings": [
+      {
+        "type":"image_picker",
+        "id":"image",
+        "label":"Add Image"
+      },
+      {
+        "type":"text",
+        "id":"text",
+        "label":"Add Title"
+      }
+      
+    ],
+    "presets":[
+      {
+        "name":"Talk Expert Section"
+      }
+    ]
+  }
+{% endschema %}

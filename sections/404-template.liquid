@@ -1,0 +1,35 @@
+<!--=================== 404 Template ===================-->
+<main id="page-404section--{{ section.id }}" class="page-404 page-404-template {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}" data-section-id="{{ section.id }}" data-section-type="page-404-template">
+    <section class="content-404 paira-gap-3 paira-gap-4">
+        <div class="container-fluid padding-fixed">
+            <div class="row margin-clear page-back">
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                    <h1 class="page-header">{{ section.settings.title_404 }}</h1>
+                    <div class="margin-top-40">{{ section.settings.details_404 }}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% schema %}
+{
+"name": "404 Page",
+"class": "page-404-section page-404-section--page-404",
+"settings": [
+{
+"type": "text",
+"id": "title_404",
+"label": "404 Title",
+"default": "Page not found"
+},
+{
+"type": "richtext",
+"id": "details_404",
+"label": "404 Details",
+"default": "<p>Sorry, we couldn't find this page.The page you requested does not exist. To continue shopping Click here .</p>"
+}
+]
+}
+{% endschema %}
+

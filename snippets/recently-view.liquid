@@ -1,0 +1,160 @@
+<!--=================== Recently View ===================-->
+<div id="paira-recentView" class="paira-recentView paira-gap-1">
+    <div class="heading">
+        <h2 class="page-header text-center margin-bottom-0 padding-bottom-0 margin-top-0"><span>{{ section.settings.recent_view_collec_title }}</span></h2>
+    </div>
+    <div class="row paira-recent-view-list {% if settings.compare == blank %} compare-none {% endif %}" id="paira-recentView-list"></div>
+</div>
+{% raw %}
+<script id="paira-recentView-template" type="text/x-jquery-tmpl">
+   <div class="col-md-3 products-con margin-top-30 text-center">
+        <div class="paira-product product">
+         <div class="overflow-h pro-im position-r">
+            <a href="${url}" class="display-in-b full-width overflow-h">
+                <img src="${Shopify.PairaCookie.resizeImage(featured_image, "large")}" alt="${title}" class="paira-product-image img-responsive main-product">
+            </a>
+                   <div class="product-hover text-center">
+                   <div class="paira-wish-compare-con">
+                 <a href="#" data-title="${title}" data-handle="${handle}" data-toggle="tooltip" data-placement="top" title="Compare" class="paira-add-to-compare add-to-compare display-in-b"><i class="fa fa-balance-scale"></i></a>
+                <a href="#" data-title="${title}" data-handle="${handle}" data-toggle="tooltip" data-placement="top" title="Wishlist" class="paira-add-to-wish add-to-compare display-in-b"><i class="fa fa-heart-o"></i></a>
+                <a href="#" data-handle="${handle}" data-toggle="tooltip" data-placement="top" title="Quick View" class="paira-quick-view quick-view display-in-b"><span><i class="fa fa-eye"></i></span></a>
+                        {{if !available}}
+                <a href="#" class="display-in-b selectss" data-toggle="tooltip" data-placement="top" title="Unavailable" >
+                <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                    <g>
+                        <g>
+                            <defs>
+                                <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"/>
+                            </defs>
+                            <clipPath id="SVGID_2_">
+                                <use xlink:href="#SVGID_1_"  overflow="visible"/>
+                            </clipPath>
+                            <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"/>
+                        </g>
+                        <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                            C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                            c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                            L180.578,106.665z M180.578,106.665"/>
+                        <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                            c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                            C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"/>
+                        <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                            z M89.914,112.012"/>
+                        <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                            H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"/>
+                    </g>
+</svg></a>
+                {{else}}
+                {{if variants.size > 1}}
+                <a href="${url}" class="display-in-b selectss" data-toggle="tooltip" data-placement="top" title="Select Option">              <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                    <g>
+                        <g>
+                            <defs>
+                                <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"/>
+                            </defs>
+                            <clipPath id="SVGID_2_">
+                                <use xlink:href="#SVGID_1_"  overflow="visible"/>
+                            </clipPath>
+                            <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"/>
+                        </g>
+                        <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                            C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                            c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                            L180.578,106.665z M180.578,106.665"/>
+                        <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                            c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                            C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"/>
+                        <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                            z M89.914,112.012"/>
+                        <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                            H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"/>
+                    </g>
+</svg></a>
+                {{else}}
+                <a href="${url}" class="display-in-b selectss" data-toggle="tooltip" data-placement="top" title="Select Option">              <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                    <g>
+                        <g>
+                            <defs>
+                                <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"/>
+                            </defs>
+                            <clipPath id="SVGID_2_">
+                                <use xlink:href="#SVGID_1_"  overflow="visible"/>
+                            </clipPath>
+                            <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"/>
+                        </g>
+                        <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                            C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                            c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                            L180.578,106.665z M180.578,106.665"/>
+                        <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                            c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                            C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"/>
+                        <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                            z M89.914,112.012"/>
+                        <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                            H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"/>
+                    </g>
+</svg></a>
+                {{/if}}
+                {{/if}}
+                </div>
+            </div>
+            </div>
+            <div class="list-views text-center">
+               <div class="product-title-price padding-top-0">
+                    <h2 class="margin-top-5 margin-bottom-0"><a href="${url}" class="paira-product-title product_title_recently">${title}</a></h2>
+                    <div class="text-center margin-top-5 margin-bottom-5">
+                    {{if compare_at_price_max > price}}
+                        <div class="display-in-b margin-right-5"><del><span class="money">${Shopify.formatMoney(compare_at_price_min)}</span></del></div>
+                        <div class="display-in-b"><span class="money">${Shopify.formatMoney(price)}</span></div>
+                    {{else}}
+                        <span class="money">${Shopify.formatMoney(price)}</span>
+                       {{/if}}
+                    </div>
+                </div>
+            </div>
+         </div>
+</script>
+{% endraw %}
+<script type="text/javascript">
+    Shopify.PairaCookie.showItemList({
+        cookieViewedLimit: '{{ section.settings.recent_view_collec_limit }}',
+        cookieMemoryLimit: 20,
+        cookieViewedId: "paira-recentView-list",
+        cookieTemplateId: "paira-recentView-template",
+        cookieName: "paira_cookieName_recentView",
+        cookieComplete: function() {
+            {% if section.settings.compare %}
+            $(".paira-recent-view-list .paira-wish-compare-con").hide();
+            {% endif %}
+            Currency.convertAll(window.shopCurrency, $('#currencies').val(), 'span.money', window.currencyFormat);
+        }
+    });
+    $(window).load(function() {
+        var recentView_count = Shopify.PairaCookie.countItem('paira_cookieName_recentView');
+        if (recentView_count == 0) {
+            $("#paira-recentView").hide();
+        }
+    });
+</script>

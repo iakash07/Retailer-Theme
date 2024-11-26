@@ -1,0 +1,50 @@
+<div id="customer_country" style="display: none;">{{ country_option_tags }}</div>
+<script>
+  try {
+    var customer_country = document.getElementById('customer_country');
+    var allCountries = customer_country.children;
+    var countriesAndStates = {};
+
+    for (var i = 0; i < allCountries.length; i++) {
+      var country = allCountries[i];
+      var stateArray = country.getAttribute("data-provinces");
+      try {
+        var parsedStateArray = stateArray ? JSON.parse(stateArray) : [];
+        var states = [];
+        for (var j = 0; j < parsedStateArray.length; j++) {
+          states.push(parsedStateArray[j][0]);
+        }
+        countriesAndStates[country.value] = states;
+      } catch (error) {
+        console.error('Error parsing JSON for country:', country.value, error);
+        continue;
+      }
+    }
+    var shopCurrency = "$";
+    {% for currency in shop.enabled_currencies %}
+    {% if currency.iso_code == shop.currency %}
+    shopCurrency ="{{ currency.symbol }}";
+    {% break %}
+    {% endif %}
+    {% endfor %}
+    window.salesteam_bo_props = {
+      "baseUrlShopName" : "{{ shop.domain }}",
+      "shopName": window.Shopify.shop,
+      "customerId": "{{customer.id}}",
+      "customerName": "{{customer.name}}",
+      "customerFirstName": "{{customer.first_name }}",
+      "customerLastName": "Kanawade",
+      "customerEmail": "{{customer.email }}",
+      "shopCurrency": shopCurrency,
+      "countriesAndStates": countriesAndStates
+    }
+    console.log("check backoffice")
+  } catch (error) {
+    console.error('Error accessing customer_country or shopCurrency:', error);
+  }
+</script>
+
+<div id="css-backoffice" height="900px" width="100%"></div>
+
+{{ 'salesteam-bo.css' | asset_url | stylesheet_tag }}
+{{ 'salesteam-bo.js' | asset_url | script_tag }}

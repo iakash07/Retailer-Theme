@@ -1,0 +1,170 @@
+<!--=================== Cart Template ===================-->
+<main id="cartsection--{{ section.id }}" class="cart-page cart-template {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}" data-section-id="{{ section.id }}" data-section-type="cart-template">
+    <section class="cart-content paira-gap-2 paira-gap-3">
+        <div class="container-fluid padding-fixed">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 heading">
+                    <h1 class="page-header margin-bottom-30"><span>{{ section.settings.shipping_cart_title }}</span></h1>
+                    <a href="/collections/all" class="pull-right cart-continue-shopping"><i class="fa fa-reply t"></i> <span>{{ 'cart.general.continue_shopping' | t }}</span></a>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 cartEmpty text-center paira-cartEmpty margin-bottom-60" {% if cart.item_count != 0 %}style="display: none;"{% endif %}>
+                    <h3>{{ 'cart.general.empty' | t }}</h3>
+                    <h5 class="margin-bottom-10">{{ 'cart.general.shopping' | t }}</h5>
+                </div>
+                <form action="/cart" method="post" class="paira-cartNotEmpty" {% if cart.item_count == 0 %}style="display: none;"{% endif %}>
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <div class="cart-item-list">
+                            <h4 class="panel-title cart-title">{{ 'cart.general.order_summary' | t }}</h4>
+                            <ul class="list-unstyled paira-cart-page-list">
+                                {% for item in cart.items %}
+                                <li>
+                                    <div class="col-md-2 col-sm-2 col-xs-3 padding-right-30 carts">
+                                        <a href="{{ item.url }}">
+                                            <img class="img-responsive lazyload blur-up" src="{{ item | img_url: 'small' }}" data-srcset="{{ item | img_url: 'small' }} 50w, {{ item | img_url: 'medium' }} 240w" data-src="{{ item | img_url: 'medium' }}" data-sizes="auto" alt="{{ item.title | escape }}">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-9 padding-clear">
+                                        <div class="col-md-4 col-sm-4 col-xs-12 padding-left-0">
+                                            <a href="{{ item.url }}" class="margin-top-10 cart-item-a">{{ item.title }}</a>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-12 text-center padding-left-0">
+                                            <h4 class="margin-top-0 margin-bottom-5"><span class="money">{{ item.line_price | money }}</span></h4>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-6 text-center quentitys">
+                                            <input type="number" size="4" name="updates[]" min="0" value="{{ item.quantity }}" class="form-control paira-cart-quantity-{{ item.id }} margin-bottom-0">
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-3 text-center padding-right-0 updates">
+                                            <a href="/cart/change?line={{ forloop.index }}&quantity=" data-item-id="{{ item.id }}" class=" margin-bottom-0 paira-cart-page-update cart-page-update  margin-top-0"><i class="fa fa-pencil"></i> {{ 'cart.general.update' | t }}</a>
+                                        </div>
+                                        <div class="col-md-1 col-sm-1 col-xs-3 text-right">
+                                            <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="paira-cart-page-delete cart-page-delete  margin-bottom-0 margin-top-0"><i class="fa fa-trash-o"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <aside class="col-md-4 col-sm-12 col-xs-12">
+                        <figure class="margin-bottom-30">
+                            <figcaption><h4 class="panel-heading">{{ 'cart.general.cart_total' | t }}</h4></figcaption>
+                            <div class="cart-sub-total paira-cart-sub-total">
+                                <h2 class="margin-top-0 margin-bottom-10"><span class="money">{{ cart.total_price | money }}</span></h2>
+                                <textarea id="note" name="note" class="margin-top-10 margin-bottom-10 form-control" placeholder="{{ 'cart.general.special_instructions' | t }}">{{ cart.note }}</textarea>
+                                <button type="submit" id="checkout" name="checkout" class="btn btn-default btn-lg btn-block text-uppercase checkout"><i class="fa fa-lock" aria-hidden="true"></i> {{ 'cart.general.proceed' | t }}</button>
+                                {% if additional_checkout_buttons %}
+                                <div class="additional-checkout-buttons margin-top-10">
+                                    {{ content_for_additional_checkout_buttons }}
+                                </div>
+                                {% endif %}
+                                {% if section.settings.cart_trust_check %}
+                                {% if section.settings.cart_pays_img == blank %}
+                                {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-50 margin-top-20' }}
+                                {% else %}
+                                <img src="{{ section.settings.cart_pays_img | img_url: 'master' }}" class="img-responsive margin-top-20" alt="Trust & Payment">
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            {% if section.settings.shipping_estimate_check %}
+                            {% include 'shipping-calculator' %}
+                            {% endif %}
+                        </figure>
+                    </aside>
+                </form>
+                {% if cart.item_count != 0 %}
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    {% include 'cart-product' %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</main>
+
+{% schema %}
+{
+"name": "Cart",
+"class": "cart-section cart-section--cart",
+"settings": [
+{
+"type": "header",
+"content": "Cart Page Title"
+},
+{
+"type": "text",
+"id": "shipping_cart_title",
+"label": "Shipping Cart Title",
+"default": "Shopping Cart"
+},
+{
+"type": "header",
+"content": "Trust & Payment Image"
+},
+{
+"type": "checkbox",
+"id": "cart_trust_check",
+"label": "Enable Trust & Payment Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "cart_pays_img",
+"label": "Trust & Payment Image",
+"info": "Upload image : 360 x 40px recommended."
+},
+{
+"type": "header",
+"content": "Shipping Estimate Widget"
+},
+{
+"type": "checkbox",
+"id": "shipping_estimate_check",
+"label": "Enable Shipping Estimate Widget",
+"default": true
+},
+{
+"type": "text",
+"id": "shipping_estimate_title",
+"label": "Shipping Estimate Title",
+"default": "Get Shipping Estimates"
+},
+{
+"type": "header",
+"content": "Collection Products"
+},
+{
+"type": "checkbox",
+"id": "cart_products_check",
+"label": "Enable Collection Products",
+"default": true
+},
+{
+"type": "text",
+"id": "cart_products_title",
+"label": "Cart Products Title",
+"default": "Customers who bought this item also bought"
+},
+{
+"type": "range",
+"id": "cart_products_limit",
+"label": "Cart Products Limit",
+"min": 5,
+"max": 32,
+"default": 8
+},
+{
+"type": "range",
+"id": "visable_pros_limit",
+"label": "Visible Products Limit",
+"min":       3,
+"max":       5,
+"default":   4
+},
+{
+"type": "collection",
+"id": "cart_products",
+"label": "Select Collection For Products"
+}
+]
+}
+{% endschema %}

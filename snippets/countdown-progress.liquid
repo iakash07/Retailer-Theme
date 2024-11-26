@@ -1,0 +1,117 @@
+<!--=================== Countdown Timer Product ===================-->
+{% if separate_countdown == blank %}
+{% assign separate_countdown = 'all' %}
+{% endif %}
+{% assign s = 0 %}
+{% for g in product.tags %}
+{% assign w = g | split: '-' %}
+{% assign d = w[1] | split: '.' %}
+{% if w[0] == 'countdown' %}
+{% if d.size > 0 %}
+{% if s == 0 %}
+<div class="single-product-details paira-single-product-details margin-top-0 progrsser">
+    <div class="relation">
+        <span class="number-span paira-total-available"></span> {{ settings.availability_texts }}
+    </div>
+    <div class="progress active">
+        <div class="paira-progress-bar progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-pressed="true" style="width: 100%">
+            <span class="sr-only"></span>
+        </div>
+    </div>
+    <div class="paira-single-product-count full-width margin-bottom-10" style="display: none;">
+        <ul id="countdown-{{separate_countdown}}-{{ product.variants.first.id }}-{{ section.id }}" class="list-inline paira-countdown countdown" data-day="{{d[0]}}" data-month="{{d[1]}}" data-year="{{d[2]}}" data-hour="{{d[3]}}" data-min="{{d[4]}}">
+            {% if settings.days_enable %}
+            <li class="dash days_dash">
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+                <span class="dash_title">Day</span>
+            </li>
+            {% endif %}
+            <li class="dash hours_dash">
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+                <span class="dash_title">Hour</span>
+            </li>
+            <li class="dash minutes_dash">
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+                <span class="dash_title">Minute</span>
+            </li>
+            <li class="dash seconds_dash">
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+                <span class="dash_title">Second</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#countdown-{{separate_countdown}}-{{ product.variants.first.id }}-{{ section.id }}').countDown({
+            targetDate: {
+                'day': {{d[0]}},
+        'month': {{d[1]}},
+        'year': {{d[2]}},
+        'hour': {{d[3]}},
+        'min': 0,
+                'sec': 0
+    },onComplete: function() { $('.paira-single-product-details').hide(); }
+    });
+    });
+</script>
+{% assign s = 1 %}
+{% endif %}
+{% else %}
+<div class="single-product-details paira-single-product-details margin-top-0 progrsser">
+    <div class="relation">
+        <span class="number-span paira-total-available"></span> {{ settings.availability_texts }}
+    </div>
+    <div class="progress active">
+        <div class="paira-progress-bar progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-pressed="true" style="width: 100%">
+            <span class="sr-only"></span>
+        </div>
+    </div>
+    <div class="paira-single-product-count full-width margin-bottom-10" style="display: none;">
+        <ul id="countdown-{{separate_countdown}}-{{ product.variants.first.id }}-{{ section.id }}" class="countdown paira-countdown list-inline" data-day="{{settings.countdown_day}}" data-month="{{settings.countdown_month}}" data-year="{{settings.countdown_year}}" data-hour="{{settings.countdown_hour}}" data-min="{{settings.countdown_second}}">
+            {% if settings.days_enable %}
+            <li class="dash days_dash">
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+                <span class="dash_title">Day</span>
+            </li>
+            {% endif %}
+            <li class="dash hours_dash">
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+                <span class="dash_title">Hour</span>
+            </li>
+            <li class="dash minutes_dash">
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+                <span class="dash_title">Minute</span>
+            </li>
+            <li class="dash seconds_dash">
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+                <span class="dash_title">Second</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#countdown-{{separate_countdown}}-{{ product.variants.first.id }}-{{ section.id }}').countDown({
+            targetDate: {
+                'day': 		{{settings.countdown_day}},
+        'month': 	{{settings.countdown_month}},
+        'year': 	{{settings.countdown_year}},
+        'hour': 	{{settings.countdown_hour}},
+        'min': 		{{settings.countdown_minute}},
+        'sec': 		{{settings.countdown_second}}
+    },onComplete: function() { $('.paira-single-product-details').hide(); }
+    });
+    });
+</script>
+{% endif %}
+{% endif %}
+{% endfor %}

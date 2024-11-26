@@ -1,0 +1,95 @@
+<div class="{{ section.settings.class }}">
+  <div class="container">
+    <div class="main-banner" style="background-color:{{ section.settings.bg_color }}">
+      <div class="main-banner-left col-50">
+          {% if section.settings.title != blank %}<h2 class="ctm-head" style=" color:{{ section.settings.text_color }}">{{ section.settings.title }}</h2>{% endif %}
+          {% if section.settings.desc != blank %}<p style="color:{{ section.settings.text_color }}">{{ section.settings.desc }}</p>{% endif %}
+          {% if section.settings.btntxt != blank %}<a class="ctm-btn" href="{{ section.settings.url }}" style="background-color:{{ section.settings.btn_bg_color }}; color:{{ section.settings.btn_text_color }}">{{ section.settings.btntxt }}</a>{% endif %}
+      </div>
+      <div class="main-banner-right col-50">
+        {% if section.settings.img != blank %}
+            <img src="{{ section.settings.img | img_url: "master" }}" class="img-responsive banner-images">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ctm-btn:hover{
+    background-color:{{section.settings.btn_bg_hover_color}} !important;
+    color: {{ section.settings.btn_hover_color  }} !important;
+  }
+</style>
+{% schema %}
+  {
+    "name": "Visit Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Add your Class"
+      },
+      {
+        "type" : "color",
+        "id" : "bg_color",
+        "label" : "Background Color"
+      },
+      {
+        "type" : "color",
+        "id" : "btn_bg_color",
+        "label" : "Button Background Color"
+      },
+        {
+        "type" : "color",
+        "id" : "text_color",
+        "label" : "Text Color"
+      },
+       {
+        "type" : "color",
+        "id" : "btn_bg_hover_color",
+        "label" : "Button Hover Background Color"
+      },
+        {
+        "type" : "color",
+        "id" : "btn_hover_color",
+        "label" : "Button Hover Color"
+      },
+      {
+        "type" : "color",
+        "id" : "btn_text_color",
+        "label" : "Button Text Color"
+      },
+      {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Add your Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Add your Title"
+      },
+      {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Add your Description"
+      },
+      {
+        "type": "text",
+        "id": "btntxt",
+        "label": "Add your Button Title"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "Add your URL"
+      }
+    ],
+    "presets":[
+      {
+        "name": "Visit Section"
+      }
+    ]
+  }
+{% endschema %}

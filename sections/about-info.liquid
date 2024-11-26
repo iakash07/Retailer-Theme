@@ -1,0 +1,35 @@
+<div class="about-info-sec mb-40">
+  <div class="ctm-container">
+      {% if section.settings.title1 != blank %}
+        <h2 class="ctm-head t-center">{{ section.settings.title1 }}</h2>
+      {% endif %}
+      {% if section.settings.desc != blank %}
+        {{ section.settings.desc }}
+      {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "About Info Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title1",
+        "label": "Add Title",
+        "default": "Main Heading"
+      },
+      {
+        "type": "html",
+        "id": "desc",
+        "label": "Add Description",
+        "default": "Add Description inside <p></p>"
+      }
+    ],
+    "presets":[
+      {
+        "name": "About Info Section"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,106 @@
+<!--=================== Search Template ===================-->
+<main id="searchsection--{{ section.id }}" class="search-page search-template {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}" data-section-id="{{ section.id }}" data-section-type="search-template">
+    <section class="search-content paira-gap-3 paira-gap-2">
+        <div class="container-fluid padding-fixed">
+            <div class="row margin-clear">
+                {% paginate search.results by section.settings.search_page_limit %}
+                {% if search.performed %}
+                {% if search.terms == "" %}
+                <div class="col-md-12 text-center padding-clear">
+                    <div class="heading pull-left full-width">
+                        <h1 class="page-header margin-bottom-0 text-center pull-left"><span class="margin-clear">{{ 'general.search.searching' | t }}</span></h1>
+                    </div>
+                </div>
+                <div class="col-md-12  text-center">
+                    <h3 class="margin-bottom-20 paira-gap-1">{{ 'general.search.no_results' | t }}</h3>
+                    <p class="font-size-14 margin-bottom-10 paira-gap-2">{{ 'general.search.no_results_html' | t }}</p>
+                </div>
+                {% else %}
+                {% if search.results == empty %}
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-clear">
+                    <div class="heading pull-left full-width">
+                        <h1 class="page-header margin-bottom-0 text-center pull-left"><span class="margin-clear">{{ 'general.search.searching' | t }}</span></h1>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                    <h3 class="margin-bottom-20 paira-gap-1">{{ 'general.search.no_results' | t }}</h3>
+                    <p class="font-size-14 margin-bottom-10 paira-gap-2">{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+                </div>
+                {% else %}
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center padding-clear">
+                    <div class="heading pull-left full-width">
+                        <h1 class="page-header margin-bottom-30 text-left pull-left"><span>{{ 'general.search.search_results' | t }}</span></h1>
+                    </div>
+                </div>
+                <div class="product-widget">
+                    <div class="products-wrapper row">
+                      {% for product in search.results %}
+                        <div class="col-md-3 margin-top-30 product-con">
+                            {% include 'search-product' %}
+                        </div>
+                      {% endfor %}
+                    </div>
+                </div>
+                {% if paginate.pages > 1 %}
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                    <!--=================== pagination ===================-->
+                    <ul class="list-inline pagination margin-clear">
+                        {% if paginate.previous %}
+                        <li><a href="{{paginate.previous.url}}" class="next-page"><i class="fa fa-angle-left"></i></a></li>
+                        {% else %}
+                        <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+                        {% endif %}
+                        {% for part in paginate.parts %}
+                        {% if part.is_link %}
+                        <li><a href="{{part.url}}"><span>{{ part.title }}</span></a></li>
+                        {% else %}
+                        <li class="active font-bold"><span>{{ part.title }}</span></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if paginate.next %}
+                        <li><a href="{{paginate.next.url}}" class="prev-page"><i class=" fa fa-angle-right"></i></a></li>
+                        {% else %}
+                        <li class="disabled"><a><i class=" fa fa-angle-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                <!-- End results -->
+                {% endif %}
+                {% endif %}
+                {% else %}
+                <div class="col-md-12 text-center padding-clear">
+                    <div class="heading pull-left full-width">
+                        <h1 class="page-header margin-bottom-0 text-center pull-left"><span class="margin-clear">{{ 'general.search.searching' | t }}</span></h1>
+                    </div>
+                </div>
+                <div class="col-md-12  text-center">
+                    <h3 class="margin-bottom-20 paira-gap-1">{{ 'general.search.no_results' | t }}</h3>
+                    <p class="font-size-14 margin-bottom-10 paira-gap-2">{{ 'general.search.no_results_html' | t }}</p>
+                </div>
+                {% endif %}
+                {% endpaginate %}
+            </div>
+        </div>
+    </section>
+</main>
+
+
+{% schema %}
+{
+"name": "Search",
+"class": "search-section search-section--search",
+"settings": [
+{
+"type": "range",
+"id": "search_page_limit",
+"label": "Search Result Limit",
+"min": 5,
+"max": 30,
+"default": 5
+}
+]
+}
+{% endschema %}
+
+<style>

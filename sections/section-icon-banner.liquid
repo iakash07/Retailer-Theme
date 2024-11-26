@@ -1,0 +1,277 @@
+<!--=================== Image Banner ===================-->
+<section class="{% if section.settings.ban_section_gap_check %} paira-gap-2 {% endif %}" id="icon-banner--{{ section.id }}">
+    <div class="icon-banner">
+      {% if section.settings.title != blank %}
+      <div class="main-ctm-head container-fluid padding-fixed {% if section.settings.ban_full_width_check %}full-width{% endif %}">
+          <div class="row {% if section.settings.ban_full_width_check %}margin-clear{% endif %}">
+              <h2 class="ctm-head t-center">{{ section.settings.title }}</h2>
+              <p>{{ section.settings.desc }}</p>
+          </div>
+      </div>
+      {% endif %}
+      <!-- Desktop -->
+      <style>
+       .cu-mobile {
+  display: none;
+}
+
+.cu-desktop {
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .cu-mobile {
+    display: block;
+  }
+  .cu-desktop {
+    display: none;
+  }
+
+  .icon-border {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+        </style>
+        <div class="cu-desktop container-fluid padding-fixed {% if section.settings.ban_full_width_check %} full-width {% endif %}">
+       <div class="row {% if section.settings.ban_full_width_check %} margin-clear {% endif %}">
+            {% for block in section.blocks %}
+           <div class="{% if section.settings.banner_row == '3' %}col-lg-4 col-md-4{% endif %}{% if section.settings.banner_row == '4' %}col-lg-3 col-md-3{% endif %} col-sm-6 col-xs-6 banes-{{ block.id }} text-center">
+               <div class="icon-border">
+                    <div class="img-footer">
+                        {% if block.settings.footer_icon == blank %}
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg height-50 margin-bottom-10 width-50' }}
+                        {% else %}
+                        <img src="{{ block.settings.footer_icon | img_url: 'master' }}" alt="{{ block.settings.Icon_text }}" class="img-responsive margin-bottom-10">
+                        {% endif %}
+                    </div>
+                    <div class="para-footer">
+                        <h4 class="margin-top-0 margin-bottom-5"><b>{{ block.settings.Icon_text }}</b></h4>
+                        <p class="margin-clear">{{ block.settings.Icon_para }}</p>
+                    </div>
+               </div>
+            </div>
+            {% endfor %}
+       </div>
+    </div>
+
+      <!-- Mobile Specific  -->
+      <div class="cu-mobile container-fluid padding-fixed full-width">
+    <div class="row margin-clear">
+        <!-- Swiper -->
+        <div class="swiper-container cu-swiper">
+            <div class="swiper-wrapper">
+                {% for block in section.blocks %}
+                <div class="swiper-slide col-sm-12 col-xs-12 banes-{{ block.id }} text-center">
+                    <div class="icon-border">
+                        <div class="img-footer">
+                            {% if block.settings.footer_icon == blank %}
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg height-50 margin-bottom-10 width-50' }}
+                            {% else %}
+                            <img src="{{ block.settings.footer_icon | img_url: 'master' }}" alt="{{ block.settings.Icon_text }}" class="img-responsive margin-bottom-10">
+                            {% endif %}
+                        </div>
+                        <div class="para-footer">
+                            <h4 class="margin-top-0 margin-bottom-5"><b>{{ block.settings.Icon_text }}</b></h4>
+                            <p class="margin-clear">{{ block.settings.Icon_para }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination ic-swiper-pagination"></div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Initialize Swiper -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var swiper = new Swiper('.cu-swiper', {
+      pagination: {
+        el: '.ic-swiper-pagination',
+        clickable: true,
+      },
+      slidesPerView: 1,
+      spaceBetween: 10,
+    });
+  });
+</script>
+
+    </div>
+</section>
+<style>
+  .ic-swiper-pagination {
+  position: relative; /* Change to relative if it was absolute */
+  margin-top: 15px; /* Adjust this value as needed */
+  /* Other styles if needed */
+}
+   .icon-banner {
+       padding: 0;
+   }
+   .icon-banner h4{
+   color: {{ section.settings.top_foo_text_color }};
+   font-size: {{ section.settings.image_head_size }}px;
+   line-height: 1;
+   }
+   .icon-banner p{
+   color: {{ section.settings.top_foo_para_color }};
+   font-size: {{ section.settings.image_texts_size }}px;
+   }
+
+    @media (max-width:1199px){
+      .icon-banner h4 {
+    font-size: 18px;
+   }
+      .icon-banner p {
+    font-size: 12px;
+}
+      
+}
+
+  
+  
+
+  
+</style>
+
+{% schema %}
+{
+"name": "Icon Banner",
+"max_blocks": 4,
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Add Title"
+},
+{
+"type": "textarea",
+"id": "desc",
+"label": "Add Description"
+},
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "ban_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "ban_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Banner Content"
+},
+{
+"type": "select",
+"id": "banner_row",
+"label": "Banner per row",
+"options": [
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}
+],
+"default": "4"
+},
+{
+"type": "header",
+"content": "Icon Banner Color & Font Size"
+},
+{
+"type": "color",
+"id": "top_foo_text_color",
+"label": "Heading Color",
+"default": "#000"
+},
+{
+"type": "range",
+"id": "image_head_size",
+"label": "Heading Font Size",
+"min": 12,
+"max": 30,
+"default": 13
+},
+{
+"type": "color",
+"id": "top_foo_para_color",
+"label": "Paragraph Color",
+"default": "#565656"
+},
+{
+"type": "range",
+"id": "image_texts_size",
+"label": "Paragraph Font Size",
+"min": 12,
+"max": 16,
+"default": 14
+}
+],
+"blocks": [
+{
+"type": "image",
+"name": "Image & Text",
+"settings": [
+{
+"type": "image_picker",
+"id": "footer_icon",
+"label": "Image",
+"info": "Upload image : 55 x 40px recommended."
+},
+{
+"type": "textarea",
+"id": "Icon_text",
+"label": "Heading",
+"default": "FREE SHIPPING & RETURN"
+},
+{
+"type": "textarea",
+"id": "Icon_para",
+"label": "Paragraph",
+"default": "Free shipping on all US orders"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Icon Banner",
+"category": "Banner",
+"blocks": [
+{
+"type": "image"
+},
+{
+"type": "image"
+},
+{
+"type": "image"
+},
+{
+"type": "image"
+}
+]
+}
+]
+}
+{% endschema %}

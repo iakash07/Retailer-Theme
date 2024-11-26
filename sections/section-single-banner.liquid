@@ -1,0 +1,244 @@
+<!--=================== Image Banner ===================-->
+<section class="banner-small single-banner {% if section.settings.ban_section_gap_check %} paira-gap-2 {% endif %}" id="slidersection--{{ section.id }}">
+    <div class="container-fluid padding-fixed {% if section.settings.ban_full_width_check %} full-width {% endif %}">
+        <div class="col-md-12 col-sm-12 col-xs-12 padding-clear">
+            <div class="position-r banner-image-smalls overflow-h">
+                <a href="{{section.settings.small_banner_link_1}}">
+                    {% if section.settings.single_image == blank %}
+                    {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                    {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg height-250 single-imgs' }}
+                    {% else %}
+                    <img src="{{ section.settings.single_image | img_url: 'master' }}" class="img-responsive single-imgs">
+                    {% endif %}
+                </a>
+                  {% if section.settings.home_slider_overlay %}
+<div class="overlay" style="background: {{ section.settings.slider_bg_trans_1 | color_modify: 'alpha', 0.5 }};position: absolute;height: 100%;width: 100%;top: 0;left: 0;"></div>
+                                                                                                                                                                             {% endif %}
+                {% if section.settings.banners_content %}
+                <div class="display-table-blog bans-height banes-{{ section.id }}">
+                    <div class="display-table-cell-blog">
+                        <div class="container-fluid padding-fixed position-r">
+                            <a href="{{ block.settings.small_btn_link }}" class="back-link"></a>
+                            <div class="images-text {% if section.settings.banners_content_position == '1' %} pull-left text-left{% elsif section.settings.banners_content_position == '2' %} pull-right text-right {% else %} text-center{% endif %}">
+                                <h2 class="margin-top-0 margin-bottom-5">{{ section.settings.image_headings }}</h2>
+                                {{ section.settings.images_text }}
+                                <a href="{{ block.settings.small_btn_link }}" class="btn btn-default"> {{ section.settings.images_text_btn }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .banes-{{ section.id }} .images-text p{
+    font-size: {{ section.settings.image_texts_size }}px;
+    color: {{ section.settings.image_para_color }};
+    }
+    .banes-{{ section.id }} .images-text h2{
+    font-size: {{ section.settings.image_head_size }}px;
+    color: {{ section.settings.image_text_color }};
+    line-height: 1;
+    }
+    .banes-{{ section.id }} .images-text .btn {
+    color: {{ section.settings.images_button_color }};
+    background-color: {{ section.settings.images_button_bg_color }};
+    border-color: {{ section.settings.images_button_border_color }};
+    }
+    .banes-{{ section.id }} .btn-default.active, .banes-{{ section.id }} .btn-default.focus, .banes-{{ section.id }} .btn-default:active, .banes-{{ section.id }} .btn-default:focus, .banes-{{ section.id }} .btn-default:hover {
+    color: {{ section.settings.h_images_button_color }};
+    background-color: {{ section.settings.h_images_button_bg_color }};
+    border-color: {{ section.settings.h_images_button_border_color }};
+    }
+</style>
+<script>
+    $(window).load(function() {
+        var ban_heightes = $(".single-imgs").height();
+        $(".bans-height").height(ban_heightes);
+    });
+</script>
+{% schema %}
+{
+"name": "Image Banner",
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "ban_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "ban_full_width_check",
+"label": "Enable Section Full Width",
+"default": true
+},
+{
+"type": "header",
+"content": "Banner Content"
+},
+{
+"type": "image_picker",
+"id": "single_image",
+"label": "Image",
+"info": "Upload image : 1920 x 250px recommended."
+},
+{
+"type": "checkbox",
+"id": "home_slider_overlay",
+"label": "Enable Image Overlay",
+"default": false
+},
+{
+"type": "color",
+"id": "slider_bg_trans_1",
+"label": "Select Image Overlay Color",
+"default": "#000"
+},
+{
+"type": "url",
+"id": "small_banner_link_1",
+"label": "Small banner link",
+"default": "\/collections\/all"
+},
+{
+"type": "checkbox",
+"id": "banners_content",
+"label": "Enable Banner Content",
+"default": true
+},
+{
+"type": "select",
+"id": "banners_content_position",
+"label": "Banner Content Alignment",
+"options": [
+{
+"value": "1",
+"label": "Content Left"
+},
+{
+"value": "2",
+"label": "Content Right"
+},
+{
+"value": "3",
+"label": "Content Center"
+}
+],
+"default": "1"
+},
+{
+"type": "text",
+"id": "image_headings",
+"label": "Heading",
+"default": "50% OFF ALL COLLECTION"
+},
+{
+"type": "range",
+"id": "image_head_size",
+"label": "Heading Font Size",
+"min": 12,
+"max": 50,
+"default": 35
+},
+{
+"type": "color",
+"id": "image_text_color",
+"label": "Select Heading Text Color",
+"default": "#000"
+},
+{
+"type": "richtext",
+"id": "images_text",
+"label": "Heading",
+"default": "<p>Find women's jeans, tops and dresses in casual styles</p>"
+},
+{
+"type": "range",
+"id": "image_texts_size",
+"label": "Paragraph Font Size",
+"min": 12,
+"max": 18,
+"default": 14
+},
+{
+"type": "color",
+"id": "image_para_color",
+"label": "Select Paragraph Text Color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "images_text_btn",
+"label": "Button Text",
+"default": "DISCOVER MORE"
+},
+{
+"type": "url",
+"id": "small_btn_link",
+"label": "Small banner Button Link",
+"default": "\/collections\/all"
+},
+{
+"type": "header",
+"content": "Button Color"
+},
+{
+"type": "color",
+"id": "images_button_color",
+"label": "Text Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "images_button_bg_color",
+"label": "Background Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "images_button_border_color",
+"label": "Border Color",
+"default": "#000"
+},
+{
+"type": "header",
+"content": "Button Hover Color"
+},
+{
+"type": "color",
+"id": "h_images_button_color",
+"label": "Text Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "h_images_button_bg_color",
+"label": "Background Color",
+"default": "#E55353"
+},
+{
+"type": "color",
+"id": "h_images_button_border_color",
+"label": "Border Color",
+"default": "#E55353"
+}
+],
+"presets": [
+{
+"name": "Image Banner",
+"category": "Banner"
+}
+]
+}
+{% endschema %}

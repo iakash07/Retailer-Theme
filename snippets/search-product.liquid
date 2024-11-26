@@ -1,0 +1,193 @@
+{% assign tag_is_reserved = false %}
+{% for tag in product.tags %}
+  {% if tag == "reserved" %}
+    {% assign tag_is_reserved = true %}
+  {% endif %}
+{% endfor %}
+
+<!--=================== Product ===================-->
+<div class="paira-product product img text-left  ">
+    <div class="overflow-h pro-im position-r" data-value="0">
+        {%- if settings.image_autoheight_enable -%}
+        <div {{ auto_height }}>
+            <a href="{{ product.url | within: collection }}" class="" >
+                {% if product.images.size >= 1%}
+                <img src="{{ product.featured_image | product_img_url: 'compact' }}" class="paira-product-image img-responsive full-width main-product lazyload blur-up" alt="{{ product.title}}" data-srcset="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'compact' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 160w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 240w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'large' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 480w" data-src="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'large' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %}" data-sizes="auto">
+                {% else %}
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+            </a>
+        </div>
+        {%- else -%}
+        <a href="{{ product.url }}" class="overflow-h">
+            {% if product.images.size >= 1%}
+            <img src="{{ product.featured_image | product_img_url: 'compact' }}" class="paira-product-image img-responsive full-width main-product lazyload blur-up" alt="{{ product.title}}" data-srcset="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'compact' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 160w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 240w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'large' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 480w" data-src="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'large' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %}" data-sizes="auto">
+            {% else %}
+            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+        </a>
+        {%- endif -%}
+        <div class="sale-stock">
+            {% if product.variants.first.inventory_management == 'shopify' and product.variants.first.inventory_quantity <= 0 %}
+             {% if tag_is_reserved != true %}
+              <div class="product-stock-out"><span>{{ 'products.product.stock_out' | t }}</span></div>
+              {% endif %}
+            {% else %}
+            {%- assign available_variant = product.selected_or_first_available_variant -%}
+            {%- if available_variant.compare_at_price > available_variant.price -%}
+            {%- assign sale_percent = available_variant.compare_at_price | minus: available_variant.price | times: 100.0 | divided_by: available_variant.compare_at_price | round: 1 -%}
+            <div class="product-sale"><span>{{ 'products.product.sale' | t }}</span></div>
+            <div class="product-sale"><span>-{{- sale_percent -}}%</span></div>
+            {%- else -%}
+            {%- assign sale_percent = 0 -%}
+            {%- endif -%}
+            {% if product.variants.size <= 1 %}
+            {% for variant in product.variants %}
+            {% assign product_inventory_management = variant.inventory_management %}
+            {% assign product_inventory_policy = variant.inventory_policy %}
+            {% assign product_quantity_item = variant.inventory_quantity.product_quantity_item %}
+            {% endfor %}
+            {% endif %}
+            {% endif %}
+        </div>
+        {% if settings.product_countdown %}
+        {% include 'countdown' %}
+        {% endif %}
+        <div class="product-hover hidden-xs text-center">
+            <div class="paira-wish-compare-con">
+                <div class="pull-left full-width compares-wish">
+                    {% if settings.compare %}
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare" data-title="{{ product.title }}" data-handle="{{ product.handle }}" class="paira-add-to-compare add-to-compare margin-bottom-15"><i class="fa fa-balance-scale"></i></a>
+                    {% endif %}
+                    {% if settings.wishlist %}
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Wishlist" data-title="{{ product.title }}" data-handle="{{ product.handle }}" class="paira-add-to-wish add-to-compare margin-bottom-15"><i class="fa fa-heart-o"></i></a>
+                    {% endif %}
+                    {% if settings.enable_quick %}
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Quick View" data-handle="{{ product.handle }}" class="paira-quick-view quick-view add-to-compare margin-bottom-15"><i class="fa fa-eye"></i></a>
+                    {% endif %}
+                </div>
+                <div class="pull-left full-width carts-con">
+                  {% if tag_is_reserved != false %}
+                    <div class="nv-pro-hold">On Hold</div>
+                  {% else %}
+                    {% if product_inventory_management == 'shopify' and product_inventory_policy == 'continue' and product_quantity_item <= 0 and product.variants.size <= 1 %}
+                    <a href="#" class="btn btn-primary paira-add-to-cart" data-item-quantity="1" data-varient-id="{{ product.variants.first.id }}">{{ 'products.product.pre_order' | t }}</a>
+                    {% else %}
+                    {% unless product.available %}
+                    <a href="#" class="btn btn-primary disabled">{{ 'products.product.unavailable' | t }}</a>
+                    {% else %}
+                    {% if product.variants.size > 1 %}
+                    <a href="{{ product.url }}" class="btn btn-primary">{{ 'products.product.select_option' | t }}</a>
+                    {% else %}
+                    <a href="#" class="btn btn-primary paira-add-to-cart add-to-cart" data-item-quantity="1" data-varient-id="{{ product.variants.first.id }}">{{ 'products.product.add_to_cart' | t }}</a>
+                    {% endif %}
+                    {% endunless %}
+                    {% endif %}
+                  {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list-views">
+        <div class="product-title-price">
+            {% if settings.enable_review %}
+            {% if settings.enable_reviews %}
+            <div class="pro-reating margin-top-5 margin-bottom-0">
+                <div class="paira-rating-con product-rating">
+                    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if settings.title_count %}
+            <h2 class="margin-top-5 margin-bottom-0"><a href="{{ product.url }}" title="{{ product.title }}" class="paira-product-title"><span>{% if settings.vendor %} {{ product.vendor }} {% endif %}</span> {{ product.title | truncate: 20, "" }}</a></h2>
+            {% else %}
+            <h2 class="margin-top-5 margin-bottom-0"><a href="{{ product.url }}" title="{{ product.title }}" class="paira-product-title"><span>{% if settings.vendor %} {{ product.vendor }} {% endif %}</span> {{ product.title }}</a></h2>
+            {% endif %}
+            {% if product.metafields.custom.add_custom_meta_tag != blank %}
+              <p class="ctm-tag">{{ product.metafields.custom.add_custom_meta_tag }}</p>
+            {% endif %}
+            <div class="{% if product.variants.first.inventory_quantity <= 0 %}hide-price {% endif %} text-left margin-top-5 margin-bottom-0" style="margin-bottom: 3px">
+              {% if tag_is_reserved != true %}  
+              {% if product.compare_at_price_max > product.price %}
+                <div class="display-in-b margin-right-5"><del><span class="money">{{ product.compare_at_price | money }}</span></del></div>
+                <div class="display-in-b"><span class="money">{{ product.price | money }}</span></div>
+                {% else %}
+                <span class="money">{{ product.price | money }}</span>
+                {% endif %}
+              {% if product.metafields.custom.erp != blank %}
+              {% assign current_variant = product.selected_or_first_available_variant %}
+                            {% if current_variant.inventory_quantity > 0 %}
+                                <p class="erp-tag">ERP: {{ product.metafields.custom.erp | metafield_text }}</p>
+                            {% endif %}
+            {% endif %}
+              {% endif %}
+            </div>
+            {% if settings.product_variant_color %}
+            <ul class="item-swatch item-swatchs list-inline margin-bottom-0 margin-top-10">
+                {% for option in product.options %}
+                {% if option == 'Color' %}
+                {% assign index = forloop.index0 %}
+                {% assign colorlist = '' %}
+                {% assign color = '' %}
+                {% for variant in product.variants %}
+                {% capture color %}
+                {{ variant.options[index] }}
+                {% endcapture %}
+                {% unless colorlist contains color %}
+                {% assign text = color | handleize %}
+                <li class="{% if forloop.first == true %}active{% endif %} {% if variant.image != null %}paira-variant-image-change{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ color }}" data-variant-image="{{ variant.image.src | product_img_url: 'large' }}">
+                    <label class="margin-bottom-0" style="background: #ddd;{% if text == 'white' %}border: 1px solid #cbcbcb; {% endif %}background-color: {{ color | split: ' ' | last | handle }};border-radius: 5px;margin-top:0;padding: 1px;opacity: 0.6;">
+                        {% if variant.image != null %}
+                        <span style="background: url('{{ variant.image.src | product_img_url: 'thumb' }}');width: 22px; height: 22px;background-size: cover;background-repeat: no-repeat;-webkit-border-radius: 5px;-moz-border-radius: 100px;display: block;" data-img="{{ variant.image.src | product_img_url: 'large' }}" class="paira-color-img color-img"></span>
+                        {% endif %}
+                    </label>
+                </li>
+                {% capture tempList %}
+                {{ colorlist | append: color | append: ' ' }}
+                {% endcapture %}
+                {% assign colorlist = tempList %}
+                {% endunless %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if settings.product_variant_size %}
+            <ul class="item-size list-inline margin-bottom-0 margin-top-5">
+                {% for option in product.options %}
+                {% if option == 'Size' %}
+                {% assign index = forloop.index0 %}
+                {% assign sizelist = '' %}
+                {% assign size = '' %}
+                {% for variant in product.variants %}
+                {% capture size %}
+                {{ variant.options[index] }}
+                {% endcapture %}
+                {% unless sizelist contains size %}
+                {% assign text = size | handleize %}
+                <li class="size-label {% if forloop.first == true %}active{% endif %} {% if variant.image != null %}paira-variant-image-change{% endif %}" style="margin-top: 5px" data-variant-image="{{ variant.image.src | product_img_url: 'large' }}">{{ size }}</li>
+                {% capture tempList %}
+                {{ sizelist | append: size | append: ' ' }}
+                {% endcapture %}
+                {% assign sizelist = tempList %}
+                {% endunless %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="paira-list-product-des list-product-des" style="display: none;margin-top: 8px">{{ product.description | strip_html | truncatewords: 30 }}</div>
+        </div>
+    </div>
+</div>
+<style>
+  p.ctm-tag {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 8px 0;
+}
+</style>

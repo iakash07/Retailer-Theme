@@ -1,0 +1,330 @@
+<div id="collectionsection--{{ section.id }}">
+    <!--=================== Collection Widget ===================-->
+    <section class="collection-list text-center {% if section.settings.collect_section_gap_check %} paira-gap-2 {% endif %}">
+        <div class="container-fluid padding-fixed {% if section.settings.col_pro_full_width_check %} full-width {% endif %}">
+            <div class="row {% if section.settings.col_pro_full_width_check %} full-width margin-clear{% endif %}">
+                <div class="col-md-12 col-xs-12 col-sm-12 {% if section.settings.col_pro_full_width_check == blank %}padding-clear{% endif %}">
+                    <div class="collection-container s13">
+                        <div class="collection-wrapper">
+                            {% if section.settings.collect_from == '1' %}
+                            {% for collection in collections limit: section.settings.home_collection_limit %}
+                            {% if section.settings.collection_style == '1' %}
+                            {% if forloop.index == 2%}
+                            <div class="col-xs-12 col-md-6 col-sm-6 margin-bottom-30 hidden-xs">
+                                <div class="collection-tops-mage position-r overflow-h">
+                                    <a href="{{section.settings.small_banner_link_1}}" class="pull-left margin-right-10 full-width">
+                                        {% if section.settings.image == blank %}
+                                        {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-300 full-width' }}
+                                        {% else %}
+                                        <img src="{{ section.settings.image | img_url: 'master' }}" class="img-responsive banner-images">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if forloop.index == 5 %}
+                            <div class="col-xs-12 col-md-6 col-sm-6 margin-bottom-30 margin-top-30 hidden-xs">
+                                <div class="collection-tops-mage position-r overflow-h">
+                                    <a href="{{section.settings.small_banner_link_2}}" class="pull-left margin-right-10 full-width">
+                                        {% if section.settings.image_2 == blank %}
+                                        {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-300 full-width' }}
+                                        {% else %}
+                                        <img src="{{ section.settings.image_2 | img_url: 'master' }}" class="img-responsive banner-images">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            <div class="col-xs-6 collectioner {% if section.settings.collection_style == '1' %} {% cycle 'col-lg-6 col-md-6 col-sm-6', 'col-lg-3 col-md-3 col-sm-3', 'col-lg-3 col-md-3 col-sm-3',' col-lg-6 col-md-6 col-sm-6 margin-top-30', 'col-lg-3 col-md-3 col-sm-3', 'col-lg-3 col-md-3 col-sm-3' %}{% else %} col-lg-4 col-md-4 col-sm-4 {% cycle '', '', '','margin-top-30', 'margin-top-30', 'margin-top-30' %}{% endif %}">
+                                <div class="collection-item position-r">
+                                    <a href="{{ collection.url }}" class="collec-im">
+                                        {% if collection.image %}
+                                        <img src="{{ collection.image.src | img_url: 'compact' }}" data-srcset="{% if collection.image %}{{ collection.image.src | img_url: 'compact' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 160w, {% if collection.image %}{{ collection.image.src | img_url: 'medium' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 240w, {% if collection.image %}{{ collection.image.src | img_url: 'grande' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 500w" data-src="{% if collection.image %}{{ collection.image.src | img_url: 'grande' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %}" alt="{{ collection.title }}" data-sizes="auto" class="lazyload blur-up img-responsive">
+                                        {% else %}
+                                        {{ 'collection-1' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svgs height-338 ' }}
+                                        {% endif %}
+                                    </a>
+                                    <div class="display-collection">
+                                        <a href="{{ collection.url }}" class="back-link"></a>
+                                        <div class="collect-over" {% if collection.image == blank %}style="margin-top: 30%"{% endif %}>
+                                            <h4 class="margin-clear">
+                                                <a href="{{ collection.url }}">{{ collection.title }}</a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            {% for block in section.blocks %}
+                            {%- assign collection = collections[block.settings.collection] -%}
+                            {% if section.settings.collection_style == '1' %}
+                            {% if forloop.index == 2%}
+                            <div class="col-xs-12 col-md-6 col-sm-6 margin-bottom-30 hidden-xs">
+                                <div class="collection-tops-mage position-r overflow-h">
+                                    <a href="{{section.settings.small_banner_link_1}}" class="pull-left margin-right-10 full-width">
+                                        {% if section.settings.image == blank %}
+                                        {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-300 full-width' }}
+                                        {% else %}
+                                        <img src="{{ section.settings.image | img_url: 'master' }}" class="img-responsive banner-images">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if forloop.index == 5 %}
+                            <div class="col-xs-12 col-md-6 col-sm-6 margin-bottom-30 margin-top-30 hidden-xs">
+                                <div class="collection-tops-mage position-r overflow-h">
+                                    <a href="{{section.settings.small_banner_link_2}}" class="pull-left margin-right-10 full-width">
+                                        {% if section.settings.image_2 == blank %}
+                                        {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-300 full-width' }}
+                                        {% else %}
+                                        <img src="{{ section.settings.image_2 | img_url: 'master' }}" class="img-responsive banner-images">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            <div class="col-xs-6 collectioner {% if section.settings.collection_style == '1' %} {% cycle 'col-lg-6 col-md-6 col-sm-6', 'col-lg-3 col-md-3 col-sm-3', 'col-lg-3 col-md-3 col-sm-3',' col-lg-6 col-md-6 col-sm-6 margin-top-30', 'col-lg-3 col-md-3 col-sm-3', 'col-lg-3 col-md-3 col-sm-3' %}{% else %} col-lg-4 col-md-4 col-sm-4 {% cycle '', '', '','margin-top-30', 'margin-top-30', 'margin-top-30' %}{% endif %}">
+                                <div class="collection-item position-r">
+                                    <a href="{{ collection.url }}" class="collec-im">
+                                        {% if collection.image %}
+                                        <img src="{{ collection.image.src | img_url: 'compact' }}" data-srcset="{% if collection.image %}{{ collection.image.src | img_url: 'compact' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 160w, {% if collection.image %}{{ collection.image.src | img_url: 'medium' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 240w, {% if collection.image %}{{ collection.image.src | img_url: 'grande' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 500w" data-src="{% if collection.image %}{{ collection.image.src | img_url: 'grande' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %}" alt="{{ collection.title }}" data-sizes="auto" class="lazyload blur-up img-responsive">
+                                        {% else %}
+                                        {{ 'collection-1' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svgs height-338 ' }}
+                                        {% endif %}
+                                    </a>
+                                    <div class="display-collection">
+                                        <a href="{{ collection.url }}" class="back-link"></a>
+                                        <div class="collect-over">
+                                            <h4 class="margin-clear">
+                                                <a href="{{ collection.url }}">{{ collection.title }}</a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if section.blocks == blank %}
+                                <div class="collection-item position-r">
+                                    <a href="#" class="collec-im">
+                                        {{ 'lifestyle-2' | append: current | placeholder_svg_tag: 'placeholder-svg position-absolute' }}
+                                    </a>
+                                    <div class="display-table-collection">
+                                        <h4 class="collect-over margin-clear" style="margin-top: 30%">
+                                            <a href="#">Hot Collections</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="text-center hidden-sm hidden-lg hidden-md another-btn">
+                            <div class="swiper-button-prev swiper-button-prev-13--{{ section.id }}"><i class="fa fa-angle-left"></i></div>
+                            <div class="swiper-button-next swiper-button-next-13--{{ section.id }}"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    $(function() {
+        var windowsize = $(window).width();
+        if (windowsize <= 767) {
+            $('.collection-container').addClass("swiper-container s13");
+            $('.collection-wrapper').addClass("swiper-wrapper");
+            $('.collection-wrapper .collectioner').addClass("swiper-slide");
+            var swiper = new Swiper('.swiper-container.s13', {
+                navigation: {
+                    nextEl: '.swiper-button-next-13--{{ section.id }}',
+                    prevEl: '.swiper-button-prev-13--{{ section.id }}'
+                },
+                slidesPerView: 2,
+                spaceBetween: 15,
+                freeMode: true,
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 30
+                    }
+                }
+            });
+        }
+    });
+</script>
+<style>
+    #collectionsection--{{ section.id }} .collect-over {
+    background: {{ section.settings.back_collection | color_modify: 'alpha', 0.9 }};
+    }
+    #collectionsection--{{ section.id }} .collection-text .overlay {
+    background: {{ section.settings.back_collection | color_modify: 'alpha', 0.9 }};
+    }
+    #collectionsection--{{ section.id }} .collection-text h1, #collectionsection--{{ section.id }} .collection-text p, #collectionsection--{{ section.id }} .collect-over a, .collect-over h5{
+    color: {{ section.settings.back_collection_text_color }};
+    }
+    #collectionsection--{{ section.id }} .collection-item:hover .collect-over {
+    background: {{ section.settings.back_collection_h | color_modify: 'alpha', 0.9 }};
+    }
+    #collectionsection--{{ section.id }} .collection-item:hover .collect-over a, #collectionsection--{{ section.id }} .collection-item:hover .collect-over h5{
+    color: {{ section.settings.back_collection_text_color_h }};
+    }
+    #collectionsection--{{ section.id }} .collection-item .back-link {
+      background: transparent;
+    }
+</style>
+{% schema %}
+{
+"name": "Collection List",
+"class": "index-section index-section--collectionsection",
+"max_blocks": 6,
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "collect_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "col_pro_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Collection Banner Image"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image 1",
+"info": "Upload image : 585 x 355px recommended."
+},
+{
+"type": "url",
+"id": "small_banner_link_1",
+"label": "Small banner link 1",
+"default": "\/collections\/all"
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Image 2",
+"info": "Upload image : 585 x 355px recommended."
+},
+{
+"type": "url",
+"id": "small_banner_link_2",
+"label": "Small banner link 2",
+"default": "\/collections\/all"
+},
+{
+"type": "header",
+"content": "Collection List Style"
+},
+{
+"type": "radio",
+"id": "collection_style",
+"label": "Select One Style",
+"options": [
+{
+"value": "1",
+"label": "Collection Style 1"
+},
+{
+"value": "2",
+"label": "Collection Style 2"
+}
+],
+"default": "1"
+},
+{
+"type": "header",
+"content": "Collection List Content"
+},
+{
+"type": "color",
+"id": "back_collection",
+"label": "Collection Text Background Overlay Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "back_collection_text_color",
+"label": "Collection Text Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "back_collection_h",
+"label": "Collection Hover Background Overlay Color",
+"default": "#F26522"
+},
+{
+"type": "color",
+"id": "back_collection_text_color_h",
+"label": "Collection Hover Text Color",
+"default": "#fff"
+},
+{
+"type": "range",
+"id": "home_collection_limit",
+"label": "Select Collection List Limit",
+"min": 3,
+"max": 6,
+"default": 3
+},
+{
+"type": "select",
+"id": "collect_from",
+"label": "Collection Display From",
+"options": [
+{
+"value": "1",
+"label": "Collection Display From Admin Panel"
+},
+{
+"value": "2",
+"label": "Collection Display From Block"
+}
+],
+"default": "1"
+}
+],
+"blocks": [
+{
+"type": "featured_collection",
+"name": "Collection",
+"settings": [
+{
+"label": "Collection",
+"id": "collection",
+"type": "collection"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Collection List",
+"category": "Collection List"
+}
+]
+}
+{% endschema %}

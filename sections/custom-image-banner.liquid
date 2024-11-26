@@ -1,0 +1,76 @@
+<div class="{{ section.settings.class }}">
+  <div class="ctm-container">
+      <div class="main-banner">
+        {% if section.settings.img != blank %}
+            <img src="{{ section.settings.img | img_url: "master" }}"  {% if section.settings.height %} height="{{ section.settings.height }}" {% endif %} {% if section.settings.width %} width="{{ section.settings.width }}" {% endif %} class="img-responsive banner-images text-center">
+        {% endif %}
+      </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Custom Image - KingRao",
+    "settings": [
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Add your Class"
+      },
+      {
+        "type": "text",
+        "id": "height",
+        "label": "Add your height"
+      },
+      {
+        "type": "text",
+        "id": "width",
+        "label": "Add your width"
+      },
+      {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Add your Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Add your Title"
+      },
+      {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Add your Description"
+      },
+      {
+        "type": "text",
+        "id": "btntxt",
+        "label": "Add your Button Title"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "Add your URL"
+      }
+    ],
+    "presets":[
+      {
+        "name": "Custom Image - KingRao"
+      }
+    ]
+  }
+{% endschema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebPage",
+  "name": "{{ page.title | escape }}",
+  "description": "{{ page.content | strip_html | escape }}",
+  "url": "{{ shop.url }}/pages/{{ page.handle }}",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Confidential Couture",
+    "url": "{{ shop.url }}",
+    "logo": "https://cdn.shopify.com/s/files/1/0643/7958/4700/files/confidential_couture_logo.jpg?v=1720514785"
+  }
+}
+</script>

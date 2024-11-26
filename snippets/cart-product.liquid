@@ -1,0 +1,96 @@
+<!--=================== Cart Product ===================-->
+
+{% if section.settings.cart_products_check %} 
+{% assign separate_countdown = 'cart_product' %}
+<section class="cart-products paira-gap-1" id="collectionproductsection--{{ section.id }}">
+    <div class="heading">
+        <h2 class="page-header margin-bottom-0 text-left"><span>{{section.settings.cart_products_title}}</span></h2>
+    </div>
+    {% if section.settings.cart_products != blank %}
+    {% assign cart_collection_product = collections[section.settings.cart_products] %}
+    <div class="product-widget swiper-container s11">
+        <div class="swiper-wrapper">
+            {% assign custom_product_small = 'none' %}
+            {% for product in cart_collection_product.products limit: section.settings.cart_products_limit %}
+            <div class="swiper-slide margin-top-30">
+                {% include 'product' %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-scrollbar"></div>
+    </div>
+    <div class="another-btn">
+    <div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>
+    <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
+    </div>
+    {% else %}
+    <div class="product-widget swiper-container s11">
+        <div class="swiper-wrapper">
+            {% for product in (1..section.settings.cart_products_limit) %}
+            <div class="swiper-slide margin-top-30">
+                <div class="product img">
+                    <div class="overflow-h pro-im position-r">
+                        <a href="#" class="overflow-h full-width">
+                            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                        </a>
+                    </div>
+                    <div class="list-views">
+                        <div class="product-title-price">
+                            <h2 class="margin-top-5 margin-bottom-0"><a href="#" title="Neck Reverse Pleat" class="">Your product's name</a></h2>
+                            <div class="text-left margin-top-5" style="margin-bottom: 8px">
+                                <span class="money">$480.00</span>
+                            </div>
+                            <a href="#" class="add-to-cart display-in-b btn btn-default">Add To Cart</a>
+                            <div class="product-hover">
+                                <div class="paira-wish-compare-con">
+                                    <a href="#" class=" add-to-compare margin-right-10 display-in-b"><i class="fa fa-balance-scale"></i></a>
+                                    <a href="#" class=" add-to-compare margin-right-10 display-in-b "><i class="fa fa-heart-o"></i></a>
+                                    <a href="#" class="quick-view display-in-b add-to-compare"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="another-btn">
+    <div class="swiper-button-prev margin-right-10"><i class="fa fa-angle-left"></i></div>
+    <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+<script>
+    $(function() {
+        var swiper = new Swiper('.swiper-container.s11', {
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            slidesPerView: {{ section.settings.visable_pros_limit }},
+            spaceBetween: 30,
+            freeMode: true,
+            breakpoints: {
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 15
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 15
+                },
+                767: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                },
+                480: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                }
+            }
+        });
+    });
+</script>

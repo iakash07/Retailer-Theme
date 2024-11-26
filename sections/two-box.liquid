@@ -1,0 +1,68 @@
+<div class="two-box-section">
+  <div class="ctm-container">
+    <div class="main-banner">
+      {% for block in section.blocks %}
+      <div class="col-50 block-{% cycle "1","2" %}">
+        <div class="main-block block-{% cycle "one","two" %}" style="background-color:{{ block.settings.color }};">  
+            {% if block.settings.img != blank %}
+                <img src="{{ block.settings.img | img_url: "master" }}">
+            {% endif %}
+            {% if block.settings.title != blank %}<h2 class="ctm-head">{{ block.settings.title }}</h2>{% endif %}
+            {% if block.settings.desc != blank %}<p>{{ block.settings.desc }}</p>{% endif %}
+            {% if block.settings.btn != blank %}<a class="ctm-btn" href="{{ block.settings.url }}">{{ block.settings.btn }}</a>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Two Box Section",
+    "settings": [],
+    "blocks":[
+      {
+        "type": "Content",
+        "name": "Info",
+        "settings": [
+            {
+              "type": "color",
+              "id": "color",
+              "label": "Add your Background Color"
+            },
+            {
+              "type": "image_picker",
+              "id": "img",
+              "label": "Add your Image"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Add your Title"
+            },
+            {
+              "type": "textarea",
+              "id": "desc",
+              "label": "Add your Description"
+            },
+            {
+              "type": "text",
+              "id": "btn",
+              "label": "Add your Button Name"
+            },
+            {
+              "type": "url",
+              "id": "url",
+              "label": "Add your URL"
+            }
+        ]
+      }
+    ],
+    "presets":[
+      {
+        "name": "Two Box Section"
+      }
+    ]
+  }
+{% endschema %}

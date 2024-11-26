@@ -1,0 +1,135 @@
+<!--=================== List Collection Template ===================-->
+<main id="list-collectionsection--{{ section.id }}" class="list-collection-page	list-collection-page-template {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}" data-section-id="{{ section.id }}" data-section-type="list-collection-page-template">
+    <!--=================== Collection List Section ===================-->
+    <section class="list-collection-content text-center paira-gap-3 paira-gap-2">
+        <div class="container-fluid padding-fixed">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="heading pull-left full-width">
+                        <h1 class="page-header margin-bottom-0 text-left pull-left"><span>{{ 'collections.filter.title' | t }}</span></h1>
+                    </div>
+                </div>
+                {% paginate collections by section.settings.list_collection_limit %}
+                {% for collection in collections %}
+                <div class="col-sm-6 col-xs-12 margin-top-30 col-md-4">
+                    <div class="collection-item position-r">
+                        <a href="{{ collection.url }}" class="collec-im">
+                            {% if collection.image %}
+                            <img src="{{ collection.image.src | img_url: 'compact' }}" data-srcset="{% if collection.image %}{{ collection.image.src | img_url: 'compact' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 160w, {% if collection.image %}{{ collection.image.src | img_url: 'medium' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 240w, {% if collection.image %}{{ collection.image.src | img_url: '1024x1024' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %} 1000w" data-src="{% if collection.image %}{{ collection.image.src | img_url: '1024x1024' }}{% else %}{{ 'empty-collection.jpg' | asset_url }}{% endif %}" alt="{{ collection.title }}" data-sizes="auto" class="lazyload blur-up img-responsive">
+                            {% else %}
+                            {{ 'collection-1' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svgs height-338 ' }}
+                            {% endif %}
+                        </a>
+                        <div class="display-collection">
+                            <a href="{{ collection.url }}" class="back-link"></a>
+                            <div class="collect-over">
+                                <h4 class="margin-clear">
+                                    <a href="{{ collection.url }}">{{ collection.title }}</a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% if paginate.pages > 1 %}
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center margin-top-30">
+                    <!--=================== pagination ===================-->
+                    <ul class="list-inline pagination margin-clear">
+                        {% if paginate.previous %}
+                        <li><a href="{{paginate.previous.url}}" class="next-page"><i class="fa fa-angle-left"></i></a></li>
+                        {% else %}
+                        <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+                        {% endif %}
+                        {% for part in paginate.parts %}
+                        {% if part.is_link %}
+                        <li><a href="{{part.url}}"><span>{{ part.title }}</span></a></li>
+                        {% else %}
+                        <li class="active font-bold"><span>{{ part.title }}</span></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if paginate.next %}
+                        <li><a href="{{paginate.next.url}}" class="prev-page"><i class=" fa fa-angle-right"></i></a></li>
+                        {% else %}
+                        <li><a><i class=" fa fa-angle-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% endpaginate %}
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    $(window).load(function() {
+        var collect_heights = $(".collection-item img").height();
+        $(".display-table-collection").height(collect_heights);
+    });
+</script>
+<style>
+     #list-collectionsection--{{ section.id }} .collect-over {
+    background: {{ section.settings.back_collection | color_modify: 'alpha', 0.9 }};
+    }
+     #list-collectionsection--{{ section.id }} .collection-text .overlay {
+    background: {{ section.settings.back_collection | color_modify: 'alpha', 0.9 }};
+    }
+     #list-collectionsection--{{ section.id }} .collection-text h1,  #list-collectionsection--{{ section.id }} .collection-text p,  #list-collectionsection--{{ section.id }} .collect-over a, .collect-over h5{
+    color: {{ section.settings.back_collection_text_color }};
+    }
+     .collect-over-number {
+     background: {{ section.settings.back_collection | color_modify: 'alpha', 0.9 }};
+     }
+     .collect-over-number h5, .collect-over-number span{
+     color: {{ section.settings.back_collection_text_color }};
+     }
+     #list-collectionsection--{{ section.id }} .collection-item:hover .collect-over {
+    background: {{ section.settings.back_collection_h | color_modify: 'alpha', 0.9 }};
+    }
+     #list-collectionsection--{{ section.id }} .collection-item:hover .collect-over a,  #list-collectionsection--{{ section.id }} .collection-item:hover .collect-over h5{
+    color: {{ section.settings.back_collection_text_color_h }};
+    }
+     #list-collectionsection--{{ section.id }} .collection-item .back-link {
+         background: transparent;
+     }
+</style>
+{% schema %}
+{
+"name": "List Collection",
+"class": "list-collection-section list-collection-section--list-collection",
+"settings": [
+{
+"type": "range",
+"id": "list_collection_limit",
+"label": "List Collection Page Limit",
+"min": 4,
+"max": 32,
+"default": 6
+},
+{
+"type": "color",
+"id": "back_collection",
+"label": "Collection List Text Overlay Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "back_collection_text_color",
+"label": "Collection List Text Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "back_collection_h",
+"label": "Collection Hover Background Overlay Color",
+"default": "#F26522"
+},
+{
+"type": "color",
+"id": "back_collection_text_color_h",
+"label": "Collection Hover Text Color",
+"default": "#fff"
+}
+]
+}
+{% endschema %}
+

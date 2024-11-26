@@ -1,0 +1,228 @@
+<!--=================== Collection Products ===================-->
+<section class="collection-products small-products  text-left {% if section.settings.col_pro_section_gap_check %} paira-gap-2 {% endif %}" id="smallproductsection--{{ section.id }}">
+    <div class="container-fluid padding-fixed {% if section.settings.col_pro_full_width_check %}full-width{% endif %} wappers">
+        <div class="row {% if section.settings.col_pro_full_width_check %}margin-clear{% endif %}">
+            {% for block in section.blocks %}
+            <div class="col-sm-12 col-xs-6 for-slide {% if section.settings.per_row == '3' %} col-md-4{% endif %} {% if section.settings.per_row == '4' %}col-md-3{% endif %}">
+                <div class="heading pull-left full-width">
+                    <h4 class="margin-clear text-left pull-left"><span>{{block.settings.collection_products_title_1}}</span></h4>
+                </div>
+                {% if block.settings.top_sellers_small != blank %}
+                {% assign collection_product = collections[block.settings.top_sellers_small] %}
+                <div class="product-widget">
+                    <div class="products-wrapper">
+                        {% for product in collection_product.products limit: block.settings.collection_products_limit_1 %}
+                        <div class="col-md-12 col-sm-4 col-xs-12 margin-top-20 padding-clear">
+                            <!--=================== Product ===================-->
+                            <div class="paira-product product img">
+                                <div class="overflow-h pro-im position-r col-md-3 col-sm-3 col-xs-3 padding-clear" data-value="0">
+                                    <a href="{{ product.url }}" class="overflow-h">
+                                        {% if product.images.size >= 1%}
+                                        <img src="{{ product.featured_image | product_img_url: 'small' }}" class="paira-product-image img-responsive full-width main-product lazyload blur-up" alt="{{ product.title}}" data-srcset="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'small' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 160w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'compact' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 240w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 480w" data-src="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %}" data-sizes="auto">
+                                        {% else %}
+                                        {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                        {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                        {% endif %}
+                                    </a>
+                                    <div class="sale-stock">
+                                        {% if product.compare_at_price_max > product.price %}
+                                        {% assign cal_compare_price = product.compare_at_price_max | divided_by: 100 %}
+                                        {% assign cal_price = product.price | divided_by: cal_compare_price %}
+                                        {% assign cal_price_percentage = cal_price | minus: 100 %}
+                                        <div class="product-sale"><span>{{ cal_price_percentage | round }}%</span></div>
+                                        {% endif %}
+                                        {% if product.variants.size <= 1 %}
+                                        {% for variant in product.variants %}
+                                        {% assign product_inventory_management = variant.inventory_management %}
+                                        {% assign product_inventory_policy = variant.inventory_policy %}
+                                        {% assign product_quantity_item = variant.inventory_quantity.product_quantity_item %}
+                                        {% endfor %}
+                                        {% endif %}
+                                        {% if product.variants.first.inventory_management == 'shopify' and product.variants.first.inventory_quantity <= 0 %}
+                                        <div class="product-stock-out"><span>{{ 'products.product.stock_out' | t }}</span></div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="product-title-price col-md-9 col-sm-9 col-xs-9 padding-right-0 padding-left-15 padding-top-0">
+                                    {% if settings.enable_review %}
+                                    <div class="pro-reating margin-top-0 margin-bottom-5">
+                                        <div class="paira-rating-con product-rating">
+                                            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <h5 class="margin-bottom-0 vendor margin-top-0">{{ product.vendor }}</h5>
+                                    <h2 class="margin-top-5 margin-bottom-0"><a href="{{ product.url }}" title="{{ product.title }}" class="paira-product-title">{{ product.title | truncate: 20, '' }}</a></h2>
+                                    <div class="text-left margin-top-5">
+                                        {% if product.compare_at_price_max > product.price %}
+                                        <div class="display-in-b margin-right-5"><del><span class="money">{{ product.compare_at_price | money }}</span></del></div>
+                                        <div class="display-in-b"><span class="money">{{ product.price | money }}</span></div>
+                                        {% else %}
+                                        <span class="money">{{ product.price | money }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="product-widget">
+                    <div class="products-wrapper">
+                        {% for product in (1..block.settings.collection_products_limit_1) %}
+                        <div class="col-md-12 col-sm-4 col-xs-12 margin-top-20 padding-clear">
+                            <div class="product img">
+                                <div class="overflow-h pro-im position-r col-md-3 col-sm-3 col-xs-3 padding-clear" data-value="0">
+                                    <a href="#" class="overflow-h">
+                                        {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                        {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                    </a>
+                                </div>
+                                <div class="product-title-price col-md-9 col-sm-9 col-xs-9 padding-right-0 padding-left-15 padding-top-0">
+                                    <h5 class="margin-bottom-0 vendor margin-top-0">Calvin Klein</h5>
+                                    <h2 class="margin-top-5 margin-bottom-0"><a href="#" title="Blazer Open Front" class="paira-product-title">Your product's name</a></h2>
+                                    <div class="text-left margin-top-5" style="margin-bottom: 0">
+                                        <span class="money">$100.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center hidden-sm hidden-lg hidden-md another-btn">
+            <div class="swiper-button-prev swiper-button-prev-14--{{ section.id }}"><i class="fa fa-angle-left"></i></div>
+            <div class="swiper-button-next swiper-button-next-14--{{ section.id }}"><i class="fa fa-angle-right"></i></div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function() {
+        var windowsize = $(window).width();
+        if (windowsize <= 767) {
+            $('.wappers').addClass("swiper-container s14");
+            $('.small-products .row').addClass("swiper-wrapper");
+            $('.small-products .for-slide').addClass("swiper-slide");
+            var swiper = new Swiper('.swiper-container.s14', {
+                navigation: {
+                    nextEl: '.swiper-button-next-14--{{ section.id }}',
+                    prevEl: '.swiper-button-prev-14--{{ section.id }}'
+                },
+                slidesPerView: 2,
+                spaceBetween: 15,
+                freeMode: true,
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true
+                },
+                breakpoints: {
+                    480: {
+                        slidesPerView: 1,
+                        spaceBetween: 30
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% schema %}
+{
+"name": "Small Products",
+"class": "index-section index-section--smallproductsection",
+"max_blocks": 4,
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "col_pro_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "col_pro_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Products Row Number"
+},
+{
+"type": "select",
+"id": "per_row",
+"label": "Row Number",
+"options": [
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}
+],
+"default": "4"
+}
+],
+"blocks": [
+{
+"type": "text",
+"name": "Collection Products",
+"settings": [
+{
+"type": "text",
+"id": "collection_products_title_1",
+"label": "Collection Products Title",
+"default": "New Products"
+},
+{
+"type": "range",
+"id": "collection_products_limit_1",
+"label": "Collection Products Limit",
+"min": 3,
+"max": 6,
+"default": 3
+},
+{
+"type": "collection",
+"id": "top_sellers_small",
+"label": "Select Collection For Products"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Small Products",
+"category": "Products",
+"blocks": [
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+}
+]
+}
+]
+}
+{% endschema %}

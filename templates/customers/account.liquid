@@ -1,0 +1,407 @@
+<!-- =================== Customer Account Template =================== -->
+<main class="account-page {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}">
+  <section class="account-content paira-gap-3 paira-gap-2">
+    <div class="container-fluid padding-fixed">
+      <div class="row margin-clear">
+        <div class="container account-page">
+          <div class="col-md-12 col-sm-12 col-xs-12 page-title">
+            <div class="heading pull-left full-width">
+              <h1 class="page-header margin-bottom-0 text-left pull-left">
+                <span>{{ 'customer.account.title' | t }}</span>
+              </h1>
+            </div>
+          </div>
+          
+          <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10 order-history">
+            <div style="align-items: center;display:flex; gap:10px;"><h3 style="margin:0px">{{ 'customer.orders.title' | t }} </h3> (<a style="text-decoration:underline;" href="/apps/draft-invoices">View Reserve Orders</a>)</div>
+            <hr class="margin-top-10">
+            {% if customer.orders.size != 0 %}
+              <div class="table-responsive order-table">
+                <table class="table table-hover table-striped">
+                  <thead class="text-uppercase">
+                    <tr>
+                      <th>{{ 'customer.orders.order_number' | t }}</th>
+                      <th>{{ 'customer.orders.date' | t }}</th>
+                      <th>{{ 'customer.orders.payment_status' | t }}</th>
+                      <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                      <th>{{ 'customer.orders.total' | t }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for order in customer.orders %}
+                      <tr class="{% if order.cancelled %}danger{% endif %}">
+                        <td>{{ order.name | link_to: order.customer_url }}</td>
+                        <td>{{ order.created_at | date: format: 'short' }}</td>
+                        <td>{{ order.financial_status_label }}</td>
+                        <td>{{ order.fulfillment_status_label }}</td>
+                        <td>
+                          <span class="money">{{ order.total_price | money }}</span>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <h5>{{ 'customer.orders.none' | t }}</h5>
+            {% endif %}
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 margin-top-10 account-deatails">
+            <h3>{{ 'customer.account.details' | t }}</h3>
+            <hr class="margin-top-10">
+            <h4>{{ 'contact.form.form_name' | t }}: {{ customer.name }}</h4>
+            <p>{{ 'contact.form.form_email' | t }}: {{ customer.email }}</p>
+            {% if customer.default_address != null %}
+              <p>{{ 'customer.addresses.title' | t }}: {{ customer.default_address.address1 }}</p>
+              {% if customer.default_address.address2 != '' %}
+                <p>{{ customer.default_address.address2 }}</p>
+              {% endif %}
+              <p>
+                {{ 'customer.addresses.city' | t }}: {{ customer.default_address.city }},
+                {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}
+              </p>
+              <p>{{ 'customer.addresses.country' | t }}: {{ customer.default_address.country }}</p>
+              <p>{{ 'customer.addresses.zip' | t }}: {{ customer.default_address.zip }}</p>
+              <p>{{ 'customer.addresses.phone' | t }}: {{ customer.default_address.phone }}</p>
+            {% endif %}
+            <a class="btn btn-default" href="/account/addresses">{{ 'customer.account.view_addresses' | t }}</a>
+            <br>
+            {% if customer.metafields.custom.isseller != blank OR customer.metafields.custom.isseller == false %}
+            <div class="account-show-wrapper">
+              <h3>Bank Details</h3>
+              <hr class="margin-top-10">
+              <p><strong>Account Holder Name:</strong> {{ customer.metafields.custom.account_holder_name }}</p>
+              <p><strong>Bank Name:</strong> {{ customer.metafields.custom.bank_name }}</p>
+              <p><strong>Account Number:</strong> {{ customer.metafields.custom.account_number }}</p>
+              <p><strong>IFSC Code:</strong> {{ customer.metafields.custom.ifsc_code }}</p>
+              <p><strong>Swift Code:</strong> {{ customer.metafields.custom.swift_code }}</p>
+              <p><strong>MICR Code:</strong> {{ customer.metafields.custom.micr_code }}</p>
+              <p><strong>Branch Name:</strong> {{ customer.metafields.custom.branch_name }}</p>
+              <p><strong>Contact Number:</strong> {{ customer.metafields.custom.contact_number_ac }}</p>
+              <p><strong>Country:</strong> {{ customer.metafields.custom.country }}</p>
+            </div>
+            <div class="account-form-btn-wrapper">
+              <p class="edit-form">Edit</p>
+            </div>
+            
+            <form id="bankAccountForm">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" class="form-control" id="country" name="country" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="contactNumber" class="form-label">Contact Number</label>
+                    <input type="number" class="form-control" id="contactNumber" name="contact_number" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="branchName" class="form-label">Branch Name</label>
+                    <input type="text" class="form-control" id="branchName" name="branch_name" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="micrCode" class="form-label">MICR Code</label>
+                    <input type="text" class="form-control" id="micrCode" name="micr_code" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="swiftCode" class="form-label">Swift Code</label>
+                    <input type="text" class="form-control" id="swiftCode" name="swift_code" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="ifscCode" class="form-label">IFSC Code</label>
+                    <input type="text" class="form-control" id="ifscCode" name="ifsc_code" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="accountNumber" class="form-label">Account Number</label>
+                    <input type="number" class="form-control" id="accountNumber" name="account_number" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="bankName" class="form-label">Bank Name</label>
+                    <input type="text" class="form-control" id="bankName" name="bank_name" required>
+                </div>
+                <div class="col-12">
+                    <label for="accountHolderName" class="form-label">Account Holder Name</label>
+                    <input type="text" class="form-control" id="accountHolderName" name="account_holder_name" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+              {% endif %}
+          </div>
+  <div id="wk-view-bidding-detail" cust-id="{{ customer.id }}"></div>
+          <div class="col-md-6 col-sm-6 col-xs-12 margin-top-10 seller-dashboard">
+            {% assign userID = customer.id %}
+            {% assign email = customer.email %}
+            {% assign current_time = 'now' | date: '%Y-%m-%d %H:%M:%S.%6N' %}
+            {% assign tmpToken = userID | append: ':' | append: email | append: ':' | append: current_time %}
+            {% assign base64token = tmpToken | base64_encode %}
+
+            <center><h3>Seller Dashboard</h3></center>
+            <hr class="margin-top-10">
+            {% if customer.metafields.custom.isseller != blank OR customer.metafields.custom.isseller == false %}
+              <style>
+                /* Modal styling */
+                .cu-seller-modal {
+                  display: none;
+                  position: fixed;
+                  z-index: 1000;
+                  left: 0;
+                  top: 0;
+                  width: 100%;
+                  height: 100%;
+                  overflow: auto;
+                  background-color: rgba(0,0,0,0.5);
+                }
+                .cu-seller-modal-content {
+                  background-color: #fff;
+                  margin: 10% auto;
+                  padding: 20px;
+                  border: 1px solid #888;
+                  width: 80%;
+                  max-width: 600px;
+                }
+                .cu-seller-close {
+                  color: #aaa;
+                  float: right;
+                  font-size: 28px;
+                  font-weight: bold;
+                }
+                .cu-seller-close:hover,
+                .cu-seller-close:focus {
+                  color: black;
+                  text-decoration: none;
+                  cursor: pointer;
+                }
+                .cu-seller-iframe {
+                  width: 100%;
+                  height: 400px;
+                  border: none;
+                  display: none;
+                }
+              </style>
+              
+       <!--/* write CSS for seller dashboard responsiveness by Alam */-->
+       <style>
+          .seller-pop-item-wrapper {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px; /* Adjust spacing between items as needed */
+          padding: 0;
+          margin: 0;
+          list-style: none;
+                                }
+
+.seller-pop-item-wrapper .item {
+    flex: 1 1 calc(50% - 10px);
+    box-sizing: border-box; 
+}
+
+.seller-pop-item-wrapper .item a {
+    display: block;
+    padding: 10px;
+    background-color: #f0f0f0;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.seller-pop-item-wrapper .item a:hover {
+    background-color: #800000;color:#fff /* Hover effect */
+}
+
+/* Specific Styling for the "Add New Item" */
+.seller-pop-item-wrapper .item:first-child {
+    flex: 1 1 100%; /* Make the first item full width */
+}        
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .seller-pop-item-wrapper .item {
+        flex: 1 1 100%; /* Stack all items on smaller screens */
+    }
+}
+</style>
+
+              <ul class="nav items seller-pop-item-wrapper">
+                <li class="nav item">
+                  <a href="/items/{{ userID }}/add-item">Add New Item</a>
+                </li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/under_processing">Under Processing</a></li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/approved">Approved</a></li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/rejected">Rejected</a></li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/pickup_request">Pickup Request</a></li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/pickup_received">Pickup Received</a></li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/listed">Listed</a></li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/sold">Sold</a></li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/return">Return</a></li>                
+                <li class="nav item"><a href="/items/status/{{ userID }}/payment_processing">Payment Processing</a></li>
+                <li class="nav item"><a href="/items/status/{{ userID }}/payment_done">Payment Done</a></li>
+              </ul>
+              <div class="seller-pop-iframe-wrapper">
+                  <div class="seller-pop-iframe">
+                    <p class="seller-pop-iframe-close">x</p>
+                    <iframe src="https://staff.confidentialcouture.com/items/{{ userID }}/add-item"></iframe>
+                  </div>
+              </div>
+              <script>
+                jQuery('ul.nav.items.seller-pop-item-wrapper a').click((event) => {
+                    event.preventDefault();
+                    let iframeLink = 'https://ccadminsync.naveenrao.com' + jQuery(event.currentTarget).attr('href');
+                    jQuery('.seller-pop-iframe iframe').attr('src', iframeLink);
+                    setTimeout(() => {
+                        jQuery('.seller-pop-iframe-wrapper').addClass('active');
+                    },200);
+                });
+                jQuery('.seller-pop-iframe p.seller-pop-iframe-close').click((event) => {
+                    event.preventDefault();
+                    jQuery('.seller-pop-iframe-wrapper').removeClass('active');
+                });
+              </script>
+              <style>
+                .seller-pop-iframe-wrapper {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: #00000026;
+                    z-index: 9999;
+                }
+                
+                .seller-pop-iframe {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%,-50%);
+                    background: white;
+                    width: 80%;
+                    height: 80%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                
+                .seller-pop-iframe p.seller-pop-iframe-close {
+                    position: absolute;
+                    right: 25px;
+                    top: 25px;
+                    font-size: 25px;
+                    background: #0000008a;
+                    color: white;
+                    height: 30px;
+                    width: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0;
+                    line-height: 25px;
+                    cursor: pointer;
+                }
+                
+                .seller-pop-iframe p.seller-pop-iframe-close:hover {
+                    background: black;
+                }
+                
+                .seller-pop-iframe iframe {
+                    width: 95%;
+                    height: 95%;
+                    border: 0;
+                    display: block;
+                }
+                
+                .seller-pop-iframe-wrapper {
+                    display: none;
+                }
+                
+                .seller-pop-iframe-wrapper.active {
+                    display: block;
+                }
+                @media only screen and (max-width: 1000px) {
+                    .seller-pop-iframe {
+                          width: 90%;
+                          height: 95%;
+                      }
+                  }
+              </style>
+              <script>
+                jQuery('p.edit-form').click(() => {
+                    jQuery('form#bankAccountForm').toggleClass('active');
+                });
+              $(document).ready(function() {
+    $('#bankAccountForm').submit(function(e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        // Disable the submit button to prevent multiple submissions
+        $('button[type="submit"]').prop('disabled', true);
+
+        // Collect form data
+        var formData = $(this).serialize();
+
+        // Perform the AJAX call
+        $.ajax({
+            url: 'https://staff.confidentialcouture.com/customer/' + {{ userID }} + '/update-bank-account', // Replace with your actual API endpoint
+            type: 'POST',
+            data: formData,
+            headers: {
+              'X-Token': "{{base64token}}"
+            },
+            dataType: 'json',
+            success: function(response) {
+                // Handle successful response
+                console.log('Success:', response);
+                alert('Bank Detail update successfully');
+                window.location.reload();
+                
+                // Optionally, you can reset the form here
+                // $('#bankAccountForm')[0].reset();
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error('Error:', error);
+                alert('An error occurred while updating bank account details. Please try again.');
+            },
+            complete: function() {
+                // Re-enable the submit button
+                $('button[type="submit"]').prop('disabled', false);
+            }
+        });
+    });
+});
+            </script>
+            {% else %}
+              <label style="font-weight: 700;font-family: 'Outfit';"> <input type="checkbox" name="become_seller" id="become_seller"> Become a Seller </label>
+
+              <script>
+                $(document).ready(function() {
+                  $('#become_seller').change(function() {
+                    $.ajax({
+                      url: 'https://staff.confidentialcouture.com/customer/' + {{ userID }} + '/update-metafield',
+                      type: 'GET',
+                      headers: {
+                        'X-Token': "{{base64token}}"
+                      },
+                      success: function(response, status, xhr) {
+                        if (xhr.status === 200) {
+                          location.reload(); // Refresh the page on success
+                        } else {
+                          console.error('Error:', response.error);
+                        }
+                      },
+                      error: function(xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                      }
+                    });
+                  });
+                });
+              </script>
+            {% endif %}
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,489 @@
+<header data-section-id="{{ section.id }}" data-section-type="header-section" class="{{ section.id }}">
+    {% if section.settings.welcome_message_notify_check %}
+    <div class="background-color" style="background: {{ section.settings.geo_text_bg }};padding: 8px;">
+        <div class="container-fluid padding-fixed">
+            <div class="margin-clear geo-text pull-left hidden-xs" style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.geo_text_font }}px">{{ section.settings.geo_text }} <span class="paira-country-flag flag" style="display: none;"></span> <span class="paira-geo-country"></span></div>
+            <marquee behavior="scroll" direction="left" class="margin-clear geo-text pull-left hidden-lg hidden-md hidden-sm" style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.geo_text_font }}px">{{ section.settings.geo_text }} <span class="paira-country-flag flag" style="display: none;"></span> <span class="paira-geo-country"></span></marquee>
+            <div class="compare-cart-wishs pull-right">
+                <div class="text-left margin-bottom-0 pull-left contact-number hidden-xs">
+                    {% if section.settings.phone_heads %}
+                    <span style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.geo_text_font }}px">{{ section.settings.phone_heads_heading }}</span>
+                    {% endif %}
+                    {% if section.settings.time %}
+                    <span class="mail">
+                        {% if section.settings.time_icon %}{% endif %}<a style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.geo_text_font }}px" href="mailto:{{ section.settings.mail_links }}">{{ section.settings.dati_texts }}</a>
+                    </span>
+                    {% endif %}
+                </div>
+                {% if section.settings.language_check %}
+                <div id="google_translate_element"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if section.settings.header_top_check %}
+    <!--=================== Header Top Section ===================-->
+    <div class="header-top" style="background: {{ section.settings.header_top_bg }}">
+        <div class="container-fluid padding-fixed">
+            <div class="row">
+                <div class="col-md-12">
+                    {% if section.settings.site_logo %}
+                    <div class="logo-text pull-left">
+                        {% if section.settings.select_header_logo == '1' %}
+                        <a href="/">
+                            <img src="{% if section.settings.logo == blank %}{{ 'logo.png' | asset_url }}{% else %}{{ section.settings.logo | img_url: 'master' }}{% endif %}" class="img-responsive"  alt="{{ shop.name }}">
+                        </a>
+                        {% else %}
+                        <h2 class="margin-bottom-5 margin-top-5"><a href="/" style="color: {{ section.settings.logo_text_color }};">{{ section.settings.header_logo_text }}</a></h2>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="pull-right hidden-xs">
+                        {% if section.settings.search %}
+                        <div class="search-frm pull-left position-r margin-right-5">
+                            <!--=================== Search Form ===================-->
+                            <form class="navbar-form" action="/search">
+                                <div class="form-group">
+                                    <input type="text" name="q" class="form-control" autocomplete="off" id="instant-search" placeholder="{{ 'header.search.shopping_for' | t }}" value="{{ search.terms }}">
+                                    <input type="hidden" class="header-search-input" name="type" value="product">
+                                </div>
+                                <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
+                            </form>
+                            <div class="instant-search-data" style="display: none">
+                                <ul class="list-unstyled dropdown-menu"></ul>
+                                <img src="{{ 'search-loading.gif' | asset_url }}" alt="Loading image" class="search-loading" style="display: none">
+                            </div>
+                        </div>
+                        {% endif %}
+                        <ul class="list-inline margin-clear pull-left log-usd-compare">
+                            {% if section.settings.login != blank or section.settings.register != blank %}
+                            {% if shop.customer_accounts_enabled %}
+                            <li class="dropdown account-drop-ul compares">
+                                <a href="#" class="account-drop"><i class="fa fa-user-o"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-left">
+                                    {% if section.settings.login %}
+                                    <li>
+                                        {% if customer %}
+                                        <a href="/account/logout" id="customer_logout_link">{{ 'header.account.logout' | t }}</a>
+                                        {% else %}
+                                        <a href="/account/login">{{ 'header.account.login' | t }}</a>
+                                        {% endif %}
+                                    </li>
+                                    {% endif %}
+                                    {% if section.settings.register %}
+                                    {% if customer %}
+                                    <li><a href="/account">{{ 'header.account.account' | t }}</a></li>
+                                    {% else %}
+                                    <li><a href="/account/register">{{ 'header.account.register' | t }}</a></li>
+                                    {% endif %}
+                                    {% endif %}
+                                </ul>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                            {% if settings.compare %}
+                            {% if section.settings.compare %}
+                            <li class="com-back"><a href="{% if settings.compare_page == blank %}# {% else %}/pages/{{settings.compare_page}}{% endif %}" class="{% if settings.compare_page == blank %} paira-compare-null{% endif %}"><i class="fa fa-balance-scale"></i></span><span class="compare"></span></a></li>
+                            {% endif %}
+                            {% endif %}
+                            {% if settings.wishlist %}
+                            {% if section.settings.wishlist %}
+                            <li class="com-back">
+                                <a href="{% if settings.wishlst_page == blank %}# {% else %}/pages/{{settings.wishlst_page}}{% endif %}" class="{% if settings.wishlst_page == blank %} paira-wish-null{% endif %}"><i class="fa fa-heart-o"></i></a>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                            {% if settings.currencies %}
+                            {% if section.settings.currencies %}
+                            <li class="courenccy">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm" data-toggle="dropdown"><span class="paira-currency-symbol symbols"><i class="fa fa-{{ settings.default_currency | downcase }}"></i></span> <span class="paira-currency-text">{{ settings.default_currency }}</span> <i class="angle-down fa fa-angle-down"></i></button>
+                                    {% include 'currencies-switcher' %}
+                                </div>
+                            </li>
+                            {% else %}
+                            <li style="display: none !important;">
+                            {% include 'currencies-switcher' %}
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div style="display: none !important;">
+    {% include 'currencies-switcher' %}
+    </div>
+    {% endif %}
+</header>
+{% if section.settings.language_check %}
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: '{{shop.locale}}', includedLanguages: '{{ section.settings.supported_language }}', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+    }
+    $(function() {
+        $('#google_translate_element').on("click", function () {
+            $("iframe.goog-te-menu-frame").contents().find('body').attr('style', 'overflow-x: hidden;');
+            $("iframe.goog-te-menu-frame").contents().find(".goog-te-menu2-item div, .goog-te-menu2-item:link div, .goog-te-menu2-item:visited div, .goog-te-menu2-item:active div, .goog-te-menu2 *")
+                    .css({
+                        'color': '#544F4B',
+                        'width':'100%'
+                    });
+            $("iframe.goog-te-menu-frame").contents().find('.goog-te-menu2-item-selected').css ('display', 'none');
+            $("iframe.goog-te-menu-frame").contents().find('.goog-te-menu2').css ({"padding":"0","overflow-y":"auto"});
+            $("iframe.goog-te-menu-frame").contents().find('.goog-te-menu2-item div').css('padding', '5px');
+            $("iframe.goog-te-menu-frame").contents().find('table').css('padding', '10px');
+            $("iframe.goog-te-menu-frame").contents().find('.goog-te-menu2-item').css('width', '100%');
+            $("iframe.goog-te-menu-frame").contents().find('td').css('width', '100%');
+            $("iframe.goog-te-menu-frame").contents().find(".goog-te-menu2-item div").hover(function () {
+                $(this).css('background-color', 'white').find('span.text').css({"color":"#d9121f","text-decoration":"underline"});
+            }, function () {
+                $(this).css('background-color', 'white').find('span.text').css({"color":"#1a1c15","text-decoration":"none"});
+            });
+            $("iframe.goog-te-menu-frame").contents().find('.goog-te-menu2').css('border', 'none');
+            $("iframe.goog-te-menu-frame").contents().find('.goog-te-menu2').css({
+                'height': '100%',
+                'width': '100%'
+            });
+        });
+    });
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+{% endif %}
+<style>
+    .geo-text p a{
+    color: {{ section.settings.geo_text_color }} !important;
+    }
+    .geo-text p a:hover, .background-color a:hover, .menus .btn:hover {
+    color: {{ section.settings.geo_text_color_h }} !important;
+    text-decoration: underline;
+    }
+    .background-color ul li{
+    color: {{ section.settings.geo_text_color | color_modify: 'alpha', 0.3 }} !important;
+    }
+
+    .header-top ,.header-top a, .header-top ul .btn, .header-top ul .btn.disabled, .header-top ul .btn:active{
+    color: {{ section.settings.top_header_text_color }};
+    }
+    .header-top a:hover, .header-top ul .btn:hover span, .header-top ul .btn:hover i{
+    color: {{ section.settings.top_header_text_hover_color }};
+    }
+    .search-frm input{
+    background: {{ section.settings.search_bg_color }};
+    border-color: {{ section.settings.search_bor_color }};
+    color: {{ section.settings.search_text_color }};
+    }
+    .search-frm .input-group-btn:first-child>.btn, .search-frm .input-group-btn:first-child>.btn-group {
+    background: {{ section.settings.search_bg_color }};
+    color: {{ section.settings.search_text_color }};
+    border-color: {{ section.settings.search_bor_color }};
+    border-color: {{ section.settings.search_text_color | color_modify: 'alpha', 0.12 }};
+    }
+    .compares .account-drop, .courenccy .symbols .fa, .com-back a{
+    background: {{ section.settings.search_bg_color }};
+    border-color: {{ section.settings.search_bor_color }};
+    color: {{ section.settings.search_text_color }};
+    }
+    .compares .account-drop:hover, .courenccy:hover .symbols .fa, .com-back a:hover {
+    background: {{ section.settings.search_bg_color_h }};
+    border-color: {{ section.settings.search_bor_color_h }};
+    color: {{ section.settings.search_text_color_h }};
+    }
+    .search-frm .search-btn {
+    color: {{ section.settings.search_text_color }};
+    }
+    .search-frm .search-btn:hover {
+    color: {{ section.settings.top_header_text_hover_color }};
+    }
+    .search-frm ::-webkit-input-placeholder{
+    color: {{ section.settings.search_text_color | color_modify: 'alpha', 0.6 }} !important;
+    }
+    .search-frm ::-moz-placeholder{
+    color: {{ section.settings.search_text_color | color_modify: 'alpha', 0.6 }} !important;
+    }
+    .search-frm :-ms-input-placeholder{
+    color: {{ section.settings.search_text_color | color_modify: 'alpha', 0.6 }} !important;
+    }
+    .search-frm :-moz-placeholder{
+    color: {{ section.settings.search_text_color | color_modify: 'alpha', 0.6 }} !important;
+    }
+    .goog-te-gadget-simple .goog-te-menu-value, .goog-te-gadget-simple .goog-te-menu-value span {
+    color: {{ section.settings.geo_text_color }};
+    }
+    .goog-te-gadget-simple {
+    font-size: {{ section.settings.geo_text_font }}px;
+    }
+    .goog-te-gadget-simple .goog-te-menu-value span:hover {
+    color: {{ section.settings.geo_text_color_h }} !important;
+    }
+    {% if section.settings.language_check == blank %}
+    @media only screen and (max-width:767px) {
+        header .logo-text {
+            float: none !important;
+            text-align: center;
+            width: 100%;
+            margin: 0;
+        }
+    }
+    {% endif %}
+</style>
+{% schema %}
+{
+"name": "Header Style 2",
+"settings": [
+{
+"type": "header",
+"content": "Top Header"
+},
+{
+"type": "checkbox",
+"id": "welcome_message_notify_check",
+"label": "Enable Top Header",
+"default": true
+},
+{
+"type": "color",
+"id": "geo_text_bg",
+"label": "Select Background Color",
+"default": "#000000"
+},
+{
+"type": "color",
+"id": "geo_text_color",
+"label": "Select Text Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "geo_text_color_h",
+"label": "Select Text Hover Color",
+"default": "#F26522"
+},
+{
+"type": "richtext",
+"id": "geo_text",
+"label": "Shipping Text",
+"default": "<p>Special Offer: Get $50 Cash Back for First Order to</p>"
+},
+{
+"type": "range",
+"id": "geo_text_font",
+"label": "Shipping Text Font Size",
+"min": 12,
+"max": 30,
+"default": 13
+},
+{
+"type": "header",
+"content": "Contact Mail"
+},
+{
+"type": "checkbox",
+"id": "phone_heads",
+"label": "Enable Contact Mail Heading",
+"default": true
+},
+{
+"type": "text",
+"id": "phone_heads_heading",
+"label": "Heading",
+"default": "Contact Us?"
+},
+{
+"type": "checkbox",
+"id": "time",
+"label": "Enable Support Mail",
+"default": true
+},
+{
+"type": "text",
+"id": "dati_texts",
+"label": "Support Mail",
+"default": "support@themetidy.com"
+},
+{
+"type": "text",
+"id": "mail_links",
+"label": "Support Mail Link",
+"default": "support@themetidy.com"
+},
+{
+"type": "header",
+"content": "Language Setting"
+},
+{
+"type": "checkbox",
+"id": "language_check",
+"label": "Enable Language",
+"default": true
+},
+{
+"type": "text",
+"id": "supported_language",
+"label": "Add Language",
+"default": "en,hi,zh-CN,fr,de,it,es",
+"info": "Use \",\" when add multiple language For ex: en,hi"
+},
+{
+"type": "paragraph",
+"content": "For copy ISO 639-1 code [Click Here](https:\/\/en.wikipedia.org\/wiki\/List_of_ISO_639-1_codes)"
+},
+{
+"type": "header",
+"content": "Middle Header"
+},
+{
+"type": "checkbox",
+"id": "header_top_check",
+"label": "Enable Middle Header",
+"default": true
+},
+{
+"type": "color",
+"id": "header_top_bg",
+"label": "Select Background Color",
+"default": "#FFFFFF"
+},
+{
+"type": "color",
+"id": "top_header_text_color",
+"label": "Select Text Color",
+"default": "#686868"
+},
+{
+"type": "color",
+"id": "top_header_text_hover_color",
+"label": "Select Text Hover Color",
+"default": "#000000"
+},
+{
+"type": "color",
+"id": "search_bg_color",
+"label": "Search Bar, Compare, User, Currency, Wishlist Background Color",
+"default": "#FFFFFF"
+},
+{
+"type": "color",
+"id": "search_bor_color",
+"label": "Search Bar, Compare, User, Currency, Wishlist Border Color",
+"default": "#DCDCDC"
+},
+{
+"type": "color",
+"id": "search_text_color",
+"label": "Search Bar, Compare, User, Currency, Wishlist Text Color",
+"default": "#2E2E2E"
+},
+{
+"type": "color",
+"id": "search_bg_color_h",
+"label": "Compare, User, Currency, Wishlist Hover Background Color",
+"default": "#F26522"
+},
+{
+"type": "color",
+"id": "search_bor_color_h",
+"label": "Compare, User, Currency, Wishlist Hover Border Color",
+"default": "#F26522"
+},
+{
+"type": "color",
+"id": "search_text_color_h",
+"label": "Compare, User, Currency, Wishlist Hover Text Color",
+"default": "#fff"
+},
+{
+"type": "header",
+"content": "Logo"
+},
+{
+"type": "checkbox",
+"id": "site_logo",
+"label": "Enable Logo",
+"default": true
+},
+{
+"type": "radio",
+"id": "select_header_logo",
+"label": "Select Logo",
+"options": [
+{
+"value": "1",
+"label": "Logo Image"
+},
+{
+"value": "2",
+"label": "Logo Text"
+}
+],
+"default": "1"
+},
+{
+"type": "image_picker",
+"id": "logo",
+"label": "Image",
+"info": "Height: 40px recommended"
+},
+{
+"type": "text",
+"id": "header_logo_text",
+"label": "Input Logo Text",
+"default": "Logo"
+},
+{
+"type": "color",
+"id": "logo_text_color",
+"label": "logo Text Color",
+"default": "#000"
+},
+{
+"type": "checkbox",
+"id": "search",
+"label": "Enable Search",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "currencies",
+"label": "Enable Currency",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "compare",
+"label": "Enable Compare",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "wishlist",
+"label": "Enable Wishlist",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "login",
+"label": "Enable Login",
+"default": true
+},
+{
+"type": "paragraph",
+"content": "## If You Enable Login then must Enable Customer accounts."
+},
+{
+"type": "checkbox",
+"id": "register",
+"label": "Enable Register",
+"default": true
+},
+{
+"type": "paragraph",
+"content": "## If You Enable Register then must Enable Customer accounts."
+}
+]
+}
+{% endschema %}

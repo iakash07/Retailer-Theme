@@ -1,0 +1,119 @@
+<style>
+/* Default styles (Desktop) css code by Alam */
+.about-1 img.d-only, .about-2 img.d-only, .about-3 img.d-only {
+  display: block;
+}
+
+.about-1 img.m-only, .about-2 img.m-only, .about-3 img.m-only {
+  display: none;
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .about-1 img.d-only, .about-2 img.d-only, .about-3 img.d-only {
+    display: none;
+  }
+
+  .about-1 img.m-only, .about-2 img.m-only, .about-3 img.m-only {
+    display: block;
+  }
+}
+</style>
+
+<div class="about-us-images">
+  <div class="ctm-container">
+    {% if section.settings.img1 != blank %}
+    <div class="about-1 mb-40">
+      <img src="{{ section.settings.img1 | img_url: "master" }}" class="d-only">
+      <img src="{{ section.settings.img2 | img_url: "master" }}" class="m-only">
+    </div>
+    {% endif %}
+    
+    {% if section.settings.img3 != blank %}
+    <div class="about-1 mb-40">
+      <img src="{{ section.settings.img3 | img_url: "master" }}" class="d-only">
+      <img src="{{ section.settings.img4 | img_url: "master" }}" class="m-only">
+    </div>
+    {% endif %}
+    
+    {% if section.settings.img5 != blank %}
+    <div class="about-2 mb-40">
+      <h2 class="ctm-head">{{ section.settings.title1 }}</h2>
+      <img src="{{ section.settings.img5 | img_url: "master" }}" class="d-only">
+      <img src="{{ section.settings.img6 | img_url: "master" }}" class="m-only">
+    </div>
+    {% endif %}
+    
+    {% if section.settings.img7 != blank %}
+    <div class="about-3 mb-40">
+      <h2 class="ctm-head">{{ section.settings.title2 }}</h2>
+      <img src="{{ section.settings.img7 | img_url: "master" }}" class="d-only">
+      <img src="{{ section.settings.img8 | img_url: "master" }}" class="m-only">
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "About Us Images Section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "img1",
+        "label": "Add Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "img2",
+        "label": "Add Mobile Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "img3",
+        "label": "Add Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "img4",
+        "label": "Add Mobile Image"
+      },
+      {
+        "type": "text",
+        "id": "title1",
+        "label": "Add Title",
+        "default": "Main Heading"
+      },
+      {
+        "type": "image_picker",
+        "id": "img5",
+        "label": "Add Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "img6",
+        "label": "Add Mobile Image"
+      },
+      {
+        "type": "text",
+        "id": "title2",
+        "label": "Add Title",
+        "default": "Main Heading"
+      },
+      {
+        "type": "image_picker",
+        "id": "img7",
+        "label": "Add Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "img8",
+        "label": "Add Mobile Image"
+      }
+    ],
+    "presets":[
+      {
+        "name": "About Us Images Section"
+      }
+    ]
+  }
+{% endschema %}

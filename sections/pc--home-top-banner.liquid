@@ -1,0 +1,50 @@
+<section>
+  <div class="home_top_banner_wrapper">
+    <div class="container">
+      <div class="home_top_banner_col">
+        {% for block in section.blocks %}
+          {% if block.settings.btn_text != blank  %}
+            <div class="home_top_banner_box">
+              <div class="home_top_banner_box_in">
+                <a href="{{ block.settings.btn_url }}">
+                  {{ block.settings.btn_text }}
+                </a>
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Home Top Banner",
+    "settings": [],
+    "blocks": [
+      {
+        "type"  : "text-block",
+        "name" : "Text Block",
+        "settings": [
+          {
+            "type"  : "url",
+            "id"  : "btn_url",
+            "label" : "Button Url"
+          },
+          {
+            "type"  : "text",
+            "id"  : "btn_text",
+            "label" : "Button Text"
+          }
+        ]
+      }
+    ],
+    "presets"  : [
+        {
+          "name" :  "Home Top Banner"
+        }
+    ]
+  }
+{% endschema %}

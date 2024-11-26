@@ -1,0 +1,28 @@
+{% if settings.zopimcheck  %}
+<!--- zopim --->
+{{ settings.zopim }}
+{% endif %}
+{% if settings.olarkcheck %}
+<!--- Olark --->
+{% if settings.logo_option == '1' %}
+{{ settings.olark }}
+{% elsif settings.logo_option == '2'  %}
+{{ settings.olark1 }}
+{% endif %}
+{% endif %}
+{% if settings.livehelpnowcheck  %}
+<!--- livehelpnow --->
+{{ settings.livehelpnow }}
+{% endif %}
+{% if settings.kayakocheck1  %}
+<!--- kayako --->
+{{ settings.kayako1 }}
+{% endif %}
+{% if settings.comm100check  %}
+<!--- comm100 --->
+{{ settings.comm100 }}
+{% endif %}
+{% if settings.facebookchecks  %}
+<!--- Facebook Customer Chat --->
+{{ settings.facebookchat }}
+{% endif %}

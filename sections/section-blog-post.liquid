@@ -1,0 +1,260 @@
+<!--=================== Blog Post ===================-->
+<section class="recent-post {% if section.settings.blog_section_gap_check %} paira-gap-2 {% endif %}" id="recent-blogsection--{{ section.id }}">
+    <div class="container  {% if section.settings.blog_full_width_check %} full-width {% endif %}">
+        <div class="row {% if section.settings.blog_full_width_check %} margin-clear {% endif %}">
+            <div class="row margin-clear">
+                <div class="col-md-12 col-sm-12 col-xs-12 heading">
+                    <h1 class="page-header margin-bottom-0 pull-left full-width"><span>{{ section.settings.home_blog_post_title }}</span></h1>
+                </div>
+            </div>
+            <div class="blog-post-widget margin-top-0">
+                {% if section.settings.blog_from == '1' %}
+                {% if section.settings.blog_post != blank %}
+                {% assign blog_post = blogs[section.settings.blog_post] %}
+                <div class="blog-con">
+                    <div class="blog-con-wrapper">
+                        {% for article in blog_post.articles limit: section.settings.home_blog_post_limit %}
+                          <div class="blog-slide">
+                              <div class="col-xs-12 col-sm-6 col-md-4">
+                                  {% if article.image %}
+                                  <div class="featured-image blog-img overflow-h position-r margin-top-0 pull-left full-width">
+                                      <a href="{{ article.url }}" class="blog-im">
+                                          <img src="{{ article | img_url: 'compact' }}" data-srcset="{{ article | img_url: 'compact' }} 160w, {{ article | img_url: 'medium' }} 240w, {{ article | img_url: 'grande' }} 500w" data-src="{{ article | img_url: 'grande' }}" alt="{{ article.title }}" data-sizes="auto" class="lazyload blur-up img-responsive" />
+                                      </a>
+                                  </div>
+                                  {% else %}
+                                  <div class="featured-image blog-img overflow-h position-r margin-top-30 pull-left full-width">
+                                      {{ 'lifestyle-2' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                  </div>
+                                  {% endif %}
+                                  <div class="blog-info margin-top-0">
+                                      <div class="half-width">
+                                          <p class="blog_date_info full-width pull-left">
+                                              <span class="margin-right-15 pull-left">Updated: {{ article.published_at | date: "%d %B, %Y" }}</span>
+                                          </p>
+                                          <h2 class="margin-clear margin-bottom-10 pull-left full-width blog-title"><a href="{{ article.url }}">{{ article.title | truncatewords: 20, '' }}</a></h2>
+                                          <p class="article-desc">{{ article.content | strip_html | truncate: 190, "" }}</p>
+                                          <p class="full-width pull-left read-m margin-clear"><a href="{{ article.url }}">Read More</a></p>
+                                      </div>
+                                  </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                    </div>
+                    <div class="text-center hidden-sm hidden-lg hidden-md another-btn">
+                    <div class="swiper-button-prev swiper-button-prev-12--{{ section.id }}"><i class="fa fa-angle-left"></i></div>
+                    <div class="swiper-button-next swiper-button-next-12--{{ section.id }}"><i class="fa fa-angle-right"></i></div>
+                    </div>
+                </div>
+                {% else %}
+                {% for article in (1..section.settings.home_blog_post_limit) %}
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="featured-image blog-img overflow-h position-r margin-top-30 pull-left full-width">
+                        {{ 'lifestyle-2' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                    <div class="blog-info margin-top-10">
+                        <div class="half-width">
+                            <p class="blog_date_info">
+                                <span class="margin-right-15 display-in-b"><i class="fa fa-calendar"></i> December 22, 2015</span>
+                                <span class="display-in-b"><a href="#"><i class="fa fa-comments-o"></i> 0</a></span>
+                            </p>
+                            <h4 class="margin-clear margin-bottom-10 pull-left full-width blog-title"><a href="#">Your article post title</a></h4>
+                            <p class="article-desc">Add a description to see how this article might appear in a search engine listing. Description to see how this article might appear in a searc...</p>
+                            <p class="full-width pull-left read-m margin-clear"><a href="#">Read More</a></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% else %}
+                <div class="blog-con">
+                    <div class="blog-con-wrapper">
+                        {% for block in section.blocks %}
+                        {% if block.settings.featured_article != blank %}
+                        {%- assign article = articles[block.settings.featured_article] -%}
+                        <div class="blog-slide">
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                {% if article.image %}
+                                <div class="featured-image blog-img overflow-h position-r margin-top-30 pull-left full-width">
+                                    <a href="{{ article.url }}" class="blog-im">
+                                        <img src="{{ article | img_url: 'compact' }}" data-srcset="{{ article | img_url: 'compact' }} 160w, {{ article | img_url: 'medium' }} 240w, {{ article | img_url: 'grande' }} 500w" data-src="{{ article | img_url: 'grande' }}" alt="{{ article.title }}" data-sizes="auto" class="lazyload blur-up img-responsive" />
+                                    </a>
+                                </div>
+                                {% else %}
+                                <div class="featured-image blog-img overflow-h position-r margin-top-30 pull-left full-width">
+                                    {{ 'lifestyle-2' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                </div>
+                                {% endif %}
+                                <div class="blog-info margin-top-10">
+                                    <div class="half-width">
+                                        <p class="blog_date_info">
+                                            <span class="margin-right-15 display-in-b"><i class="fa fa-calendar"></i> {{ article.published_at | date: "%B %d, %Y" }}</span>
+                                            <span class="display-in-b"><a href="{{ article.url }}#comments"><i class="fa fa-comments-o"></i> {{article.comments_count}}</a></span>
+                                        </p>
+                                        <h4 class="margin-clear margin-bottom-10 pull-left full-width blog-title"><a href="{{ article.url }}">{{ article.title | truncate: 35, '' }}</a></h4>
+                                        <p class="article-desc">{{ article.content | strip_html | truncate: 100, "" }}</p>
+                                        <p class="full-width pull-left read-m margin-clear"><a href="{{ article.url }}">Read More</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="featured-image blog-img overflow-h position-r margin-top-30 pull-left full-width">
+                                {{ 'lifestyle-2' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                            </div>
+                            <div class="blog-info margin-top-10">
+                                <div class="half-width">
+                                    <p class="blog_date_info">
+                                        <span class="margin-right-15 display-in-b"><i class="fa fa-calendar"></i> December 22, 2015</span>
+                                        <span class="display-in-b"><a href="#"><i class="fa fa-comments-o"></i> 0</a></span>
+                                    </p>
+                                    <h4 class="margin-clear margin-bottom-10 pull-left full-width blog-title"><a href="#">Your article post title</a></h4>
+                                    <p class="article-desc">Add a description to see how this article might appear in a search engine listing. Description to see how this article might appear in a searc...</p>
+                                    <p class="full-width pull-left read-m margin-clear"><a href="#">Read More</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="text-center hidden-sm hidden-lg hidden-md another-btn">
+                        <div class="swiper-button-prev swiper-button-prev-12--{{ section.id }}"><i class="fa fa-angle-left"></i></div>
+                        <div class="swiper-button-next swiper-button-next-12--{{ section.id }}"><i class="fa fa-angle-right"></i></div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% if section.settings.url != blank %}
+              <div class="see-more">
+                <a href="{{ section.settings.url }}">SEE ALL POSTS</a>
+              </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<script>
+    $(function() {
+        var windowsize = $(window).width();
+        if (windowsize <= 767) {
+            $('.blog-con').addClass("swiper-container s12");
+            $('.blog-con-wrapper').addClass("swiper-wrapper");
+            $('.blog-slide').addClass("swiper-slide");
+            var swiper = new Swiper('.swiper-container.s12', {
+                navigation: {
+                    nextEl: '.swiper-button-next-12--{{ section.id }}',
+                    prevEl: '.swiper-button-prev-12--{{ section.id }}'
+                },
+                slidesPerView: 1,
+                spaceBetween: 15,
+                freeMode: true,
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true
+                }
+            });
+        }
+    });
+</script>
+{% schema %}
+{
+"name": "Blog Post",
+"class": "index-section index-section--recent-blogsection",
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "blog_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "blog_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "url",
+"id": "url",
+"label": "Select Blog URL"
+},
+{
+"type": "header",
+"content": "Blog Post Content"
+},
+{
+"type": "text",
+"id": "home_blog_post_title",
+"label": "Blog Post Title",
+"default": "Latest articles"
+},
+{
+"type": "blog",
+"id": "blog_post",
+"label": "Select Blog"
+},
+{
+"type": "range",
+"id": "home_blog_post_limit",
+"label": "Blog Post Limit",
+"min": 3,
+"max": 12,
+"default": 3
+},
+{
+"type": "select",
+"id": "blog_from",
+"label": "Blog Post Display From",
+"options": [
+{
+"value": "1",
+"label": "Blog Post Display From Admin Panel"
+},
+{
+"value": "2",
+"label": "Blog Post Display From Block"
+}
+],
+"default": "2"
+}
+],
+"blocks": [
+{
+"type": "featured_blog",
+"name": "Blog Post",
+"settings": [
+{
+"type": "article",
+"id": "featured_article",
+"label": "Custom Blog"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Blog Post",
+"category": "Blog Post",
+"blocks": [
+{
+"type": "featured_blog"
+},
+{
+"type": "featured_blog"
+},
+{
+"type": "featured_blog"
+}
+]
+}
+]
+}
+{% endschema %}

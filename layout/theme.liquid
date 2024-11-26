@@ -1,0 +1,166 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]> <html class="ie9 no-js" lang="en"> <![endif]-->
+<!-- [if (gt IE 9)|!(IE)]><! -->
+<html class="no-js" lang="en">
+  <!-- <![endif] -->
+  <head>
+    <meta name="google-site-verification" content="URvtgKdx2B10U1yYRlJXPxzrUweqgtIowEVJDtHFATw" />
+    <!-- =================== Retailer Shopify Theme v2.5 =================== -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png">
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    <title>
+      {{ page_title }}
+      {% if current_tags -%}
+        {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+      {%- endif %}
+      {% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+      {% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Jost:400,500,600,700%7CAmiri:300,300i,400,400i,500,500i,700,700i%7CAmiri:300,300i,400,400i,500,500i,700,700i&amp;subset=latin-ext&amp;display=swap"
+      rel="stylesheet"
+    >
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    >
+    {% include 'social-meta-tags' %}
+    <!-- =================== Style Include =================== -->
+    {{ 'paira-combine.css' | asset_url | stylesheet_tag }}
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    {% if template == 'product' %}
+     {{ 'jquery.bxslider.css' | asset_url | stylesheet_tag }}
+      {{ 'jquery.fancybox.min.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {% if template == 'product.template2' %}
+      {{ 'fotorama-fancybox.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {% if template == 'product.template3' %}
+      {{ 'fotorama-fancybox.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {% if template == 'product.template4' %}
+      {{ 'jquery.bxslider.css' | asset_url | stylesheet_tag }}
+      {{ 'jquery.fancybox.min.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {% if template == 'index' %}
+      {{ 'fotorama.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {{ 'paira-typography.css' | asset_url | stylesheet_tag }}
+    <!-- =================== Header Hook =================== -->
+    {{ content_for_header }}
+    <!-- =================== Scripts Include =================== -->
+    {{ 'jquery-combine.js' | asset_url | script_tag }}
+    <!--[if lt IE 9]> {{ 'html5shiv-respond.min.js' | asset_url | script_tag }} <![endif]-->
+    {% if template contains 'customers' %}
+      {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+      {{ 'customer_area.js' | shopify_asset_url | script_tag }}
+    {% endif %}
+
+        {{ 'nv.css' | asset_url | stylesheet_tag }}
+    
+    <script>
+      {% if settings.currency_format %}
+      window.currencyFormat = '{{ settings.currency_format }}';
+      {% else %}
+      window.currencyFormat = 'money_format';
+      {% endif %}
+      window.shopCurrency = '{{ shop.currency }}';
+      window.animationLoading = "{{ 'ajax_loader.gif' | asset_url }}";
+      window.optionSwitchDropdown = '{{settings.option_switch_dropdown}}';
+      window.comparePage = '{{settings.compare_page}}';
+      window.wishPage = '{{settings.wishlst_page}}';
+      window.dialogCart = '{{ "general.modal_dialog_box.cart_message" | t }}';
+      window.dialogMassage = '{{ "general.modal_dialog_box.dialog_message" | t }}';
+      window.dialogCartBtn = '{{ "general.modal_dialog_box.dialog_cart_btn" | t }}';
+      window.dialogCompare = '{{ "general.modal_dialog_box.compare_message" | t }}';
+      window.dialogCompareBtn = '{{ "general.modal_dialog_box.dialog_compare_btn" | t }}';
+      window.dialogWish = '{{ "general.modal_dialog_box.wish_message" | t }}';
+      window.dialogWishBtn = '{{ "general.modal_dialog_box.dialog_wish_btn" | t }}';
+      window.dialogAddBtn = '{{ "general.modal_dialog_box.dialog_add_to_cart_btn" | t }}';
+      window.cartItem = '{{ cart.item_count }}';
+    </script>
+  </head>
+  <body class="{% if template.name == 'collection' %} template-collection-new-collection {% endif %}  template-{{ template | replace: '.', '-' | handle }}">
+    <!-- =================== Main Body Content Container =================== -->
+    <div class="paira-container {% if template == 'index' %}home-page{% endif %}">
+      <!-- =================== Header Container =================== -->
+      {% if settings.header_style == 'header-layout-5' %}
+        {% section 'header-layout-5' %}
+        {% section 'navigation-3' %}
+      {% elsif settings.header_style == 'header-layout-2' %}
+        {% section 'header-layout-2' %}
+        {% section 'navigation-2' %}
+      {% elsif settings.header_style == 'header-layout-3' %}
+        {% section 'header-layout-3' %}
+        {% section 'navigation-2' %}
+      {% elsif settings.header_style == 'header-layout-4' %}
+        {% section 'header-layout-4' %}
+        {% section 'navigation-2' %}
+      {% else %}
+        {% section 'header-layout-1' %}
+        {% section 'navigation-1' %}
+      {% endif %}
+      {% if settings.breadcrumb_check %}
+        <!-- =================== Breadcrumb Section =================== -->
+        {% include 'breadcrumb' %}
+      {% endif %}
+      <!-- =================== Main Content Container =================== -->
+      {{ content_for_layout }}
+      <!-- =================== Footer Container =================== -->
+      {% comment %}{% section 'signup-section' %}  {% endcomment %}
+      {% section 'section-icon-banner' %}
+      {% section 'footer' %}
+    </div>
+    <!-- =================== For All Modal Dialog Box / Loading Animation =================== -->
+    {% include 'modal-dialog-box' %}
+    <!-- =================== Scripts Include =================== -->
+    {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+    {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+    {% if template == 'product' %}
+      {{ 'jquery.fancybox.min.js' | asset_url | script_tag }}
+      {{ 'jquery.elevateZoom-3.0.8.min.js' | asset_url | script_tag }}
+    {% endif %}
+    {% if template == 'product.template2' %}
+      {{ 'fotorama-fancybox.js' | asset_url | script_tag }}
+    {% endif %}
+    {% if template == 'product.template3' %}
+      {{ 'fotorama-fancybox.js' | asset_url | script_tag }}
+    {% endif %}
+    {% if template == 'product.template4' %}
+      {{ 'jquery.fancybox.min.js' | asset_url | script_tag }}
+      {{ 'jquery.elevateZoom-3.0.8.min.js' | asset_url | script_tag }}
+    {% endif %}
+    {% if template == 'index' %}
+      {{ 'fotorama.js' | asset_url | script_tag }}
+    {% endif %}
+    {{ 'paira-combine.js' | asset_url | script_tag }}
+
+        {{ 'nv.js' | asset_url | script_tag }}
+
+    <!-- =================== Font Awesome =================== -->
+    {{ 'font-awesome-animate.css' | asset_url | stylesheet_tag }}
+    <!-- =================== Notify =================== -->
+    {% include 'notify-product' %}
+    <!-- =================== For Currencies Changes =================== -->
+    {% include 'currencies' %}
+    <!-- =================== For Ticket / Support System =================== -->
+    {% include 'ticket_support_system' %}
+    <!-- =================== For Live Chat Support =================== -->
+    {% include 'live_chat_support' %}
+
+  </body>
+</html>
+{% include 'pcode' %}

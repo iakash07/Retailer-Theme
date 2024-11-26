@@ -1,0 +1,258 @@
+<!--=================== Image Banner ===================-->
+<section class="gallary-banner gallary-banner-{{ section.id }} insfed {% if section.settings.section_gap_check %} paira-gap-2 {% endif %}" id="gallary--{{ section.id }}">
+    <div class="container {% if section.settings.ban_full_width_check %}full-width{% endif %}">
+        <div class="banner-contain">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 heading">
+                    {% if section.settings.home_gallery != blank %}
+                    <h1 class="page-header margin-bottom-0 pull-left"><span>{{section.settings.home_gallery}}</span></h1>
+                    {% endif %}
+                </div>
+                <div class="ctm-gallary col-md-12 col-sm-12 col-xs-12">
+                {% if section.blocks == blank %}
+                <div class="ins-gallery ins-over-{{block.id}} {% if section.settings.home_gallery != blank %} margin-top-30{% endif %}">
+                    <div class="ins-over">
+                    <a href="#" class="overflow-h">
+                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg ins-img height-200' }}
+                    </a>
+                        <div class="over">
+                            <ul class="padding-clear">
+                                <li style="width: 100%">
+                                    <a href="#" class="mar-left" style="font-size: 14px;display: inline-block;width: 100%;padding: 10px;"><span>View Gallery1</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+                </div>
+                <div class="ins-gallery ins-over-{{block.id}} {% if section.settings.home_gallery != blank %} margin-top-30{% endif %}">
+                    <div class="ins-over">
+                    <a href="#" class="overflow-h">
+                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg ins-img height-200' }}
+                    </a>
+                        <div class="over">
+                            <ul class="padding-clear">
+                                <li style="width: 100%">
+                                    <a href="#" class="mar-left" style="font-size: 14px;display: inline-block;width: 100%;padding: 10px;"><span>View Gallery2</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+                </div>
+                <div class="ins-gallery ins-over-{{block.id}} {% if section.settings.home_gallery != blank %} margin-top-30{% endif %}">
+                    <div class="ins-over">
+                    <a href="#" class="overflow-h">
+                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg ins-img height-200' }}
+                    </a>
+                        <div class="over">
+                            <ul class="padding-clear">
+                                <li style="width: 100%">
+                                    <a href="#" class="mar-left" style="font-size: 14px;display: inline-block;width: 100%;padding: 10px;"><span>View Gallery3</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+                </div>
+                <div class="ins-gallery ins-over-{{block.id}} {% if section.settings.home_gallery != blank %} margin-top-30{% endif %}">
+                    <div class="ins-over">
+                    <a href="#" class="overflow-h">
+                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg ins-img height-200' }}
+                    </a>
+                        <div class="over">
+                            <ul class="padding-clear">
+                                <li style="width: 100%">
+                                    <a href="#" class="mar-left" style="font-size: 14px;display: inline-block;width: 100%;padding: 10px;"><span>View Gallery4</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+                </div>
+                  <div class="ins-gallery ins-over-{{block.id}} {% if section.settings.home_gallery != blank %} margin-top-30{% endif %}">
+                    <div class="ins-over">
+                    <a href="#" class="overflow-h">
+                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg ins-img height-200' }}
+                    </a>
+                        <div class="over">
+                            <ul class="padding-clear">
+                                <li style="width: 100%">
+                                    <a href="#" class="mar-left" style="font-size: 14px;display: inline-block;width: 100%;padding: 10px;"><span>View Gallery4</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+                </div>
+                <div class="ins-gallery ins-over-{{block.id}} {% if section.settings.home_gallery != blank %} margin-top-30{% endif %}">
+                    <div class="ins-over">
+                    <a href="#" class="overflow-h">
+                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg ins-img height-200' }}
+                    </a>
+                        <div class="over">
+                            <ul class="padding-clear">
+                                <li style="width: 100%">
+                                    <a href="#" class="mar-left" style="font-size: 14px;display: inline-block;width: 100%;padding: 10px;"><span>View Gallery5</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                    <div class="ins-gallery ins-over-{{block.id}} {% if section.settings.home_gallery != blank %} margin-top-30{% endif %}">
+                        <div class="ins-over">
+                            <a href="#" class="overflow-h">
+                                {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg ins-img height-200' }}
+                            </a>
+                            <div class="over">
+                                <ul class="padding-clear">
+                                    <li style="width: 100%">
+                                        <a href="#" class="mar-left" style="font-size: 14px;display: inline-block;width: 100%;padding: 10px;"><span>View Gallery6</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% for block in section.blocks %}
+                <div class="ins-gallery ins-over-{{block.id}} {% if section.settings.home_gallery != blank %} margin-top-30{% endif %}">
+                    <div class="ins-over overflow-h">
+                        {% if block.settings.image == blank %}
+                        {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg ins-img height-200' }}
+                        {% else %}
+                        <a href="{{ block.settings.small_btn_link }}"><img src="{{ block.settings.image | img_url: 'master' }}" class="img-responsive banner-images"></a>
+                        {% endif %}
+                        <div class="over">
+                            <ul class="padding-clear">
+                                <li style="width: 100%">
+                                  {% if block.settings.image_text_btn != blank  %}  
+                                    <a href="{{ block.settings.small_btn_link }}" class="mar-left" style="font-size: 14px;display: inline-block;width: 100%;padding: 10px;margin-left: 0 !important;"><span>{{ block.settings.image_text_btn }}</span></a>
+                                  {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+        </div>
+    </div>
+</section>
+{% comment %}
+<style>
+    {% for block in section.blocks %}
+    .ins-over-{{block.id}} .over ul {
+    background: {{ block.settings.instagram_back | color_modify: 'alpha', 0.9 }};
+    }
+    .ins-over-{{block.id}}.ins-gallery:hover ul {
+    background: {{ block.settings.instagram_back_h | color_modify: 'alpha', 0.9 }};
+    }
+    .ins-back h1, .back-instagram a, .insfed .ins-back .fa, .insfed .over, .insfed .over_1, .insfed ul li .mar-left, .over-1 a{
+    color: {{ block.settings.instagram_back_text_color }};
+    }
+    .ins-over-{{block.id}} .over ul:hover .fa, .ins-over-{{block.id}}.ins-gallery:hover ul .mar-left{
+    color: {{ block.settings.instagram_back_text_color_h }};
+    }
+    {% endfor %}
+    .gallary-banner-{{ section.id }} .heading h1, .gallary-banner-{{ section.id }} .heading a {
+    color: {{ section.settings.top_foo_text_colo }};
+    }
+    .gallary-banner-{{ section.id }} .heading a:hover{
+    color: {{ section.settings.top_foo_text_colo_h }};
+    }
+</style>
+{% endcomment %}
+{% schema %}
+{
+"name": "CC Images by Alam",
+"max_blocks": 15,
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "ban_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Gallery Content"
+},
+{
+"type": "text",
+"id": "home_gallery",
+"label": "Gallery Title",
+"default": "Home Gallery"
+}
+],
+"blocks": [
+{
+"type": "image",
+"name": "Banner Image",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "Upload image : 320 x 320px recommended."
+},
+{
+"type": "text",
+"id": "image_text_btn",
+"label": "Link Text",
+"default": "View Gallery"
+},
+{
+"type": "url",
+"id": "small_btn_link",
+"label": "Small banner Button Link",
+"default": "\/collections\/all"
+},
+{
+"type": "header",
+"content": "Gallery Colors"
+},
+{
+"type": "color",
+"id": "instagram_back",
+"label": "Background Overlay Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "instagram_back_text_color",
+"label": "Text Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "instagram_back_h",
+"label": "Background Overlay Hover Color",
+"default": "#F26522"
+},
+{
+"type": "color",
+"id": "instagram_back_text_color_h",
+"label": "Hover Text Color",
+"default": "#fff"
+}
+]
+}
+],
+"presets": [
+{
+"name": "CC Images by Alam",
+"category": "Instagram"
+}
+]
+}
+{% endschema %}

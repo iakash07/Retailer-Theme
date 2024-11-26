@@ -1,0 +1,291 @@
+<!--=================== Ajax Loading ===================-->
+<div class="paira-loading ajax-loading margin-clear padding-clear text-center" style="display: none;">
+    <img src="{{ 'ajax_loader.gif' | asset_url }}" class="padding-clear margin-top-10" alt="Loading image">
+</div>
+<!--=================== Quick View Dialog ===================-->
+<div class="modal fade quick-view-dialog" id="paira-quick-view-dialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+                <div class="row paira-product margin-clear">
+                    <div class="col-md-5 col-sm-5 col-xs-12 margin-bottom-0 padding-clear">
+                        <div class="single-variants-product">
+                            <div id="paira-quickView-sliderLoad" class="quickView-sliderLoad" style="display: none;"></div>
+                            <div class="single-product-image paira-quick-product-image pull-left" id="paira-quickView-featureImage">
+                                <img src="{{ 'empty-product.png' | asset_url }}" alt="paira Product Image" class="paira-product-image img-responsive pull-left" id="paira-quickView-image">
+                            </div>
+                            <div class="position-r display-in-b">
+                                <div class="single-product-image-list swiper-container paira-quickview-swiper">
+                                    <ul id="paira-quickView-slider" class="swiper-wrapper"></ul>
+                                </div>
+                                <div class="swiper-button-prev swiper-button-prev-quickview-swiper"><i class="fa fa-angle-left"></i></div>
+                                <div class="swiper-button-next swiper-button-next-quickview-swiper"><i class="fa fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-7 col-xs-12 padding-clear">
+                        <div class="col-md-12 col-sm-12 padding-right-0">
+                            <h1 class="margin-clear paira-product-title margin-bottom-20 margin-top-0" id="paira-quickView-title"></h1>
+                            {% if settings.enable_review %}
+                            <span class="reviews margin-clear padding-clear"><span class="paira-quickView-rating-con margin-clear padding-clear" data-id="{{ product.id }}"></span></span>
+                            {% endif %}
+                            <div class="margin-top-10 margin-bottom-10">
+                                <p class="margin-bottom-10"><label class="margin-right-10 margin-bottom-0">{{ 'products.template.vendor' | t }}:</label><span id="paira-quickView-vendor"></span></p>
+                                <p class="margin-bottom-10"><label class="margin-right-10 margin-bottom-0">{{ 'products.template.type' | t }}:</label> <span id="paira-quickView-type"></span></p>
+                            </div>
+                            <div class="pull-left full-width margin-bottom-10 margin-top-0">
+                                <h3 class="margin-clear" id="paira-quickView-price"></h3>
+                            </div>
+                            <div class="single-product-details margin-bottom-15 margin-top-0 progrsser paira-progressbar">
+                                <div class="relation">
+                                <span class="number-span paira-quick-total-available"></span> {{ settings.availability_texts }}
+                                </div>
+                                <div class="progress active">
+                                    <div class="paira-quick-progress-bar progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-pressed="true" style="width: 100%">
+                                        <span class="sr-only"></span>
+                                    </div>
+                                </div>
+                                <div id="paira-quickView-count" class="quickView-count full-width">
+                                    <ul id="paira-quickView-countdown" class="list-inline countdown">
+                                        {% if settings.days_enable %}
+                                        <li class="dash days_dash">
+                                            <div class="digit">0</div>
+                                            <div class="digit">0</div>
+                                            <span class="dash_title">Days</span>
+                                        </li>
+                                        {% endif %}
+                                        <li class="dash hours_dash">
+                                            <div class="digit">0</div>
+                                            <div class="digit">0</div>
+                                            <span class="dash_title">Hours</span>
+                                        </li>
+                                        <li class="dash minutes_dash">
+                                            <div class="digit">0</div>
+                                            <div class="digit">0</div>
+                                            <span class="dash_title">Mins</span>
+                                        </li>
+                                        <li class="dash seconds_dash">
+                                            <div class="digit">0</div>
+                                            <div class="digit">0</div>
+                                            <span class="dash_title">Secs</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="option-background">
+                                <div class="paira-quickView-switch quickView-switch"></div>
+                                <ul class="magin-bottom-0 paira-quickView-variant-image" style="display: none !important;"></ul>
+                                <div class=" margin-top-20 sub-tol" style="display: none"><label>{{ 'products.template.sub_total' | t }}:</label> <strong class="subtotal paira-quickView-subtotal"><span class="money">$10.00</span></strong></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="margin-bottom-20 full-width pull-left">
+                                {% if settings.product_offer_check %}
+                                <div class="full-width pull-left shipping-method margin-bottom-5 margin-top-0">
+                                    <div class="margin-clear free-ship">
+                                        {% if settings.product_offer_img %}
+                                        {% if settings.offer_img == blank %}
+                                        {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-20 margin-right-5' }}
+                                        {% else %}
+                                        <img src="{{ settings.offer_img | img_url: 'master' }}" class="margin-right-5">
+                                        {% endif %}
+                                        {% endif %}
+                                        {{ settings.shipping_free }} {% if settings.product_flag_check %}<span class="paira-country-flag flag display-in-b" style="display: none;"></span> <span class="paira-geo-country display-in-b"></span>{% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if settings.sold_with_text %}
+                                <div class="full-width pull-left count-product margin-bottom-5">
+                                    {% if settings.sold_with_text_img %}
+                                    {% if settings.sold_img == blank %}
+                                    {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-20 margin-right-5' }}
+                                    {% else %}
+                                    <img src="{{ settings.sold_img | img_url: 'master' }}" class="margin-right-5">
+                                    {% endif %}
+                                    {% endif %}<span class="number-span paira-quickview-total-sold"></span> {{ settings.sold_text }}</div>
+                                {% endif %}
+                                {% if settings.product_view_check %}
+                                <div class="full-width pull-left count-product margin-bottom-5">
+                                    {% if settings.product_view_img %}
+                                    {% if settings.view_img == blank %}
+                                    {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-20 margin-right-5' }}
+                                    {% else %}
+                                    <img src="{{ settings.view_img | img_url: 'master' }}" class="margin-right-5">
+                                    {% endif %}
+                                    {% endif %}
+                                    <span class="number-span paira-quickview-total-viewing"></span> {{ settings.view_text }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="margin-top-0 quick-view-quentity">
+                                <div class="input-group paira-quickView-quantity-group product-quantity-group">
+                                    <div class="input-group-addon left-adon" data-direction="down"><i class="fa fa-minus"></i></div>
+                                    <input type="text" value="1" class="form-control paira-quickView-single-quantity text-center" placeholder="1">
+                                    <div class="input-group-addon right-adon" data-direction="up"><i class="fa fa-plus"></i></div>
+                                </div>
+                            </div>
+                            {% if settings.buy_now_check %}
+                            <a href="#" data-item-quantity="1" data-varient-id="{{ product.variants.first.id }}" class="btn btn-default btn-lg margin-top-20 margin-right-0 paira-buy-now pull-left buy-now">{{ 'products.template.buy_now' | t }}</a>
+                            {% endif %}
+                            <div id="paira-quickView-buttons" class="margin-top-20"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function subTotal(quantity, price, subTotal) {
+        var v = quantity,
+            p = price,
+            x = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g,
+            q = p.match(x);
+        if (!q){
+            x = /([0-9]+[.|,][0-9]+)/g; q = p.match(x);
+        }
+        if(q){
+            var b = Shopify.formatMoney(q[0].replace(/[.|,]/g,'') * parseInt(v)),
+                s = p.replace(new RegExp(q[0], "g") ,b.match(x)[0]);
+            subTotal.text(s);
+        }
+    }
+    var switchImage = function(newImageSrc, newImage, mainImageDomEl) {
+        $(mainImageDomEl).attr('src', newImageSrc);
+        $(mainImageDomEl).parents('a').attr('href', newImageSrc);
+    };
+    var quickViewCallBack = function(variant, selector) {
+        if (variant && variant.featured_image) {
+            var newImage = variant.featured_image,
+                mainImageDomEl = $('.paira-quick-product-image img')[0];
+            Shopify.Image.switchImage(newImage, mainImageDomEl, function(a) {
+                $("#paira-quickView-slider a").each(function() {
+                    var i = $(this).attr("data-zoom-image"),
+                        p = a.split( '?');
+                    p = (p[1]) ? p[0] : a;
+                    return i == p ? ($(this).trigger("click")) : void 0
+                })
+            })
+        }
+        if (variant && variant.available) {
+            $('.single-product-buttons.compare').removeAttr('disabled').removeClass('disabled');
+            if(variant.price < variant.compare_at_price){
+                $('#paira-quickView-price').html('<del><span class="money">'+ Shopify.formatMoney(variant.compare_at_price, "{{ shop.money_format }}") +'</span></del><span class="margin-left-10 paira-quickView-default-price"><span class="money">'+ Shopify.formatMoney(variant.price, "{{ shop.money_format }}") +'</span></span>');
+            } else {
+                $('#paira-quickView-price').html('<span class="paira-quickView-default-price"><span class="money">'+ Shopify.formatMoney(variant.price, "{{ shop.money_format }}") +'</span></span>');
+            }
+            var tr = parseInt($('.quantity_'+variant.id).html());
+            if(tr <= 0){
+                $('#paira-quickView-buttons .paira-add-to-cart').removeAttr('disabled').removeClass('disabled').attr('data-varient-id', variant.id).html('Pre Order');
+                $('#paira-quick-view-dialog .paira-buy-now').removeAttr('disabled').removeClass('disabled').attr('data-varient-id', variant.id).html('Buy Now');
+            }else{
+                $('#paira-quickView-buttons .paira-add-to-cart').removeAttr('disabled').removeClass('disabled').attr('data-varient-id', variant.id).html('Add to Cart');
+                $('#paira-quick-view-dialog .paira-buy-now').removeAttr('disabled').removeClass('disabled').attr('data-varient-id', variant.id).html('Buy Now');
+            }
+            subTotal($('.paira-quickView-single-quantity').val(), $('.paira-quickView-default-price .money').text(), $('.paira-quickView-subtotal .money'));
+        } else {
+            var message = variant ? "Sold Out" : "Unavailable";
+            $('#paira-quickView-buttons .paira-add-to-cart').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-ellipsis-h"></i> '+message);
+              $('.quick-view-dialog .paira-buy-now').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-ellipsis-h"></i> '+message);
+            $('#paira-quickView-buttons .paira-add-to-compare').addClass('disabled').attr('disabled', 'disabled');
+            $('#paira-quickView-price').html(message);
+            $('.paira-quickView-subtotal .money').html(message);
+        }
+    };
+    $(function() {
+        {% if settings.sold_with_text %}
+        /*******************************************************************************
+         * Total Sold
+         *******************************************************************************/
+        function qc_getRandomArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        $(".paira-quickview-total-sold").text(qc_getRandomArbitrary({{ settings.sold_text_min }},{{ settings.sold_text_max }}));
+        {% endif %}
+        {% if settings.product_view_check %}
+        /*******************************************************************************
+         * Total Active View
+         *******************************************************************************/
+        function qc_getandomArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        $(".paira-quickview-total-viewing").text(qc_getandomArbitrary({{ settings.view_text_min }},{{ settings.view_text_max }}));
+        {% endif %}
+        /*******************************************************************************
+         * Total Availability
+         *******************************************************************************/
+        function qc_getanAvaiArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        $(".paira-quick-total-available").text(qc_getanAvaiArbitrary({{ settings.availability_min }},{{ settings.availability_max }}));
+        $(".paira-quick-progress-bar").css("width", parseInt($(".paira-quick-total-available").text())+'%');
+        var interval = setInterval(function(){
+            var total_sold = parseInt($(".paira-quickview-total-sold").text()),
+                total_available = parseInt($(".paira-quick-total-available").text());
+            if(total_available <= {{ settings.availability_min }}){
+                clearInterval(interval);
+            }else {
+                $(".paira-quickview-total-sold").text(total_sold+1);
+                $(".paira-quick-total-available").text(total_available-1);
+                $(".paira-quick-progress-bar").css("width", total_available-1+'%');
+            }
+        }, {{settings.timer_range_second}}000);
+    });
+</script>
+<!--=================== Ajax Success Message ===================-->
+<div class="modal fade ajax-success-message" id="paira-ajax-success-message" tabindex="-1" role="dialog">
+    <div class="modal-dialog margin-top-80 modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="">
+                    <div class="col-md-12 col-sm-12 col-xs-12 top-section margin-bottom-15">
+                        <div class="paira-success-message-img"></div>
+                        <div class="pull-left content">
+                            <div class="alert alert-success margin-bottom-0 padding-bottom-5 text-left" role="alert"><span class="paira-success-message-details"></span></div>
+                            <a href="#" class="btn btn-default margin-top-10 paira-success-message-link pull-left"></a>
+                            <a href="/checkout" class="btn btn-primary pull-left margin-top-10 margin-left-10 paira-go-to-checkout" style="display: none">{{ 'header.cart.checkout' | t }}</a>
+                            <a href="#" data-dismiss="modal" aria-label="Close" class="pull-left margin-top-20 continue"><i class="fa fa-reply" aria-hidden="true"></i> <span>{{ 'cart.general.continue_shopping' | t }}</span></a>
+                            <!-- <div class="full-width pull-left margin-top">
+                                {% if settings.safty_img == blank %}
+                                {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg pull-left height-40' }}
+                                {% else %}
+                                <img src="{{ settings.safty_img | img_url: 'master' }}" alt="Image" class="img-responsive pull-left">
+                                {% endif %}
+                            </div> -->
+                        </div>
+                        <h4 class="margin-bottom-15 paira-success-message-title" style="display: none;"></h4>
+                    </div>
+                </div>
+                <div class="margin-clear hidden-xs">
+                    <div class="paira-recentView-dialog">
+                        <div class="paira-recent-view-list-dialog">
+                            {% include 'special-product' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--=================== Common Message Message ===================-->
+<div class="modal fade common-message" id="paira-common-message" tabindex="-1" role="dialog">
+    <div class="modal-dialog margin-top-80">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="alert alert-success margin-bottom-20 margin-top-20 text-center font-size-14" role="alert">
+                            <strong class="paira-common-message-details"></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

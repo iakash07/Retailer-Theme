@@ -1,0 +1,66 @@
+{% if settings.notify_product_check %}
+<!--=================== Notify Product ===================-->
+{% if settings.notify_product != blank %}
+{% assign not_product = collections[settings.notify_product] %}
+<div class="notify-container paira-notify-container">
+    <div class="paira-notify">
+        <div id="prod-slider-1" class="vertical-slider carousel vertical slide product-slide" data-ride="carousel" data-interval="10000">
+            <div class="carousel-inner" role="listbox">
+                {% for product in not_product.products limit: settings.notify_product_limit %}
+                <div class="item{% if forloop.first == true %} active{% endif %}">
+                    <button type="button" class="close-notify" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+                    <div class="paira-product product">
+                        <div class="col-md-3 padding-clear">
+                            <a href="{{ product.url }}">
+                                <img src="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'small' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %}" alt="{{ product.title | escape  }}" class="paira-product-image img-responsive margin-top-0 full-width">
+                            </a>
+                        </div>
+                        <div class="col-md-9 padding-clear padding-left-15">
+                            {% if product.variants.size <= 1 %}
+                            {% for variant in product.variants %}
+                            {% assign product_inventory_management = variant.inventory_management %}
+                            {% assign product_inventory_policy = variant.inventory_policy %}
+                            {% assign product_quantity_item = variant.inventory_quantity.product_quantity_item %}
+                            {% endfor %}
+                            {% endif %}
+                            <div class="product-title-price margin-top-15">
+                                <span class="display-in-b margin-bottom-5" style="font-size: 12px"><span class="number-span paira-time-ago"></span> Min Ago</span>
+                                <p class="margin-bottom-5"><span class="paira-customer-name"></span> purchased a</p>
+                                <h5 class="margin-bottom-0 margin-top-0"><a href="{{ product.url }}" class="paira-product-title">{{ product.title | truncate: 24, "" }}</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="notify-container paira-notify-container">
+    <p class="margin-top-20" style="background: #fff;padding: 15px 25px;">Please select Notify Product from <a href="/admin/themes" class="text-muted">theme option</a></p>
+</div>
+{% endif %}
+{% endif %}
+<script>
+    $(function() {
+        var userNames = [{{ settings.customer_name }}];
+        function getRandomNum(min, max){
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        function echoRandom(name){
+            $(".paira-customer-name").text(name);
+            $(".paira-time-ago").text(getRandomNum({{ settings.proof_text_min }},{{ settings.proof_text_max }}));
+        }
+        var singleOne = userNames[Math.floor(Math.random() * userNames.length)]
+        echoRandom(singleOne);
+        $('#prod-slider-1').on('slide.bs.carousel', function () {
+            var pickOne = userNames[Math.floor(Math.random() * userNames.length)];
+            echoRandom(pickOne);
+        });
+        $(document).on('click', '.close-notify', function(p) {
+            p.stopPropagation();
+            $(".paira-notify-container").fadeOut();
+        });
+    });
+</script>

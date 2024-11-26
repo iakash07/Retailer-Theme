@@ -1,0 +1,19 @@
+<!--=================== Currency Switcher ===================-->
+<ul class="dropdown-menu dropdown-menu-right" id="currencies_sle">
+    {% capture codes %},USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK,{% endcapture %}
+    {% assign supported_codes = settings.supported_currencies | split: ' ' %}
+    <li><a href="#" class="active" data-value="{{ shop.currency }}"><i class="fa fa-{{ shop.currency | downcase }}"></i> {{ shop.currency }}</a></li>
+    {% for code in supported_codes %}
+    {% if code != shop.currency and codes contains code %}
+    <li><a href="#" data-value="{{ code }}"><i class="fa fa-{{ code | downcase }}"></i> {{ code }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>
+<select name="currencies" id="currencies" style="display: none">
+    <option value="{{ shop.currency }}" selected="selected">{{ shop.currency }}</option>
+    {% for code in supported_codes %}
+    {% if code != shop.currency and codes contains code %}
+    <option value="{{ code }}">{{ code }}</option>
+    {% endif %}
+    {% endfor %}
+</select>

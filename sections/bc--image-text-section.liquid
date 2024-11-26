@@ -1,0 +1,82 @@
+<section class="bc_image_text">
+  <div class="bc_image_text_section">
+    <div class="container">
+      <div class="bc_image_text_col">
+        <div class="bc_image_text_flex">
+          {% for block in section.blocks %}
+            <div class="bc_image_col">
+              <div class="bc_image_inner">
+                {% if block.settings.image != blank %}
+                  <img src="{{ block.settings.image | img_url:'master' }}">
+                {% endif %}
+              </div>
+            </div>
+            <div class="bc_text_col">
+              <div class="bc_text_inner">
+                {% if block.settings.title != blank %}
+                  <h2>{{ block.settings.title }}</h2>
+                {% endif %}
+                {% if block.settings.description != blank %}
+                  <div>{{ block.settings.description }}</div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+          <div class="bio_cleaning_btn">
+            {% if section.settings.btn_text != blank %}
+              <a href="{{ section.settings.btn_url }}" class="ctm-btn">
+                {{ section.settings.btn_text }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bc Image Text Section",
+  "settings": [
+    {
+      "type":"url",
+      "id":"btn_url",
+      "label":"Add Button Url"
+    },
+    {
+      "type":"text",
+      "id":"btn_text",
+      "label":"Add Button Text"
+    }
+  ],
+  "blocks":[
+    {
+      "type":"image_text_block",
+      "name":"Image Text Block",
+      "settings":[
+        {
+          "type":"image_picker",
+          "id":"image",
+          "label":"Add Image"
+        },
+        {
+          "type":"text",
+          "id":"title",
+          "label":"Add Title"
+        },
+        {
+          "type":"richtext",
+          "id":"description",
+          "label":"Add Description"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"Bc Image Text Section"
+    }
+  ]
+}
+{% endschema %}

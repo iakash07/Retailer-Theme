@@ -1,0 +1,68 @@
+<section class="text_image_section">
+  <div class="text_image">
+    <div class="container">
+      <div class="text_image_col">
+        <div class="text_image_flex">
+          <div class="text_wrapper">
+            <div class="text_wrapper_inner">
+              {% if section.settings.title != blank %}
+              <h4>{{ section.settings.title }}</h4>
+              {% endif %}
+              {% if section.settings.heading != blank %}
+              <h2>{{ section.settings.heading }}</h2>
+              {% endif %}
+              {% if section.settings.description != blank %}
+              <div>{{ section.settings.description }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="image_wrapper">
+            <div class="image_wrapper_inner">
+              {% if section.settings.image != blank %}
+              <img src="{{ section.settings.image | img_url:'master' }}">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Text & Image Section",
+    "settings": [
+      {
+        "type":"text",
+        "id":"title",
+        "label":"Add Title"
+      },
+      {
+        "type":"text",
+        "id":"heading",
+        "label":"Add Heading"
+      },
+      {
+        "type":"richtext",
+        "id":"description",
+        "label":"Add Description"
+      },
+      {
+        "type":"image_picker",
+        "id":"image",
+        "label":"Add Image"
+      }
+    ],
+    "presets":[
+      {
+        "name":"Text & Image Section"
+      }
+    ]
+  }
+{% endschema %}

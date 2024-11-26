@@ -1,0 +1,76 @@
+<section>
+  <div class="product_page_section">
+    <div class="ctm-container">
+      <div class="product_page">
+        <div class="product_flex">
+          <div class="product_image_one">
+            {% if section.settings.image != blank %}
+              <img src="{{ section.settings.image | img_url:'master' }}">
+            {% endif %}
+          </div>
+          <div class="product_desc">
+            {% if section.settings.text != blank %}
+              <h2>{{ section.settings.text }}</h2>
+            {% endif %}
+            {% if section.settings.desc != blank %}
+              <p>{{ section.settings.desc }}</p>
+            {% endif %}
+            {% if section.settings.btn_text != blank %}
+              <a href="{{ section.settings.btn_url }}">
+                {{ section.settings.btn_text }}
+              </a>
+            {% endif %}
+          </div>
+          <div class="product_image_two">
+            {% if section.settings.image2 != blank %}
+              <img src="{{ section.settings.image2 | img_url:'master' }}">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Image Section",
+  "settings": [
+    {
+      "type":"image_picker",
+      "id":"image",
+      "label":"Add Image"
+    },
+    {
+      "type":"text",
+      "id":"text",
+      "label":"Add Heading"
+    },
+    {
+      "type":"textarea",
+      "id":"desc",
+      "label":"Add Description"
+    },
+    {
+      "type":"url",
+      "id":"btn_url",
+      "label":"Add Button Url"
+    },
+    {
+      "type":"text",
+      "id":"btn_text",
+      "label":"Add Button Text"
+    },
+    {
+      "type":"image_picker",
+      "id":"image2",
+      "label":"Add Image"
+    }
+  ],
+  "presets":[
+    {
+      "name":"Product Image Section"
+    }
+  ]
+}
+{% endschema %}

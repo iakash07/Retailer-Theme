@@ -1,0 +1,68 @@
+{% schema %}
+  {
+    "name": "cc-button",
+    "settings": []
+  }
+{% endschema %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Buttons</title>
+  <style>
+    .button-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
+    
+    .button-container button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button-container button:hover {
+      background-color: #45a049;
+    }
+
+    @media screen and (max-width: 768px) {
+      .button-container button {
+        padding: 12px 24px;
+        font-size: 14px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .button-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button-container button {
+        width: 80%;
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="button-container">
+    <button>Button 1</button>
+    <button>Button 2</button>
+    <button>Button 3</button>
+  </div>
+</body>
+</html>

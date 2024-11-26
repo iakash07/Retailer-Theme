@@ -1,0 +1,58 @@
+<div class="{{ section.settings.class }}">
+  <div class="ctm-container">
+    <div class="main-banner">
+      <div class="main-banner-left col-50">
+          {% if section.settings.title != blank %}<h2 class="ctm-head">{{ section.settings.title }}</h2>{% endif %}
+          {% if section.settings.desc != blank %}<p>{{ section.settings.desc }}</p>{% endif %}
+          {% if section.settings.btntxt != blank %}<a class="ctm-btn" href="{{ section.settings.url }}">{{ section.settings.btntxt }}</a>{% endif %}
+      </div>
+      <div class="main-banner-right col-50">
+        {% if section.settings.img != blank %}
+            <img src="{{ section.settings.img | img_url: "master" }}" class="img-responsive banner-images">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Image with Text Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Add your Class"
+      },
+      {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Add your Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Add your Title"
+      },
+      {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Add your Description"
+      },
+      {
+        "type": "text",
+        "id": "btntxt",
+        "label": "Add your Button Title"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "Add your URL"
+      }
+    ],
+    "presets":[
+      {
+        "name": "Image with Text Section"
+      }
+    ]
+  }
+{% endschema %}

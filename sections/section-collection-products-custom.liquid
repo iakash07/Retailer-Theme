@@ -1,0 +1,480 @@
+<!--=================== Collection Products ===================-->
+{% assign separate_countdown = 'top_sellers' %}
+<section class="collection-products collection-products-custom {% if section.settings.col_pro_section_gap_check %} paira-gap-2 {% endif %}" id="collectionproductsection--{{ section.id }}">
+    <div class="container-fluid padding-fixed {% if section.settings.col_pro_full_width_check %} full-width {% endif %}">
+        <div class="row custom-por {% if section.settings.col_pro_full_width_check %} margin-clear {% endif %}">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="heading pull-left full-width text-center">
+                    <h1 class="page-header margin-bottom-0 text-left pull-left"><span>{{section.settings.collection_products_title}}</span></h1>
+                </div>
+                <div class="row">
+                    {% for block in section.blocks %}
+                    {% if block.settings.feature_products != blank %}
+                    <div class="col-md-4 margin-top-30 product-con">
+                        <!--=================== Product ===================-->
+                        <div class="paira-product product img text-center">
+                            {% assign product = all_products[block.settings.feature_products] %}
+                            <div class="overflow-h pro-im position-r" data-value="0">
+                                <a href="{{ product.url }}" class="overflow-h">
+                                    {% if product.images.size >= 1%}
+                                    <img src="{{ product.featured_image | product_img_url: 'compact' }}" class="paira-product-image img-responsive full-width main-product lazyload blur-up" alt="{{ product.title}}" data-srcset="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'compact' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 160w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 240w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'large' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 480w" data-src="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'large' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %}" data-sizes="auto">
+                                    {% else %}
+                                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                    {% endif %}
+                                </a>
+                                {% if settings.product_variant_img %}
+                                <div class="product-variant paira-collection-product-images">
+                                    {% if product.images.size > 0 %}
+                                    {% for image in product.images limit: 3 %}
+                                    <a href="#" class="paira-product-variant-img-small" data-image-url="{{ image | product_img_url: 'large' }}"><img src="{{ image | product_img_url: 'thumb' }}" data-srcset="{{ image | product_img_url: 'small' }} 100w, {{ image | product_img_url: 'small' }} 240w" data-src="{{ image | product_img_url: 'medium' }}" data-sizes="auto" class="lazyload blur-up img-responsive center-block full-width product-small {% if forloop.first == true %} active{% endif %}" alt="{{ product.title }}"/></a>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                <div class="sale-stock">
+                                    {% if product.compare_at_price_max > product.price %}
+                                    {% assign cal_compare_price = product.compare_at_price_max | divided_by: 100 %}
+                                    {% assign cal_price = product.price | divided_by: cal_compare_price %}
+                                    {% assign cal_price_percentage = cal_price | minus: 100 %}
+                                    <div class="product-sale"><span>{{ cal_price_percentage | round }}%</span></div>
+                                    {% endif %}
+                                    {% if product.variants.size <= 1 %}
+                                    {% for variant in product.variants %}
+                                    {% assign product_inventory_management = variant.inventory_management %}
+                                    {% assign product_inventory_policy = variant.inventory_policy %}
+                                    {% assign product_quantity_item = variant.inventory_quantity.product_quantity_item %}
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% if product.variants.first.inventory_management == 'shopify' and product.variants.first.inventory_quantity <= 0 %}
+                                    <div class="product-stock-out"><span>{{ 'products.product.stock_out' | t }}</span></div>
+                                    {% endif %}
+                                </div>
+                                <div class="product-hover hidden-xs">
+                                    <div class="paira-wish-compare-con">
+                                        {% if settings.compare %}
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Compare" data-title="{{ product.title }}" data-handle="{{ product.handle }}" class="paira-add-to-compare add-to-compare"><i class="fa fa-balance-scale"></i></a>
+                                        {% endif %}
+                                        {% if settings.wishlist %}
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Wishlist" data-title="{{ product.title }}" data-handle="{{ product.handle }}" class="paira-add-to-wish add-to-compare "><i class="fa fa-heart-o"></i></a>
+                                        {% endif %}
+                                        {% if settings.enable_quick %}
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Quick View" data-handle="{{ product.handle }}" class="paira-quick-view quick-view add-to-compare"><i class="fa fa-eye"></i></a>
+                                        {% endif %}
+                                        {% if product_inventory_management == 'shopify' and product_inventory_policy == 'continue' and product_quantity_item <= 0 and product.variants.size <= 1 %}
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Pre Order" class="paira-add-to-cart selectss" data-item-quantity="1" data-varient-id="{{ product.variants.first.id }}">
+                                            <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                    <g>
+                        <g>
+                            <defs>
+                                <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"/>
+                            </defs>
+                            <clipPath id="SVGID_2_">
+                                <use xlink:href="#SVGID_1_"  overflow="visible"/>
+                            </clipPath>
+                            <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"/>
+                        </g>
+                        <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                            C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                            c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                            L180.578,106.665z M180.578,106.665"/>
+                        <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                            c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                            C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"/>
+                        <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                            z M89.914,112.012"/>
+                        <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                            H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"/>
+                    </g>
+</svg>
+                                        </a>
+                                        {% else %}
+                                        {% unless product.available %}
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Unavailable" class="disabled selectss">
+                                            <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                    <g>
+                        <g>
+                            <defs>
+                                <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"/>
+                            </defs>
+                            <clipPath id="SVGID_2_">
+                                <use xlink:href="#SVGID_1_"  overflow="visible"/>
+                            </clipPath>
+                            <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"/>
+                        </g>
+                        <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                            C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                            c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                            L180.578,106.665z M180.578,106.665"/>
+                        <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                            c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                            C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"/>
+                        <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                            z M89.914,112.012"/>
+                        <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                            H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"/>
+                    </g>
+                    </svg>
+                                        </a>
+                                        {% else %}
+                                        {% if product.variants.size > 1 %}
+                                        <a href="{{ product.url }}" data-toggle="tooltip" data-placement="top" title="Select Option" class="selectss">
+                                            <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                    <g>
+                        <g>
+                            <defs>
+                                <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"/>
+                            </defs>
+                            <clipPath id="SVGID_2_">
+                                <use xlink:href="#SVGID_1_"  overflow="visible"/>
+                            </clipPath>
+                            <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"/>
+                        </g>
+                        <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                            C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                            c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                            L180.578,106.665z M180.578,106.665"/>
+                        <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                            c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                            C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"/>
+                        <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                            z M89.914,112.012"/>
+                        <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                            H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"/>
+                    </g>
+                    </svg>
+                                        </a>
+                                        {% else %}
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart" class="paira-add-to-cart add-to-cart selectss" data-item-quantity="1" data-varient-id="{{ product.variants.first.id }}">
+                                            <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                    <g>
+                        <g>
+                            <defs>
+                                <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"/>
+                            </defs>
+                            <clipPath id="SVGID_2_">
+                                <use xlink:href="#SVGID_1_"  overflow="visible"/>
+                            </clipPath>
+                            <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"/>
+                        </g>
+                        <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                            C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                            c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                            L180.578,106.665z M180.578,106.665"/>
+                        <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                            c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                            C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"/>
+                        <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                            z M89.914,112.012"/>
+                        <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                            H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"/>
+                    </g>
+                    </svg>
+                                        </a>
+                                        {% endif %}
+                                        {% endunless %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-views">
+                                {% if product_inventory_management == 'shopify' and product_quantity_item <= 0 and product.variants.size <= 1 %}
+                                <div class="product-stock-out"><span>{{ 'products.product.stock_out' | t }}</span></div>
+                                {% endif %}
+                                <div class="product-title-price">
+                                    {% if settings.vendor %}
+                                    <h5 class="margin-bottom-5 vendor margin-top-0">{{ product.vendor }}</h5>
+                                    {% endif %}
+                                    {% if settings.enable_review %}
+                                    {% if settings.enable_reviews %}
+                                    <div class="pro-reating text-center margin-top-0">
+                                        <div class="paira-rating-con product-rating">
+                                            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
+                                    <h2 class="margin-top-5 margin-bottom-0"><a href="{{ product.url }}" title="{{ product.title }}" class="paira-product-title">{{ product.title }}</a></h2>
+                                    <div class="text-center margin-top-5" style="margin-bottom: 3px">
+                                        {% if product.compare_at_price_max > product.price %}
+                                        <div class="display-in-b margin-right-5"><del><span class="money">{{ product.compare_at_price | money }}</span></del></div>
+                                        <div class="display-in-b"><span class="money">{{ product.price | money }}</span></div>
+                                        {% else %}
+                                        <span class="money">{{ product.price | money }}</span>
+                                        {% endif %}
+                                    </div>
+                                    {% if settings.product_variant_color %}
+                                    <ul class="item-swatch item-swatchs list-inline margin-bottom-0 margin-top-5">
+                                        {% for option in product.options %}
+                                        {% if option == 'Color' %}
+                                        {% assign index = forloop.index0 %}
+                                        {% assign colorlist = '' %}
+                                        {% assign color = '' %}
+                                        {% for variant in product.variants %}
+                                        {% capture color %}
+                                        {{ variant.options[index] }}
+                                        {% endcapture %}
+                                        {% unless colorlist contains color %}
+                                        {% assign text = color | handleize %}
+                                        <li class="{% if forloop.first == true %}active{% endif %} {% if variant.image != null %}paira-variant-image-change{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ color }}" data-variant-image="{{ variant.image.src | product_img_url: 'large' }}">
+                                            <label class="margin-bottom-0" style="background: #ddd;{% if text == 'white' %}border: 1px solid #cbcbcb; {% endif %}background-color: {{ color | split: ' ' | last | handle }};border-radius: 30px;margin-top:0;padding: 1px;opacity: 0.6;">
+                                                {% if variant.image != null %}
+                                                <span style="background: url('{{ variant.image.src | product_img_url: 'thumb' }}');width: 25px; height: 25px;background-size: cover;background-repeat: no-repeat;-webkit-border-radius: 30px;-moz-border-radius: 100px;display: block;" data-img="{{ variant.image.src | product_img_url: 'large' }}" class="paira-color-img color-img"></span>
+                                                {% endif %}
+                                            </label>
+                                        </li>
+                                        {% capture tempList %}
+                                        {{ colorlist | append: color | append: ' ' }}
+                                        {% endcapture %}
+                                        {% assign colorlist = tempList %}
+                                        {% endunless %}
+                                        {% endfor %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    {% if settings.product_variant_size %}
+                                    <ul class="item-size list-inline margin-bottom-5 margin-top-0">
+                                        {% for option in product.options %}
+                                        {% if option == 'Size' %}
+                                        {% assign index = forloop.index0 %}
+                                        {% assign sizelist = '' %}
+                                        {% assign size = '' %}
+                                        {% for variant in product.variants %}
+                                        {% capture size %}
+                                        {{ variant.options[index] }}
+                                        {% endcapture %}
+                                        {% unless sizelist contains size %}
+                                        {% assign text = size | handleize %}
+                                        <li class="size-label {% if forloop.first == true %}active{% endif %} {% if variant.image != null %}paira-variant-image-change{% endif %}" style="margin-top: 5px" data-variant-image="{{ variant.image.src | product_img_url: 'large' }}">{{ size }}</li>
+                                        {% capture tempList %}
+                                        {{ sizelist | append: size | append: ' ' }}
+                                        {% endcapture %}
+                                        {% assign sizelist = tempList %}
+                                        {% endunless %}
+                                        {% endfor %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    {% if settings.product_countdown %}
+                                    {% include 'countdown' %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-md-4 margin-top-30" style="width: 25%;position: relative;display: inline-block;float: none;vertical-align: top;margin-left: -4px;">
+                        <div class="product img text-center">
+                            <div class="overflow-h pro-im position-r" data-value="0">
+                                <a href="#" class="overflow-h full-width">
+                                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                </a>
+                                <div class="product-hover hidden-xs">
+                                    <div class="paira-wish-compare-con">
+                                        <a href="#" class="add-to-compare"><i class="fa fa-balance-scale"></i></a>
+                                        <a href="#" class="add-to-compare "><i class="fa fa-heart-o"></i></a>
+                                        <a href="#" class="quick-view add-to-compare"><i class="fa fa-eye"></i></a>
+                                        <a href="#" class="selectss">
+                                            <svg version="1.0" id="Cart_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" height="25px" viewBox="0 0 265 320.235" enable-background="new 0 0 265 320.235" xml:space="preserve">
+                                                            <g>
+                                                                <g>
+                                                                    <defs>
+                                                                        <rect id="SVGID_1_" y="-0.012" width="265" height="320.247"></rect>
+                                                                    </defs>
+                                                                    <clipPath id="SVGID_2_">
+                                                                        <use xlink:href="#SVGID_1_" overflow="visible"></use>
+                                                                    </clipPath>
+                                                                    <path clip-path="url(#SVGID_2_)" d="M248.899,319.992H16.263c-0.467,0-0.936-0.022-1.399-0.056
+                                                                        c-8.839-0.815-15.338-8.61-14.539-17.392L19.725,89.218c0.753-8.295,7.598-14.552,15.928-14.552H229.51
+                                                                        c8.316,0.01,15.16,6.266,15.915,14.552l19.396,213.327c0.042,0.455,0.062,0.948,0.062,1.437
+                                                                        C264.888,312.799,257.721,319.986,248.899,319.992L248.899,319.992z M35.653,85.332c-2.774,0-5.055,2.083-5.305,4.847
+                                                                        L10.952,303.514c-0.27,2.926,1.9,5.524,4.829,5.789l0.483,0.022h232.629c2.94-0.006,5.324-2.395,5.324-5.34l-19.414-213.8
+                                                                        c-0.25-2.764-2.531-4.847-5.304-4.854H35.653z M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666
+                                                                        c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012z M89.914,112.012"></path>
+                                                                </g>
+                                                                <path d="M180.578,127.998c-8.822,0-16-7.177-16-16.001c0-8.822,7.176-15.998,16-15.998c8.822,0,16,7.176,16,15.998
+                                                                    C196.578,120.821,189.4,127.998,180.578,127.998L180.578,127.998z M180.578,106.665c-2.941,0-5.335,2.39-5.335,5.332
+                                                                    c0,2.946,2.394,5.334,5.335,5.334c2.944,0,5.333-2.388,5.333-5.334C185.911,109.055,183.522,106.665,180.578,106.665
+                                                                    L180.578,106.665z M180.578,106.665"></path>
+                                                                <path d="M84.581,127.998c-8.821,0-15.999-7.177-15.999-16.001c0-8.822,7.177-15.998,15.999-15.998v10.666
+                                                                    c-2.94,0-5.333,2.388-5.333,5.332c0,2.943,2.394,5.334,5.333,5.334c2.94,0,5.333-2.392,5.333-5.334h10.666
+                                                                    C100.581,120.821,93.405,127.998,84.581,127.998L84.581,127.998z M84.581,127.998"></path>
+                                                                <path d="M89.914,112.012c-0.008-2.942-2.409-5.341-5.344-5.347l0.025-10.666c8.789,0.02,15.961,7.193,15.986,15.983L89.914,112.012
+                                                                    z M89.914,112.012"></path>
+                                                                <path d="M185.911,101.332h-10.668V53.333c0-23.524-19.138-42.665-42.664-42.665c-23.524,0-42.665,19.141-42.665,42.665v47.999
+                                                                    H79.248V53.333C79.248,23.925,103.171,0,132.579,0c29.407,0,53.332,23.925,53.332,53.333V101.332z M185.911,101.332"></path>
+                                                            </g>
+                                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-views">
+                                <div class="product-title-price">
+                                    <h2 class="margin-top-5 margin-bottom-0"><a href="#" title="Contrast Shawl Collar" class="paira-product-title">Your product's name</a></h2>
+                                    <div class="text-center margin-top-5" style="margin-bottom: 3px">
+                                        <span class="money" data-currency-usd="$480.00" data-currency="USD">$480.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    {% if section.settings.product_row == '3' %}
+    .collection-products-custom .product-con {
+        width: 33.33%;
+    }
+    {% endif %}
+    {% if section.settings.product_row == '4' %}
+    .collection-products-custom .product-con {
+        width: 25%;
+    }
+    {% endif %}
+    {% if section.settings.product_row == '5' %}
+    .collection-products-custom .product-con {
+        width: 20%;
+    }
+    {% endif %}
+    {% if section.settings.product_row == '6' %}
+    .collection-products-custom .product-con {
+        width: 16.66%;
+    }
+    {% endif %}
+</style>
+{% schema %}
+{
+"name": "Custom Products List",
+"class": "index-section index-section--collectionproductsection",
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "col_pro_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "col_pro_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Collection Products Content"
+},
+{
+"type": "text",
+"id": "collection_products_title",
+"label": "Collection Products Title",
+"default": "Hot Collection"
+},
+{
+"type": "header",
+"content": "Product Per Row"
+},
+{
+"type": "select",
+"id": "product_row",
+"label": "Product Per Row",
+"options": [
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+},
+{
+"value": "6",
+"label": "6"
+}
+],
+"default": "4"
+}
+],
+"blocks": [
+{
+"type": "product_single",
+"name": "Product",
+"settings": [
+{
+"type": "product",
+"id": "feature_products",
+"label": "Feature product"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Custom Products List",
+"category": "Products",
+"blocks": [
+{
+"type": "product_single"
+},
+{
+"type": "product_single"
+},
+{
+"type": "product_single"
+},
+{
+"type": "product_single"
+}
+]
+}
+]
+}
+{% endschema %}

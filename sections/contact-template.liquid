@@ -1,0 +1,539 @@
+<!-- =================== Contact Template =================== -->
+<main
+  id="contactsection--{{ section.id }}"
+  class="contact-page contact-template {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="contact-template"
+>
+  <section class="contact-content">
+    <div class="container">
+      <div class="col-md-12 padding-clear">
+        {% if section.settings.contact_google_map_check %}
+          <!-- =================== Google Map =================== -->
+          <div class="paira-gap-4 paira-gap-3">
+            <div id="googleMap" style="height: 350px;"></div>
+          </div>
+          <script
+            type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js{% if section.settings.map_api_key != '' %}?key={{ section.settings.map_api_key }}{% endif %}"
+          ></script>
+          <script>
+            if($("#googleMap").length) {
+                var locations = [
+                    {% if section.settings.map_point_place1 != '' %}
+                ['{{section.settings.map_description1}}', {{section.settings.map_point_place1}}, 1],
+                {% endif %}
+                {% if section.settings.map_point_place2 != '' %}
+                ['{{section.settings.map_description2}}', {{section.settings.map_point_place2}}, 2],
+                {% endif %}
+                {% if section.settings.map_point_place3 != '' %}
+                ['{{section.settings.map_description3}}', {{section.settings.map_point_place3}}, 3],
+                {% endif %}
+                {% if section.section.settings.map_point_place4 != '' %}
+                ['{{section.settings.map_description4}}', {{section.settings.map_point_place4}}, 4],
+                {% endif %}
+                {% if section.settings.map_point_place5 != '' %}
+                ['{{section.settings.map_description5}}', {{section.settings.map_point_place5}}, 5],
+                {% endif %}
+                {% if section.settings.map_point_place6 != '' %}
+                ['{{section.settings.map_description6}}', {{section.settings.map_point_place6}}, 6],
+                {% endif %}
+                {% if section.settings.map_point_place7 != '' %}
+                ['{{section.settings.map_description7}}', {{section.settings.map_point_place7}}, 7],
+                {% endif %}
+            ];
+                var map = new google.maps.Map(document.getElementById('googleMap'), {
+                    zoom: 14,
+                    center: new google.maps.LatLng({{section.settings.map_point_place1}}),
+                styles: [
+                    {
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#f5f5f5"
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#616161"
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "color": "#f5f5f5"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.land_parcel",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#bdbdbd"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#eeeeee"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#757575"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#e5e5e5"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#9e9e9e"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#757575"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#dadada"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#616161"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#9e9e9e"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit.line",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#e5e5e5"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit.station",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#eeeeee"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#c9c9c9"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#9e9e9e"
+                            }
+                        ]
+                    }
+                ]
+            }),
+                infowindow = new google.maps.InfoWindow(),
+                        marker, i;
+                for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                        return function() {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+            }
+          </script>
+        {% endif %}
+      </div>
+    </div>
+    <div class="container  paira-gap-2">
+      <div class="row">
+        <!--
+          <div class="col-md-12">
+            <div class="heading pull-left full-width">
+              <h1 class="page-header margin-bottom-20 text-left pull-left">
+                <span>{{ page.title }}</span>
+              </h1>
+            </div>
+            <div class="content-page margin-bottom-20">{{ page.content }}</div>
+          </div>
+        -->
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+          {% form 'contact' %}
+            <div class="row">
+              {% if form.posted_successfully? %}
+                <div class="col-md-12">
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong><i class="fa fa-check"></i></strong> {{ 'contact.form.form_posted_success' | t }}
+                  </div>
+                </div>
+              {% endif %}
+              {% if form.errors %}
+                <div class="col-md-12">
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong><i class="fa fa-times"></i></strong> {{ 'contact.form.form_errors' | t }}
+                  </div>
+                  {% for field in form.errors %}
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <strong><i class="fa fa-times"></i></strong> {{ 'contact.form.the' | t }}
+                      <strong>{{ field }}</strong> {{ form.errors.messages[field] }}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              <div class="col-md-6">
+                <input name="form_type" type="hidden" value="contact">
+                <input name="utf8" type="hidden" value="✓">
+                <label>{{ 'contact.form.form_name' | t }}</label>
+                <input type="text" class="form-control margin-bottom-20" name="contact[name]" placeholder="">
+              </div>
+              <div class="col-md-6">
+                <label>Last Name</label>
+                <input type="text" class="form-control margin-bottom-20" name="contact[name]" placeholder="">
+              </div>
+              <div class="col-md-6">
+                <label>{{ 'contact.form.form_email' | t }}</label>
+                <input type="email" class="form-control margin-bottom-20" name="contact[email]" placeholder="">
+              </div>
+              <div class="col-md-6">
+                <label>{{ 'contact.form.form_phone' | t }}</label>
+                <input type="telephone" class="form-control margin-bottom-20" name="contact[phone]" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label>State</label>
+              <input type="text" class="form-control margin-bottom-20" name="contact[text]" placeholder="">
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>{{ 'contact.form.form_message' | t }}</label>
+                <textarea rows="2" name="contact[body]" class="form-control margin-bottom-20" placeholder=""></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-default sub_btn">{{ 'contact.form.submit_message' | t }}</button>
+          {% endform %}
+        </div>
+        {% if section.settings.get_in_touch_check %}
+          <aside class="col-md-4 col-lg-3 col-sm-12 col-xs-12">
+            <figure class="margin-bottom-30">
+              <figcaption>
+                <h4 class="panel-heading padding-bottom-0">{{ section.settings.contact_title }}</h4>
+              </figcaption>
+              <div class="contact_content_widget">
+                <ul class="list-unstyled">
+                  {% if section.settings.contact_textarea != blank %}
+                    <li>
+                      <p>
+                        <i class="fa fa-user"></i><span>{{ section.settings.contact_textarea }}</span>
+                      </p>
+                    </li>
+                  {% endif %}
+                  {% if section.settings.contact_address != blank %}
+                    <li>
+                      <p>
+                        <i class="fa fa-map-marker"></i><span>{{ section.settings.contact_address }}</span>
+                      </p>
+                    </li>
+                  {% endif %}
+                  {% if section.settings.contact_tel != blank %}
+                    <li>
+                      <p>
+                        <i class="fa fa-phone"></i><span>{{ section.settings.contact_tel }}</span>
+                      </p>
+                    </li>
+                  {% endif %}
+                  {% if section.settings.contact_email != blank %}
+                    <li>
+                      <p>
+                        <i class="fa fa-envelope"></i
+                        ><span
+                          ><a href="mailto:{{ section.settings.contact_email }}">
+                            {{- section.settings.contact_email -}}
+                          </a></span
+                        >
+                      </p>
+                    </li>
+                  {% endif %}
+                  {% if section.settings.contact_schedule != blank %}
+                    <li>
+                      <p class="margin-clear">
+                        <i class="fa fa-clock-o"></i><span>{{ section.settings.contact_schedule }}</span>
+                      </p>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </figure>
+            {% if section.settings.content_image_check %}
+              <figure class="margin-bottom-0 padding-clear">
+                {% if section.settings.contact_image == blank %}
+                  {{ 'image' | append: current | placeholder_svg_tag: 'placeholder-svg height-200' }}
+                {% else %}
+                  <img
+                    src="{{ section.settings.contact_image | img_url: 'compact' }}"
+                    data-srcset="{% if section.settings.contact_image == blank %}{{ 'contact-empty.png' | asset_url }}{% else %}{{ section.settings.contact_image | img_url: 'compact' }}{% endif %} 50w, {% if section.settings.contact_image == blank %}{{ 'contact-empty.png' | asset_url }}{% else %}{{ section.settings.contact_image | img_url: 'large' }}{% endif %} 500w"
+                    data-src="{% if section.settings.contact_image == blank %}{{ 'contact-empty.png' | asset_url }}{% else %}{{ section.settings.contact_image | img_url: 'large' }}{% endif %}"
+                    class="img-responsive center-block lazyload blur-up"
+                    data-sizes="auto"
+                    alt="{{ shop.name }}"
+                  >
+                {% endif %}
+              </figure>
+            {% endif %}
+          </aside>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</main>
+{% schema %}
+{
+"name": "Contact",
+"class": "contact-section contact-section--contactsection",
+"settings": [
+{
+"type": "header",
+"content": "Get In Touch Widget"
+},
+{
+"type": "checkbox",
+"id": "get_in_touch_check",
+"label": "Enable Widget",
+"default": true
+},
+{
+"type": "text",
+"id": "contact_title",
+"label": "Title",
+"default": "Get In Touch"
+},
+{
+"type": "text",
+"id": "contact_textarea",
+"label": "Description",
+"default": "ThemeTidy"
+},
+{
+"type": "text",
+"id": "contact_address",
+"label": "Address",
+"default": "98 Agnibina Road, Jinnah Super Market, 2nd Floor, Jhenidah, Bangladesh"
+},
+{
+"type": "text",
+"id": "contact_tel",
+"label": "Telephone Number",
+"default": "+880 0000-000000"
+},
+{
+"type": "text",
+"id": "contact_email",
+"label": "E-mail Address",
+"default": "support@themetidy.com"
+},
+{
+"type": "text",
+"id": "contact_schedule",
+"label": "Shop Open And Close Schedule Time",
+"default": "9:00 AM - 6:00 PM"
+},
+{
+"type": "header",
+"content": "Banner Image"
+},
+{
+"type": "checkbox",
+"id": "content_image_check",
+"label": "Enable Banner Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "contact_image",
+"label": "Image",
+"info": "Upload image : 280 x 200px recommended."
+},
+{
+"type": "header",
+"content": "Google Map Widget"
+},
+{
+"type": "checkbox",
+"id": "contact_google_map_check",
+"label": "Enable Widget",
+"default": true
+},
+{
+"type": "text",
+"id": "map_api_key",
+"label": "Google Map Api Key"
+},
+{
+"type": "text",
+"id": "map_point_place1",
+"label": "Coordinate 1",
+"default": "23.545002, 89.172516"
+},
+{
+"type": "text",
+"id": "map_description1",
+"label": "Coordinate Description 1",
+"default": "Jhenidah, Bangladesh"
+},
+{
+"type": "text",
+"id": "map_point_place2",
+"label": "Coordinate 2",
+"default": "23.545201, 89.165655"
+},
+{
+"type": "text",
+"id": "map_description2",
+"label": "Coordinate Description 2",
+"default": "Enpek, Bangladesh"
+},
+{
+"type": "text",
+"id": "map_point_place3",
+"label": "Coordinate 3",
+"default": "23.537035, 89.174420"
+},
+{
+"type": "text",
+"id": "map_description3",
+"label": "Coordinate Description 3",
+"default": "paira, Bangladesh"
+},
+{
+"type": "text",
+"id": "map_point_place4",
+"label": "Coordinate 4",
+"default": "23.542593, 89.168170"
+},
+{
+"type": "text",
+"id": "map_description4",
+"label": "Coordinate Description 4",
+"default": "Eco, Bangladesh"
+},
+{
+"type": "text",
+"id": "map_point_place5",
+"label": "Coordinate 5"
+},
+{
+"type": "text",
+"id": "map_description5",
+"label": "Coordinate Description 5"
+},
+{
+"type": "text",
+"id": "map_point_place6",
+"label": "Coordinate 6"
+},
+{
+"type": "text",
+"id": "map_description6",
+"label": "Coordinate Description 6"
+},
+{
+"type": "text",
+"id": "map_point_place7",
+"label": "Coordinate 7"
+},
+{
+"type": "text",
+"id": "map_description7",
+"label": "Coordinate Description 7"
+}
+]
+}
+{% endschema %}

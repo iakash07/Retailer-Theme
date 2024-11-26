@@ -1,0 +1,85 @@
+<!--=================== Instagram Gallery Widget  ===================-->
+<section class="instafeed insfed {% if section.settings.ins_section_gap_check %} paira-gap-2 {% endif %}" id="instagramsection--{{ section.id }}">
+    <div class="container-fluid padding-fixed {% if section.settings.ins_full_width_check %} full-width {% endif %}">
+        <div class="apps-back">
+            {% if section.settings.instagram_title != blank %}
+            <div class="heading">
+                <h1 class="margin-bottom-30 page-header"><span>{{ section.settings.instagram_title }}</span></h1>
+            </div>
+            {% endif %}
+            <div class="padding-top-10">
+                {{ section.settings.instagram_apps }}
+            </div>
+            {% if section.settings.instagram_btn_text != blank %}
+            <a href="{{ section.settings.instagram_btn_link }}" class="btn btn-default more-btn margin-top-30">{{ section.settings.instagram_btn_text }}</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% schema %}
+{
+"name": "Instagram",
+"class": "index-section index-section--instagramsection",
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "ins_section_gap_check",
+"label": "Enable Section Gap",
+"default": true
+},
+{
+"type": "header",
+"content": "Section Full Width"
+},
+{
+"type": "checkbox",
+"id": "ins_full_width_check",
+"label": "Enable Section Full Width",
+"default": false
+},
+{
+"type": "header",
+"content": "Instagram Section Title"
+},
+{
+"type": "text",
+"id": "instagram_title",
+"label": "Instagram Section Title",
+"default": "Retailer In Instagram"
+},
+{
+"type": "header",
+"content": "Instagram from Shopify Apps"
+},
+{
+"type": "textarea",
+"id": "instagram_apps",
+"label": "Embed Widget Code",
+"info": "Get Embed Code From This shopify Apps [click here](https:\/\/apps.shopify.com\/instagram-shop-by-snapppt)"
+},
+{
+"type": "text",
+"id": "instagram_btn_text",
+"label": "Instagram Button Text",
+"default": "Follow Us On Instagram"
+},
+{
+"type": "url",
+"id": "instagram_btn_link",
+"label": "Instagram Button Link",
+"default": "\/collections\/all"
+}
+],
+"presets": [
+{
+"name": "Instagram",
+"category": "Instagram"
+}
+]
+}
+{% endschema %}
+

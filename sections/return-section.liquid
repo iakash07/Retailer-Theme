@@ -1,0 +1,135 @@
+<div class="main-return-section pt-120">
+  <div class="ctm-container">
+    {% if section.settings.topd != blank %}
+      <div class="top-return-section">
+        {{ section.settings.topd }}
+    </div>
+    {% endif %}
+    <div class="return-img">
+      {% if section.settings.img != blank %}
+        <img src="{{ section.settings.img | img_url: "master" }}">
+      {% endif %}
+    </div>
+    <div class="return-desc pt-120">
+      {% if section.settings.mtitle != blank %}
+        <h2 class="ctm-head">{{ section.settings.mtitle }}</h2>
+      {% endif %}
+      <div class="return-des-inner">
+        <h6>{{ section.settings.stitle1 }}</h6>
+        {{ section.settings.desc1 }}
+        <h6>{{ section.settings.stitle2 }}</h6>
+        {{ section.settings.desc2 }}
+        <h6>{{ section.settings.stitle3 }}</h6>
+        {{ section.settings.desc3 }}
+      </div>
+    </div>
+    <div class="main-return-service pt-120">
+      <div class="return-service">
+        {% for block in section.blocks limit:3 %}
+          <div class="return-service-col">
+            {{ block.settings.svg }}
+            <h6>{{ block.settings.stitle }}</h6>
+            <p>{{ block.settings.sdesc }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="or-sec">
+      <span>OR</span>
+    </div>
+    <div class="main-return-service">
+      <div class="return-service">
+        {% for block in section.blocks offset:3 %}
+          <div class="return-service-col">
+            {{ block.settings.svg }}
+            <h6>{{ block.settings.stitle }}</h6>
+            <p>{{ block.settings.sdesc }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Return Section",
+    "settings": [
+      {
+        "type": "html",
+        "id": "topd",
+        "label": "Add Top Description",
+        "info": "Add Info between <p></p> Tag"
+      },
+      {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Add Image"
+      },
+      {
+        "type": "text",
+        "id": "mtitle",
+        "label": "Add Main Heading"
+      },
+      {
+        "type": "text",
+        "id": "stitle1",
+        "label": "Add Sub Heading 1"
+      },
+      {
+        "type": "richtext",
+        "id": "desc1",
+        "label": "Add Description 1"
+      },
+      {
+        "type": "text",
+        "id": "stitle2",
+        "label": "Add Sub Heading 2"
+      },
+      {
+        "type": "richtext",
+        "id": "desc2",
+        "label": "Add Description 2"
+      },
+      {
+        "type": "text",
+        "id": "stitle3",
+        "label": "Add Sub Heading 3"
+      },
+      {
+        "type": "richtext",
+        "id": "desc3",
+        "label": "Add Description 3"
+      }
+    ],
+    "blocks":[
+      {
+        "type": "info",
+        "name": "Add Info",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "svg",
+            "label": "Add SVG ICon"
+          },
+          {
+            "type": "text",
+            "id": "stitle",
+            "label": "Add Sub Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "sdesc",
+            "label": "Add Description"
+          }
+        ]
+      }
+    ],
+    "presets":[
+      {
+        "name": "Return Section"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,216 @@
+<!-- =================== FAQs Template =================== -->
+<main class="faqs-page {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}">
+  <section
+    id="faqssection-{{ section.id }}"
+    class="faqs-template"
+    data-section-id="{{ section.id }}"
+    data-section-type="faqs-template"
+  >
+    <div class="ctm-container paira-gap-3 paira-gap-2">
+      <div class="row">
+        <div class="heading pull-left full-width">
+          <h2 class="ctm-head t-center">
+            <span>{{ section.settings.title1 }}</span>
+          </h2>
+        </div>
+        <div class="content-page col-md-12 margin-bottom-0">{{ page.content }}</div>
+        <div class="col-md-12 margin-top-10">
+          <div class="panel-group margin-clear" id="accordion" role="tablist" aria-multiselectable="true">
+            {% for block in section.blocks %}
+              {% if block.type == "text" %}
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading-{{ forloop.index }}">
+                  <h2 class="panel-title">
+                    <a
+                      role="button"
+                      class="collapsed"
+                      data-toggle="collapse"
+                      data-parent="#accordion"
+                      href="#collapse-{{ forloop.index }}"
+                      aria-expanded="true"
+                      aria-controls="collapse-{{ forloop.index }}"
+                    >
+                      {{ block.settings.question }}
+                    </a>
+                  </h2>
+                </div>
+                <div
+                  id="collapse-{{ forloop.index }}"
+                  class="panel-collapse collapse"
+                  role="tabpanel"
+                  aria-labelledby="heading-{{ forloop.index }}"
+                >
+                  <div class="panel-body">
+                    {{ block.settings.answers }}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            {% endfor %}
+            {% for block in section.blocks %}
+                {% if block.type == "title" %}
+                    <h2 class="ctm-head t-center pt-30">
+                      <span>{{ block.settings.title1 }}</span>
+                    </h2>
+              {% endif %}
+            {% endfor %}
+            {% for block in section.blocks %}
+              {% if block.type == "text1" %}
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading-{{ forloop.index }}">
+                  <h2 class="panel-title">
+                    <a
+                      role="button"
+                      class="collapsed"
+                      data-toggle="collapse"
+                      data-parent="#accordion"
+                      href="#collapse-{{ forloop.index }}"
+                      aria-expanded="true"
+                      aria-controls="collapse-{{ forloop.index }}"
+                    >
+                      {{ block.settings.question }}
+                    </a>
+                  </h2>
+                </div>
+                <div
+                  id="collapse-{{ forloop.index }}"
+                  class="panel-collapse collapse"
+                  role="tabpanel"
+                  aria-labelledby="heading-{{ forloop.index }}"
+                >
+                  <div class="panel-body">
+                    {{ block.settings.answers }}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% comment %}
+          <div class="col-md-6 margin-top-30">
+              {% form 'contact' %}
+              <div class="row">
+                  <div class="col-md-12 faq-padding">
+                      <h2 class="margin-clear">{{ 'faq.form.ask_questions' | t }}</h2>
+                  </div>
+                  {% if form.posted_successfully? %}
+                  <div class="col-md-12">
+                      <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong><i class="fa fa-check"></i></strong> {{ 'faq.form.form_question_success' | t }}
+                      </div>
+                  </div>
+                  {% endif %}
+                  {% if form.errors %}
+                  <div class="col-md-12">
+                      <div class="alert alert-warning alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong><i class="fa fa-times"></i></strong> {{ 'faq.form.form_question_errors' | t }}
+                      </div>
+                      {% for field in form.errors %}
+                      <div class="alert alert-warning alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong><i class="fa fa-times"></i></strong> {{ 'contact.form.the' | t }} <strong>{{ field }}</strong> {{ form.errors.messages[field] }}
+                      </div>
+                      {% endfor %}
+                  </div>
+                  {% endif %}
+                  <div class="col-md-12">
+                      <input name="form_type" type="hidden" value="contact">
+                      <input name="utf8" type="hidden" value="✓">
+                      <label>{{ 'contact.form.form_name' | t }}</label>
+                      <input type="text" class="form-control margin-bottom-20" name="contact[name]" placeholder="">
+                  </div>
+                  <div class="col-md-12">
+                      <label>{{ 'contact.form.form_email' | t }}</label>
+                      <input type="email" class="form-control margin-bottom-20" name="contact[email]" placeholder="">
+                  </div>
+                  <div class="col-md-12">
+                      <label>{{ 'contact.form.form_phone' | t }}</label>
+                      <input type="telephone" class="form-control margin-bottom-20" name="contact[phone]" placeholder="">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12 faq-padding">
+                      <label>{{ 'faq.form.your_question' | t }}</label>
+                      <textarea rows="9" name="contact[body]" class="form-control margin-bottom-20" placeholder=""></textarea>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-default">{{ 'faq.form.send_question' | t }}</button>
+              {% endform %}
+          </div>
+        {% endcomment %}
+      </div>
+    </div>
+  
+  </section>
+</main>
+
+{% schema %}
+{
+"name": "Frequently Ask Questions",
+"settings": [
+  {
+    "type": "text",
+    "id": "title1",
+    "label": "Add Title",
+    "default": "Main Heading"
+  }
+],
+"blocks": [
+{
+"type": "text",
+"name": "Questions & Answer",
+"settings": [
+{
+"type": "text",
+"id": "question",
+"label": "Question",
+"default": "What is Shopify?"
+},
+{
+"type": "richtext",
+"id": "answers",
+"label": "Answer",
+"default": "<p>Shopify is a complete ecommerce solution that allows you to set up an online store to sell your goods. Shopify is the leading ecommerce platform which enables entrepreneurs to start their own online store. It’s perfect for entrepreneurs who want to start their own ecommerce store without any hassle.</p>"
+}
+]
+},
+{
+"type": "title",
+"name": "Add Title",
+"settings": [
+{
+"type": "text",
+"id": "title1",
+"label": "Add Title"
+}
+]
+},
+{
+"type": "text1",
+"name": "new Questions & Answer",
+"settings": [
+{
+"type": "text",
+"id": "question",
+"label": "Question",
+"default": "What is Shopify?"
+},
+{
+"type": "richtext",
+"id": "answers",
+"label": "Answer",
+"default": "<p>Shopify is a complete ecommerce solution that allows you to set up an online store to sell your goods. Shopify is the leading ecommerce platform which enables entrepreneurs to start their own online store. It’s perfect for entrepreneurs who want to start their own ecommerce store without any hassle.</p>"
+}
+]
+}
+],
+"presets":[
+  {
+    "name": "Frequently Ask Questions"
+  }
+]
+}
+{% endschema %}

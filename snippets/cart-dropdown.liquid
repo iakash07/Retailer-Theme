@@ -1,0 +1,60 @@
+<!--=================== Cart Dropdown ===================-->
+{% if section.settings.search_mobile %}
+<button type="button" data-toggle="collapse" data-target="#serches" class="black-search hidden-lg hidden-md hidden-sm" aria-expanded="true"><svg version="1.0" id="search-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="30px" height="30px" viewBox="22.251 37 437.999 438" enable-background="new 22.251 37 437.999 438"
+	 xml:space="preserve">
+<g>
+	<path d="M335.107,312.346h-20.054l-7.446-7.571c25.061-27.501,39.952-65.043,39.952-105.119
+		C347.558,109.584,274.975,37,184.904,37S22.251,109.584,22.251,199.655c0,90.07,72.582,162.653,162.653,162.653
+		c40.077,0,77.621-14.892,105.12-39.952l7.571,7.446v20.055L422.738,475l37.511-37.511L335.107,312.346z M184.904,312.346
+		c-62.57,0-112.534-50.12-112.534-112.691c0-62.572,49.964-112.535,112.534-112.535c62.572,0,112.691,49.963,112.691,112.535
+		C297.594,262.225,247.476,312.346,184.904,312.346L184.904,312.346z"/>
+</g>
+</svg>
+</button>
+{% endif %}
+<a href="/cart" class="padding-bottom-10 cart-icon">
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.8335 2.83334H5.2985C6.8285 2.83334 8.03267 4.15084 7.90517 5.66667L6.72933 19.7767C6.531 22.0858 8.35849 24.0692 10.6818 24.0692H25.7693C27.8093 24.0692 29.5943 22.3975 29.7502 20.3717L30.5152 9.74668C30.6852 7.39501 28.9002 5.4825 26.5343 5.4825H8.24517" stroke="#111111" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M23.0208 31.1667C23.9988 31.1667 24.7917 30.3738 24.7917 29.3958C24.7917 28.4178 23.9988 27.625 23.0208 27.625C22.0428 27.625 21.25 28.4178 21.25 29.3958C21.25 30.3738 22.0428 31.1667 23.0208 31.1667Z" stroke="#111111" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.6876 31.1667C12.6656 31.1667 13.4584 30.3738 13.4584 29.3958C13.4584 28.4178 12.6656 27.625 11.6876 27.625C10.7096 27.625 9.91675 28.4178 9.91675 29.3958C9.91675 30.3738 10.7096 31.1667 11.6876 31.1667Z" stroke="#111111" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.75 11.3333H29.75" stroke="#111111" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a><span class="cart-item-counts"><span class="paira-cart-item-count">{{ cart.item_count }}</span></span>
+<div class="paira-cartNotEmpty" {% if cart.item_count == 0 %}style="display: none;"{% endif %}>
+    <ul class="dropdown-menu dropdown-menu-right hidden-xs">
+        <li>
+            <ul class="list-unstyled margin-clear paira-cart-item-list">
+                {% for line in cart.items %}
+                <li id="item_{{ line.variant.id }}" class="cart-menu-line-item padding-left-15 padding-right-15">
+                    <a href="/products/{{ line.product.handle }}" class="pull-left cart-images-drop"><img src="{{ line.image | product_img_url: 'small' }}" alt=""></a>
+                    <div class="pull-left cart-detail-drop">
+                        <a href="/products/{{ line.product.handle }}" class="cart-menu-line-title pull-left margin-left-10 drop-title">{{ line.title }}</a>
+                        <div class="pull-left cart-menu-line-cal text-right">
+                            <a href="#" class="cart-menu-item-remove drop-title" data-varient-id="{{ line.variant.id }}"><i class="fa fa-times"></i></a>
+                            <p class="margin-top-15"><strong class="cart-menu-line-quantity">{{ line.quantity }}</strong> x <strong class="cart-menu-line-price"><span class="money">{{ line.product.price | money }}</span></strong></p>
+                        </div>
+                    </div>
+                </li>
+                <li class="divider"></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="padding-right-15 padding-left-15">
+            <strong><span class="pull-left">{{ 'header.cart.total' | t }}</span> <span class="paira-cart-total-price pull-right"><span class="money">{{ cart.total_price | money}}</span></span></strong>
+        </li>
+        <li class="divider"></li>
+        <li class="cart-menu-buttons">
+            <a href="/cart" class="btn btn-primary pull-left">{{ 'header.cart.view_cart' | t }}</a>
+            <a href="/checkout" class="btn btn-default pull-right">{{ 'header.cart.checkout' | t }}</a>
+        </li>
+    </ul>
+</div>
+<div class="paira-cartEmpty" {% if cart.item_count != 0 %}style="display: none;"{% endif %}>
+    <ul class="dropdown-menu margin-top-5">
+        <li class="text-center margin-top-40 margin-bottom-40">
+            <h6>{{ 'header.cart.empty_massage' | t }}</h6>
+            <p>{{ 'header.cart.continue' | t }}</p>
+        </li>
+    </ul>
+</div>

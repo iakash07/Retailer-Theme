@@ -1,0 +1,235 @@
+<!--=================== Blog Template ===================-->
+<main id="blogsection--{{ section.id }}" class="blog-page blog-template {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}" data-section-id="{{ section.id }}" data-section-type="blog-template">
+    <section class="blog-content paira-gap-2">
+        <div class="container-fluid padding-fixed">
+            <div class="row">
+                {% if section.settings.blog_layout == '1' or section.settings.blog_layout == '2' %}
+                <a href="#sidebar" class="bars" id="displayTextLeft"><span>Show Sidebar</span> <i class="fa fa-plus-circle" style="display: inline-block;margin-left: 5px;"></i><i class="fa fa-minus-circle" style="display: none;margin-left: 5px;"></i></a>
+                {% endif %}
+                <div {% if section.settings.blog_layout == '1' %} class="col-lg-9 col-md-9 col-sm-8 col-xs-12 paira-gap-3 pull-right"{% endif %}{% if section.settings.blog_layout == '2' %} class="col-lg-9 col-md-9 col-sm-8 col-xs-12 paira-gap-3 pull-left"{% endif %}{% if section.settings.blog_layout == '3' %}class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paira-gap-3 full-width-collection"{% endif %}>
+                    <div class="col-md-12 heading">
+                        <h1 class="page-header margin-bottom-0" style="text-align: left"><span>{{ blog.title }}</span></h1>
+                    </div>
+                    {% paginate blog.articles by section.settings.blog_post_limit %}
+                    {% for article in blog.articles %}
+                    <article class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-sm-6 col-xs-12 blog-coloum">
+                        {% if article.image %}
+                        <div class="featured-image blog-img overflow-h position-r margin-top-30 pull-left full-width">
+                            <a href="{{ article.url }}" class="blog-im">
+                                <img src="{{ article | img_url: 'compact' }}" data-srcset="{{ article | img_url: 'compact' }} 160w, {{ article | img_url: 'medium' }} 240w, {{ article | img_url: 'grande' }} 500w" data-src="{{ article | img_url: 'grande' }}" alt="{{ article.title }}" data-sizes="auto" class="lazyload blur-up img-responsive" />
+                            </a>
+                        </div>
+                        {% else %}
+                        <div class="featured-image blog-img overflow-h position-r margin-top-30 pull-left full-width">
+                            {{ 'lifestyle-2' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                        {% endif %}
+                        <div class="blog-info margin-top-10 pull-left full-width">
+                            <div class="half-width">
+                                <p class="blog_date_info">
+                                    <span class="margin-right-15 display-in-b"><i class="fa fa-calendar"></i> {{ article.published_at | date: "%B %d, %Y" }}</span>
+                                    <span class="display-in-b"><a href="{{ article.url }}#comments"><i class="fa fa-comments-o"></i> {{article.comments_count}}</a></span>
+                                </p>
+                                <h4 class="margin-clear margin-bottom-10 pull-left full-width blog-title"><a href="{{ article.url }}">{{ article.title | truncate: 35, '' }}</a></h4>
+                                <p class="article-desc">{{ article.content | strip_html | truncate: 100, "" }}</p>
+                                <p class="full-width pull-left read-m margin-clear"><a href="{{ article.url }}">Read More</a></p>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                    {% if paginate.pages > 1 %}
+                    <div class="paginates">
+                        <div class="full-width text-center pull-left">
+                            <ul class="pagination list-inline margin-clear">
+                                {% if paginate.previous %}
+                                <li><a href="{{paginate.previous.url}}"><span><i class=" fa fa-angle-left"></i></span></a></li>
+                                {% else %}
+                                <li class="disabled"><a><span><i class=" fa fa-angle-left"></i></span></a></li>
+                                {% endif %}
+                                {% for part in paginate.parts %}
+                                {% if part.is_link %}
+                                <li>{{ part.title | link_to: part.url }}</li>
+                                {% else %}
+                                <li class="active"><span>{{ part.title }}</span></li>
+                                {% endif %}
+                                {% endfor %}
+                                {% if paginate.next %}
+                                <li><a href="{{paginate.next.url}}"><i class=" fa fa-angle-right"></i></a></li>
+                                {% else %}
+                                <li class="disabled"><a><i class=" fa fa-angle-right"></i></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endpaginate %}
+                </div>
+            <aside id="sidebar" class="sidebar col-lg-3 col-md-3 col-sm-4 col-xs-12 paira-gap-3" {% if section.settings.blog_layout == '1' %} style="float: left;"{% endif %}{% if section.settings.blog_layout == '2' %} style="float: right;"{% endif %}{% if section.settings.blog_layout == '3' %} style="display:none;"{% endif %}>
+            {% if section.settings.recent_post_check %}
+            <figure class="margin-bottom-30">
+                <figcaption><h4 class="panel-heading padding-bottom-0">{{ section.settings.recent_post_title }}</h4></figcaption>
+                <div class="blog-recent-post-widget">
+                    <ul class="list-unstyled margin-clear">
+                        {% for article in blogs[blog.handle].articles limit: section.settings.recent_post_limit %}
+                        <li>
+                            <h5 class="margin-bottom-5 margin-top-0"><a href="{{ article.url }}" class="blog-titel">{{ article.title }}</a></h5>
+                            <p class="blog_date_info margin-clear">
+                                <span class="margin-right-15"><i class="fa fa-calendar"></i> {{ article.published_at | date: "%B %d, %Y" }}</span>
+                                <span><a href="{{ article.url }}#comments"><i class="fa fa-comments-o"></i> {{article.comments_count}}</a></span>
+                            </p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </figure>
+            {% endif %}
+            {% if section.settings.post_tags_check %}
+            <figure class="margin-bottom-30">
+                <figcaption><h4 class="panel-heading padding-bottom-0">{{ section.settings.post_tags_title }}</h4></figcaption>
+                <div class="blog-tag-widget">
+                    <ul class="list-inline margin-clear">
+                        {% for tag in blog.tags limit: section.settings.tags_limit %}
+                        <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </figure>
+            {% endif %}
+            {% if section.settings.post_social_widget_check %}
+            <!--=================== Facebook Widgets ===================-->
+            {% include 'facebook-likebox' %}
+            {% endif %}
+            </aside>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% schema %}
+{
+"name": "Blog",
+"class": "blog-section blog-section--blogsection",
+"settings": [
+{
+"type": "select",
+"id": "blog_layout",
+"label": "Blog Layout",
+"options": [
+{
+"value": "1",
+"label": "Sidebar Left"
+},
+{
+"value": "2",
+"label": "Sidebar Right"
+},
+{
+"value": "3",
+"label": "Full Width"
+}
+]
+},
+{
+"type": "header",
+"content": "Blog Post Limit"
+},
+{
+"type": "range",
+"id": "blog_post_limit",
+"label": "Limit",
+"min": 3,
+"max": 30,
+"default": 6
+},
+{
+"type": "header",
+"content": "Recent Post Widget"
+},
+{
+"type": "checkbox",
+"id": "recent_post_check",
+"label": "Enable Recent Post Widget",
+"default": true
+},
+{
+"type": "text",
+"id": "recent_post_title",
+"label": "Recent Post Widget Title",
+"default": "Recent Post"
+},
+{
+"type": "range",
+"id": "recent_post_limit",
+"label": "Limit",
+"min": 3,
+"max": 15,
+"default": 5
+},
+{
+"type": "header",
+"content": "Tags Widget"
+},
+{
+"type": "checkbox",
+"id": "post_tags_check",
+"label": "Enable Tags Widget",
+"default": true
+},
+{
+"type": "text",
+"id": "post_tags_title",
+"label": "Blog Tags Widget Title",
+"default": "Blog Tags"
+},
+{
+"type": "range",
+"id": "tags_limit",
+"label": "Limit",
+"min": 3,
+"max": 50,
+"default": 25
+},
+{
+"type": "header",
+"content": "Social Widget"
+},
+{
+"type": "checkbox",
+"id": "post_social_widget_check",
+"label": "Enable Social Widget",
+"default": true
+},
+{
+"type": "paragraph",
+"content": "## Please Go Back To Widget Settings For Setup Facebook Widget."
+},
+{
+"type": "header",
+"content": "Facebook Widget Setting"
+},
+{
+"type": "text",
+"id": "fblikeboxurl",
+"label": "Facebook Page URL",
+"default": "https:\/\/www.facebook.com\/themetidy"
+},
+{
+"type": "checkbox",
+"id": "fblikeboxface",
+"label": "Show Friend's Faces"
+},
+{
+"type": "checkbox",
+"id": "fblikeboxheader",
+"label": "Show Header",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "fblikeboxposts",
+"label": "Show Posts",
+"default": true
+}
+]
+}
+{% endschema %}

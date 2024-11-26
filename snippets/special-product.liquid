@@ -1,0 +1,32 @@
+<!--=================== Collection Products ===================-->
+{% if settings.special_products_check %}
+{% assign separate_countdown = 'special_product' %}
+    <div class="col-md-12 col-sm-12 col-xs-12 padding-clear">
+        <div class="login-back">
+            <h4 class="page-header text-center margin-bottom-10 padding-bottom-0">{{settings.special_products_title}}</h4>
+            {% if settings.special_products != blank %}
+            {% assign collects_product = collections[settings.special_products] %}
+            <div class="product-widget">
+                {% for product in collects_product.products limit: settings.special_products_limit %}
+                <div class="col-md-3 col-sm-3">
+                {% include 'custom-product-small' %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            {% for product in (1..settings.special_products_limit) %}
+            <div class="col-md-3">
+                <div class="product">
+                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                    <div class="product-title-price">
+                    <h2 class="margin-top-0 margin-bottom-0"><a href="#">Your product's name</a></h2>
+                    <span class="money font-size-16 margin-bottom-10"><b>$250.00</b></span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

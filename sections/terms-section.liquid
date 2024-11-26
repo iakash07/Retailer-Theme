@@ -1,0 +1,48 @@
+<div class="main-terms-section pt-120 pb-120">
+  <div class="ctm-container">
+    {% if section.settings.mtitle != blank %}
+      <h2 class="ctm-head">{{ section.settings.mtitle }}</h2>
+    {% endif %}
+    <div class="terms-info">
+      {{ section.settings.topd }}
+    </div>
+    {% if section.settings.btntext != blank %}
+      <a href="{{ section.settings.btnurl }}" class="ctm-btn">{{ section.settings.btntext }}</a>
+    {% endif %}
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Terms Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "mtitle",
+        "label": "Add Main Heading"
+      },
+      {
+        "type": "html",
+        "id": "topd",
+        "label": "Add Top Description",
+        "info": "Add Info between <p></p> Tag"
+      },
+      {
+        "type": "text",
+        "id": "btntext",
+        "label": "Add Button Text"
+      },
+      {
+        "type": "url",
+        "id": "btnurl",
+        "label": "Add Button URL"
+      }
+    ],
+    "presets":[
+      {
+        "name": "Terms Section"
+      }
+    ]
+  }
+{% endschema %}

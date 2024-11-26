@@ -1,0 +1,37 @@
+<!--=================== Registration Template ===================-->
+<main class="register-page {% if section.settings.header_top_check == blank and section.settings.welcome_message_notify_check == blank %}paira-sticky-root{% endif %}">
+    <section class="register-content paira-gap-3 paira-gap-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="heading pull-left full-width">
+                        <h1 class="page-header margin-bottom-30 text-left pull-left"><span>{{ 'customer.register.title' | t }}</span></h1>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="login-back">
+                        {% form 'create_customer' %}
+                        {{ form.errors | default_errors }}
+                        <label>{{ 'customer.register.first_name' | t }}</label>
+                        <input type="text" value="" name="customer[first_name]" id="first_name" class="form-control margin-bottom-10"  />
+                        <label>{{ 'customer.register.last_name' | t }}</label>
+                        <input type="text" value="" name="customer[last_name]" id="last_name" class="form-control margin-bottom-10"  />
+                        <label>{{ 'customer.register.email' | t }}</label>
+                        <input type="email" value="" name="customer[email]" id="email" class="form-control margin-bottom-10"  />
+                        <label>{{ 'customer.register.password' | t }}</label>
+                        <input type="password" value="" name="customer[password]" id="password" class="form-control margin-bottom-10"  />
+                        <button type="submit" class="btn btn-default pull-left margin-top-10">{{ 'customer.register.submit' | t }}</button>
+                        <a href="{{ shop.url }}" class="pull-right margin-top-20 store-return"><i class="fa fa-reply " aria-hidden="true"></i> <span>{{ 'general.modal_dialog_box.return_to_store' | t }}</span></a>
+                        {% endform %}
+                    </div>
+                </div>
+                <div class="col-md-6 login-register">
+                    <div class="login-back text-center">
+                        <h4 class="margin-bottom-20 margin-top-0">Already have an account?</h4>
+                        <a href="/account/login" class="btn btn-primary">{{ 'customer.login.title' | t }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

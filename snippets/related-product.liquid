@@ -1,0 +1,76 @@
+<!--=================== Related Product ===================-->
+<div class="row related-pro paira-related-product position-r margin-clear paira-gap-2">
+    <div class="heading row margin-clear">
+        <h2 class="page-header margin-bottom-0"><span>{{ section.settings.related_product_title }}</span></h2>
+    </div>
+    <div class="swiper-container s3 related-product">
+        <div class="swiper-wrapper">
+            {% assign product_found = 'no' %}
+            {% assign separate_countdown = 'related' %}
+            {% assign related_product_limits = section.settings.related_product_limit | plus: 0 %}
+            {% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+            {% assign found_a_collection = false %}
+            {% for c in product.collections %}
+            {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+            {% assign product_found = 'yes' %}
+            {% assign found_a_collection = true %}
+            {% assign collection = c %}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% if collection and collection.products_count > 1 %}
+            {% assign current_product = product %}
+            {% assign current_product_found = false %}
+            {% assign current_product_found = 'none' %}
+            {% assign settings_related_value = section.settings.related_product_limit | plus: 1 %}
+            {% for product in collection.products limit: settings_related_value %}
+            {% if product.handle == current_product.handle %}
+            {% assign current_product_found = true %}
+            {% else %}
+            <div class="swiper-slide margin-top-30">
+                {% include 'product' %}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="another-btn">
+    <div class="swiper-button-prev swiper-button-prev-related"><i class="fa fa-angle-left"></i></div>
+    <div class="swiper-button-next swiper-button-next-related"><i class="fa fa-angle-right"></i></div>
+    </div>
+</div>
+<script>
+    $(function() {
+        var swiper = new Swiper('.swiper-container.s3', {
+            navigation: {
+                nextEl: '.swiper-button-next-related',
+                prevEl: '.swiper-button-prev-related'
+            },
+            slidesPerView: {{ section.settings.visable_pro_limit }},
+            spaceBetween: 30,
+            freeMode: true,
+            breakpoints: {
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 15
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 15
+                },
+                767: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                },
+                480: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                }
+            }
+        });
+        {% if product_found != 'yes' %}
+        $(".paira-related-product").hide();
+        {% endif %}
+    });
+</script>

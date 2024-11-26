@@ -1,0 +1,44 @@
+<!--=================== Social Share Widget ===================-->
+{% if template contains 'product' %}
+{% assign src = product.url %}
+{% assign featured_image = product.featured_image.src | img_url: 'original' %}
+{% assign title = product.title %}
+{% elsif template contains 'article' %}
+{% assign src = article.url %}
+{% assign featured_image = article | img_url: 'original' %}
+{% assign title = article.title %}
+{% endif %}
+<div class="sicoal-share-widget">
+    <ul class="list-inline">
+        {% if settings.social_shear_pro_fb %}
+        <li class="margin-top-10">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ src }}" target="_blank"><i class="fa fa-facebook"></i></a>
+        </li>
+        {% endif %}
+        {% if settings.social_shear_pro_tw %}
+        <li class="margin-top-10">
+            <a href="https://twitter.com/home?status={{ shop.url }}{{ src }}" target="_blank"><i class="fa fa-twitter"></i></a>
+        </li>
+        {% endif %}
+        {% if settings.social_shear_pro_lk %}
+        <li class="margin-top-10">
+            <a href="https://www.linkedin.com/cws/share?url={{ shop.url }}{{ src }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+        </li>
+        {% endif %}
+        {% if settings.social_shear_pro_gplus %}
+        <li class="margin-top-10">
+            <a href="https://plus.google.com/share?url={{ shop.url }}{{ src }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+        </li>
+        {% endif %}
+        {% if settings.social_shear_pro_pt %}
+        <li class="margin-top-10">
+            <a href="https://pinterest.com/pin/create/button/?url={{ shop.url }}{{ src }}&media={{ featured_image }}&description={{ title }}" target="_blank"><i class="fa fa-pinterest"></i></a>
+        </li>
+        {% endif %}
+        {% if settings.social_shear_pro_email %}
+        <li class="margin-top-10">
+            <a href="mailto:{{settings.social_shear_pro_email_text}}" target="_blank"><i class="fa fa-envelope"></i></a>
+        </li>
+        {% endif %}
+    </ul>
+</div>

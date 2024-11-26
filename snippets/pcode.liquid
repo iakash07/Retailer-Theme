@@ -1,0 +1,347 @@
+{% for product in product.collections %}
+{% if  product.metafields.rock_pcodes.Settings != null and  product.metafields.rock_pcodes.Settings != "" %}
+{% assign pinCodes = product.metafields.rock_pcodes.Settings %}
+{% endif %}   
+{% endfor %}
+{% assign settings = shop.metafields.rock_pcodechecker.Settings.value %}
+{% assign pincode_msg = settings.pincode_msg %}
+{% assign no_pincode_msg = settings.no_pincode_msg %}
+{% assign btn_label = settings.btn_label %}
+  
+{% if settings.is_enabled == "1" %}
+
+  <div class="pcodealertArea">
+    <div class="pcodeToast">
+
+      <div class="pcodeToast-content">
+        <span class="toastIcon toastActiveIcon">&#10003;</span>
+        <span class="toastIcon errroIcon">&#33;</span>
+
+        <div class="toastMessage">
+          <span class="toastText">Your changes has been saved</span>
+        </div>
+      </div>
+      <span class="toastClose">&#10006;</span>
+      
+
+
+      <div class="toastProgress">
+        <div class="line"></div>
+      </div>
+    </div>
+
+  </div>
+
+<style>
+  .pcodealertArea {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    background-color: #f4f7ff;
+    overflow: hidden;
+    position: relative;
+    display:none;
+    z-index: 10; 
+
+    box-shadow: 0 6px 32px 0 rgb(0 18 46 / 24%);
+
+  }
+
+  .pcodeToast {
+    position: fixed;
+    top: calc(70% + 50px);
+    left: 50%;
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 20px 35px 20px 25px;
+    -webkit-box-shadow: 0 6px 20px -5px rgb(0 0 0 / 10%);
+            box-shadow: 0 6px 20px -5px rgb(0 0 0 / 10%);
+    overflow: hidden;
+    -webkit-transform: translateX(calc(100% + 30px));
+        -ms-transform: translateX(calc(100% + 30px));
+            transform: translateX(calc(100% + 30px));
+    -webkit-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+    -o-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+  }
+  .pcodeToast .pcodeToast-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    cursor: pointer;
+  }
+  .pcodeToast-content .toastIcon {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .pcodeToast.error-color .pcodeToast-content .toastIcon {
+    background-color: rgb(255, 6, 6);
+    color: #ffffff;
+  }
+
+  .pcodeToast.toastActive-color .pcodeToast-content .toastIcon {
+    background-color: #4cd964;
+    color: #ffffff;
+  }
+
+  .pcodeToast-content .toastMessage {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin: 0 20px;
+  }
+
+  .toastMessage .toastText {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666666;
+  }
+
+  .toastMessage .toastText {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .pcodeToast .toastClose {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  .pcodeToast .toastClose:hover {
+    opacity: 1;
+  }
+
+  .pcodeToast i.fa-solid.check {
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .pcodeToast.error-color i.fa-solid.check {
+    background: rgb(255, 6, 6);
+  }
+
+  .pcodeToast.toastActive-color i.fa-solid.check {
+    background: #4cd964;
+  }
+
+  .toastProgress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      z-index: 2;
+  }
+
+  .pcodeToast .toastProgress .line {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+  }
+
+  .pcodeToast.error-color .toastProgress .line {
+    background-color: rgb(255, 6, 6);
+  }
+
+  .pcodeToast.toastActive-color .toastProgress .line {
+    background-color: #4cd964;
+  }
+  
+  .pcodeToast.toastActive .line {
+    -webkit-animation: progress 5s linear forwards;
+            animation: progress 5s linear forwards;
+  }
+
+  .pcodeToast:hover .toastProgress .line {
+    -webkit-animation-play-state: paused !important;
+            animation-play-state: paused !important;
+  }
+  @-webkit-keyframes progress {
+    100% {
+      right: 100%;
+    }
+  }
+@keyframes progress {
+    100% {
+      right: 100%;
+    }
+  }
+
+  .pcodeToast.toastActive~button {
+    pointer-events: none;
+  }
+
+  @media screen and (min-width:320px) and (max-width: 575px) {
+    .pcodeToast.toastActive {
+      left: 0;
+      -webkit-transform: translateX(0);
+          -ms-transform: translateX(0);
+              transform: translateX(0);
+    }
+
+    .pcodeToast {
+      width: 100%;
+    }
+  }
+  
+  .pincode_checker_wrapper
+  {
+    margin: 10px 0px;
+  }
+ .pincode_checker_wrapper input {
+      margin: 0 10px 0 0px;
+      padding-left: 8px;
+      outline: none;
+      display: inline-block;
+      height: 45px;
+  }
+  
+  .pincode_checker_wrapper .pc_err
+  {
+    color: red;
+    font-style: italic;
+    display:none;
+  }
+</style>
+
+
+
+<script>  
+var loadScript = function (url, callback) {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    if (script.readyState) {
+        script.onreadystatechange = function () {
+            if (script.readyState == 'loaded' || script.readyState == 'complete') {
+                script.onreadystatechange = null;
+                callback();
+            }
+        };
+    } else {
+        script.onload = function () {
+            callback();
+        };
+    }
+    script.src = url;
+    document.getElementsByTagName('head') [0].appendChild(script);
+};
+
+if ((typeof jQuery === 'undefined') || (parseFloat(jQuery.fn.jquery) < 1.7)) {
+    loadScript('https://cdn.shopify.com/s/files/1/0123/6100/7200/files/chat.js?v=1616410856', function () {
+        jQuery191 = jQuery.noConflict(true);
+        pincodeChecker(jQuery191);
+    });
+
+} else {
+    pincodeChecker(jQuery);
+}  
+  
+  function pincodeChecker($)
+  {
+  $(document).ready(function(){
+
+    
+    var pcodeToast = $(".pcodeToast");
+    var Toastprogress = document.querySelector(".progress");
+    
+                 if(window.location.href.includes('/products/'))
+   {
+  var pcodeListUnfltr = `{{pinCodes}}`;
+  pcodeList = pcodeListUnfltr.replace(/"/g, '')
+  pcodeArr = pcodeList.split(','); 
+
+   $("form[ action*= '/cart/add' ] button:first").before(`<div class="pincode_checker_wrapper">
+  <div><input type="number" class="pcodeval" placeholder="Enter your Pincode">
+  <button type="button" class="btn button button-primary pcodebtn" >{{settings.btn_label}}</button></div><div>`);    
+
+       $(document).on("click",".toastClose",function(){
+                         $(".pcodealertArea").hide(200);
+                    clearTimeout(window.toastTimeout);
+                      });
+     
+     $(document).on("click",".pcodebtn",function()
+               {
+                  clearTimeout(window.toastTimeout);
+                  $(".pcodeToast").removeClass("error-color toastActive-color");
+                  $(".toastIcon").hide();
+                  let pCode = $(".pcodeval").val().replace(/ /g,'');
+      
+      if(pcodeArr.includes(pCode))
+      { 
+        $(".pcodeToast").addClass("toastActive-color");
+        $(".toastActiveIcon, .pcodealertArea").hide().show();
+        $(pcodeToast).addClass("toastActive");
+        $(Toastprogress).addClass("toastActive");
+        $(".toastText").text(`{{ pincode_msg }}`)
+        
+       window.toastTimeout =  setTimeout(() => {
+        $(pcodeToast).removeClass("toastActive");
+        $(Toastprogress).removeClass("toastActive");
+        $(".pcodealertArea").hide();
+      }, 5000);  
+      
+      }
+      else
+      {
+        $(".pcodeToast").addClass("error-color");
+        $(".errroIcon, .pcodealertArea").hide().show();
+
+        $(pcodeToast).addClass("toastActive");
+        $(Toastprogress).addClass("toastActive");
+        $(".toastText").text(`{{ no_pincode_msg }}`)
+       window.toastTimeout = setTimeout(() => {
+        $(pcodeToast).removeClass("toastActive");
+        $(Toastprogress).removeClass("toastActive");
+        $(".pcodealertArea").hide();
+      }, 5000);
+      }
+      
+               });
+   }
+});  
+  }
+</script>
+
+
+{% endif %}
+
+     

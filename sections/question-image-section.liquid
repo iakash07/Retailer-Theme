@@ -1,0 +1,118 @@
+<section class="question_image">
+  <div class="question_image_section">
+    <div class="ctm-container">
+      <div class="question_image_col">
+        <div class="question_image_flex">
+          <div class="question_col">
+            <div class="quesiton_col_inner">
+              {% if section.settings.title != blank %}
+              <h2>{{ section.settings.title }}</h2>
+              {% endif %}
+              <div class="faq_question_flex">
+       <div class="faq_left_col">
+       {% for block in section.blocks %}
+        <div class="faq_side">
+          <div class="faq_side_inner">
+            <div class="faq_heading_col">
+          <div class="icon_flex">
+          {% if block.settings.question != blank %}
+          <h3 class="faq_heading">{{ block.settings.question }}</h3>
+          {% endif %}
+          <span class="plus_icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z"/></svg></span>
+            <span class="minus_icon">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="m12 6.586-8.707 8.707 1.414 1.414L12 9.414l7.293 7.293 1.414-1.414L12 6.586z"/></svg>
+            </span>
+          </div>
+            </div>
+          {% if block.settings.answer != blank %}
+          <div class="faq_desc">{{ block.settings.answer }}</div>
+          {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+         </div>
+        </div>
+            </div>
+          </div>
+          <div class="image_col_box">
+            <div class="image_col_inner">
+            {% if section.settings.image != blank %}
+            <img src="{{ section.settings.image | img_url:'master' }}">
+            {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+               
+
+               
+
+                  
+<script>
+  $(document).ready(function(){
+      $('.faq_heading_col').on('click', function() {
+      if($(this).hasClass('active')) {
+        $(this).siblings('.faq_desc').slideUp();
+        $(this).removeClass('active');
+      }
+      else {
+      $('.faq_desc').slideUp();
+        $('.faq_heading_col').removeClass('active');
+        $(this).siblings('.faq_desc').slideToggle();
+        $(this).toggleClass('active');
+      }
+      });
+  })
+</script>
+
+
+
+                  
+{% schema %}
+  {
+    "name": "Question Image Section",
+    "settings": [
+      {
+        "type":"text",
+        "id":"title",
+        "label":"Add Title"
+      },
+      {
+        "type":"image_picker",
+        "id":"image",
+        "label":"Add Image"
+      }
+    ],
+    "blocks":[
+      {
+        "type":"accordion_block",
+        "name":"Accordion Block",
+        "settings":[
+          {
+            "type":"text",
+            "id":"question",
+            "label":"Add Question"
+          },
+          {
+            "type":"textarea",
+            "id":"answer",
+            "label":"Add Answer"
+          }
+        ]
+      }
+    ],
+    "presets":[
+      {
+        "name":"Question Image Section"
+      }
+    ]
+  }
+{% endschema %}

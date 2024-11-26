@@ -1,0 +1,81 @@
+<section class="image_title_section">
+  <div class="image_title">
+    <div class="container">
+      <div class="image_title_col">
+        <div class="image_title_flex">
+          {% for block in section.blocks %}
+            <div class="image_title_wrapper">
+              <div class="image_title_wrapper_inner">
+                <div class="image_col">
+                  {% if block.settings.image != blank %}
+                    <img src="{{ block.settings.image | img_url:'master' }}">
+                  {% endif %}
+                </div>
+                <div class="title_col">
+                  {% if block.settings.text != blank %}
+                    <a href="{{ block.settings.title_url }}">
+                      {{ block.settings.text }}
+                    </a>
+                  {% endif %}
+                </div>
+                <div class="icon_col">
+                  {% if block.settings.icon != blank %}
+                    <a href="{{ block.settings.icon_url }}">
+                      <span>{{ block.settings.icon }}</span>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image Title Section",
+  "settings": [],
+  "blocks":[
+    {
+      "type":"iamge_title_block",
+      "name":"Image Title Block",
+      "settings":[
+        {
+          "type":"image_picker",
+          "id":"image",
+          "label":"Add Image"
+        },
+        {
+         "type":"url",
+          "id":"title_url",
+          "label":"Add Title Url"
+        },
+        {
+          "type":"text",
+          "id":"text",
+          "label":"Add Title"
+        },
+        {
+         "type":"url",
+          "id":"icon_url",
+          "label":"Add Icon Url"
+        },
+        {
+          "type":"html",
+          "id":"icon",
+          "label":"Add Icon"
+        }
+
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"Image Title Section"
+    }
+  ]
+}
+{% endschema %}

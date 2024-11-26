@@ -1,0 +1,944 @@
+<!--=================== Multi Layout Mega Menu ===================-->
+<section data-section-id="{{ section.id }}" data-section-type="header-section" class="{% if template == 'index'%}{% if section.settings.head_section_gap_check %} navigations{% endif %}{% endif %}{% if section.settings.header_top_check != blank or section.settings.welcome_message_notify_check != blank %}paira-sticky-root{% endif %}" {% if template == 'index'%}{% if section.settings.head_section_gap_check != blank %}style="margin-bottom: {{ section.settings.gap_height }}px;"{% endif %}{% endif %}>
+    <div class="header-middle default-nav-3">
+        <div class="container-fluid padding-fixed">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <nav class="navbar navbar-default paira-mega-menu mega-menu">
+                        {% if section.settings.site_logo %}
+                        <div class="logo-text pull-left">
+                            {% if section.settings.select_header_logo == '1' %}
+                            <a href="/">
+                                <img src="{% if section.settings.logo == blank %}{{ 'logo.png' | asset_url }}{% else %}{{ section.settings.logo | img_url: 'master' }}{% endif %}" class="img-responsive"  alt="{{ shop.name }}">
+                            </a>
+                            {% else %}
+                            <h2 class="margin-bottom-5 margin-top-5"><a href="/" style="color: {{ section.settings.logo_text_color }};">{{ section.settings.header_logo_text }}</a></h2>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="navbar-header">
+                            <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="pull-left navbar-toggle margin-right-0">
+                                <svg version="1.0" id="menu-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                     width="34px" height="22px" viewBox="0 0 1060.926 680.602" enable-background="new 0 0 1060.926 680.602"
+                                     xml:space="preserve">
+                                <g>
+                                    <path d="M40.087,80.049h980.878c22.095,0,39.961-17.891,39.961-39.962c0-22.095-17.866-40.087-39.961-40.087H40.087
+                                        C17.991,0,0,17.991,0,40.087C0,62.157,17.991,80.049,40.087,80.049L40.087,80.049z M40.087,80.049"/>
+                                    <path d="M40.087,380.325h980.878c22.095,0,39.961-17.891,39.961-39.962c0-22.095-17.866-40.087-39.961-40.087
+                                        H40.087C17.991,300.276,0,318.268,0,340.363C0,362.434,17.991,380.325,40.087,380.325L40.087,380.325z M40.087,380.325"/>
+                                    <path d="M40.087,680.602h980.878c22.095,0,39.961-17.891,39.961-39.962c0-22.095-17.866-40.087-39.961-40.087
+                                        H40.087C17.991,600.553,0,618.544,0,640.64C0,662.71,17.991,680.602,40.087,680.602L40.087,680.602z M40.087,680.602"/>
+                                </g>
+                                </svg>
+                            </button>
+                            <div class="compare-cart-wish compare-cart-wish-block pull-left hidden-lg hidden-md margin-right-15">
+                                <ul class="list-inline text-right margin-bottom-0">
+                                    <li class="dropdown cart-menu-body paira-cart-menu-body padding-right-0 cart-drop">
+                                        {% include 'cart-dropdown' %}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="navbar-background"></div>
+                        <div id="navbar-collapse" class="navbar-collapse collapse side-collapse pull-right">
+                            <div class="mobile-logo visible-sm visible-xs">
+                                <div class="padding-left-15 padding-right-15 opacity-mobile">
+                                    <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle close-menu">
+                                        <i class="fa fa-times"></i> Close
+                                    </button>
+                                </div>
+                            </div>
+                            <ul class="nav navbar-nav">
+                                {% for link in linklists.main-menu.links %}
+                                {% for block in section.blocks %}
+                                {% if section.settings.megamenu_check and link.title == block.settings.megamenu_name %}
+                                <li class="{% if link.active %}active{% endif %} dropdown paira-dropdown mega-menu-fw {% if link.title == section.settings.megamenu_new %}icon_new{% endif %} {% if link.title == section.settings.megamenu_sale %}icon_sale{% endif %} {% if link.title == section.settings.megamenu_trade %}icon_trade{% endif %}">
+                                    <a href="{{ link.url }}">{{ link.title }} <i class="paira-angle-down angle-down fa fa-angle-down"></i></a>
+                                    <!--=================== Grid Mega Menu ===================-->
+                                    <ul class="dropdown-menu paira-dropdown-menu list-unstyled {% if block.type == "banner_product" %}style-3{% endif %} {% if block.type == 'menu' %}style-1{% endif %} {% if block.type == "product_sing" %}style-2{% endif %}">
+                                <li class="mega-menu-grid">
+                                    {% if block.type == 'menu' %}
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 padding-clear margin-top-30">
+                                        {% if block.settings.megamenu_colum_1_check %}
+                                        <div class="col-md-3 col-sm-6 col-xs-6 margin-bottom-15">
+                                            {% if block.settings.megamenu_colum_1 != blank %}
+                                            {% assign menu_1 = linklists[block.settings.megamenu_colum_1] %}
+                                            <h5 class="popover-title margin-bottom-10 margin-top-0 padding-top-0">{{ linklists[block.settings.megamenu_colum_1].title }}</h5>
+                                            <ul class="list-unstyled">
+                                                {% for mega_menu_1 in menu_1.links %}
+                                                <li class="margin-bottom-10"><a href="{{ mega_menu_1.url }}">{{mega_menu_1.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="margin-top-0">Please select navigation from <a href="/admin/themes" class="text-muted">theme option</a></p>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if block.settings.megamenu_colum_2_check %}
+                                        <div class="col-md-3 col-sm-6 col-xs-6 margin-bottom-15">
+                                            {% if block.settings.megamenu_colum_2 != blank %}
+                                            {% assign menu_2 = linklists[block.settings.megamenu_colum_2] %}
+                                            <h5 class="popover-title margin-bottom-10 margin-top-0 padding-top-0">{{ linklists[block.settings.megamenu_colum_2].title }}</h5>
+                                            <ul class="list-unstyled">
+                                                {% for mega_menu_2 in menu_2.links %}
+                                                <li class="margin-bottom-10"><a href="{{ mega_menu_2.url }}">{{mega_menu_2.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="margin-top-0">Please select navigation from <a href="/admin/themes" class="text-muted">theme option</a></p>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if block.settings.megamenu_colum_3_check %}
+                                        <div class="col-md-3 col-sm-6 col-xs-6 margin-bottom-15">
+                                            {% if block.settings.megamenu_colum_3 != blank %}
+                                            {% assign menu_3 = linklists[block.settings.megamenu_colum_3] %}
+                                            <h5 class="popover-title margin-bottom-10 margin-top-0 padding-top-0">{{ linklists[block.settings.megamenu_colum_3].title }}</h5>
+                                            <ul class="list-unstyled">
+                                                {% for mega_menu_3 in menu_3.links %}
+                                                <li class="margin-bottom-10"><a href="{{ mega_menu_3.url }}">{{mega_menu_3.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="margin-top-0">Please select navigation from <a href="/admin/themes" class="text-muted">theme option</a></p>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if block.settings.megamenu_colum_4_check %}
+                                        <div class="col-md-3 col-sm-6 col-xs-6 margin-bottom-15">
+                                            {% if block.settings.megamenu_colum_4 != blank %}
+                                            {% assign menu_4 = linklists[block.settings.megamenu_colum_4] %}
+                                            <h5 class="popover-title margin-bottom-10 margin-top-0 padding-top-0">{{ linklists[block.settings.megamenu_colum_4].title }}</h5>
+                                            <ul class="list-unstyled">
+                                                {% for mega_menu_4 in menu_4.links %}
+                                                <li class="margin-bottom-10"><a href="{{ mega_menu_4.url }}">{{mega_menu_4.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="margin-top-0">Please select navigation from <a href="/admin/themes" class="text-muted">theme option</a></p>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if block.settings.meg_imff_check %}
+                                        <div class="col-md-6 col-sm-6 col-xs-6 margin-bottom-15">
+                                            <a href="{{ block.settings.meg_im_link_11 }}">
+                                                {% if block.settings.meg_im_11 == blank %}
+                                                {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-100' }}
+                                                {% else %}
+                                                <img class="pull-right img-responsive lazyload blur-up" src="{{ block.settings.meg_im_11 | img_url: 'compact' }}" data-srcset="{% if block.settings.meg_im_11 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_11 | img_url: 'compact' }}{% endif %} 160w, {% if block.settings.meg_im_11 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_11 | img_url: 'medium' }}{% endif %} 240w, {% if block.settings.meg_im_11 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_11 | img_url: 'original' }}{% endif %} 480w" data-src="{% if block.settings.meg_im_11 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_11 | img_url: 'original' }}{% endif %}" data-sizes="auto" alt="{{ shop.name }}">
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                        {% if block.settings.meg_imff_check_1 %}
+                                        <div class="col-md-6 col-sm-6 col-xs-6 margin-bottom-15">
+                                            <a href="{{ block.settings.meg_im_link_12 }}">
+                                                {% if block.settings.meg_im_12 == blank %}
+                                                {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-100' }}
+                                                {% else %}
+                                                <img class="pull-right img-responsive lazyload blur-up" src="{{ block.settings.meg_im_12 | img_url: 'compact' }}" data-srcset="{% if block.settings.meg_im_12 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_12 | img_url: 'compact' }}{% endif %} 160w, {% if block.settings.meg_im_12 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_12 | img_url: 'medium' }}{% endif %} 240w, {% if block.settings.meg_im_12 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_12 | img_url: 'original' }}{% endif %} 480w" data-src="{% if block.settings.meg_im_12 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_12 | img_url: 'original' }}{% endif %}" data-sizes="auto" alt="{{ shop.name }}">
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% elsif block.type == "product_sing" %}
+                                    {% if block.settings.megamenu_info_check %}
+                                    <div class="col-md-3 col-sm-12 col-xs-12  text-center sale-offer">
+                                        <h4>{{block.settings.megamenu_info}}</h4>
+                                        {{block.settings.megamenu_para}}
+                                        <a href="{{block.settings.megamenu_info_btn_url}}" class="btn">{{block.settings.megamenu_info_btn}}</a>
+                                    </div>
+                                    {% endif %}
+                                    {% if block.settings.meg_im_check %}
+                                    <div class="col-md-3 col-sm-12 col-xs-12 padding-clear glass-image">
+                                        <a href="{{ block.settings.meg_im_link }}">
+                                            {% if block.settings.meg_im == blank %}
+                                            {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                            {% else %}
+                                            <img class="pull-right img-responsive lazyload blur-up" src="{{ block.settings.meg_im | img_url: 'compact' }}" data-srcset="{% if block.settings.meg_im == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im | img_url: 'compact' }}{% endif %} 160w, {% if block.settings.meg_im == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im | img_url: 'medium' }}{% endif %} 240w, {% if block.settings.meg_im == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im | img_url: 'original' }}{% endif %} 480w" data-src="{% if block.settings.meg_im == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im | img_url: 'original' }}{% endif %}" data-sizes="auto" alt="{{ shop.name }}">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                    {% if block.settings.megamenu_info_2_check %}
+                                    <div class="col-md-3 col-sm-12 col-xs-12 text-center sale-offer">
+                                        <h4>{{block.settings.megamenu_info_2}}</h4>
+                                        {{block.settings.megamenu_para_2}}
+                                        <a href="{{block.settings.megamenu_info_btn_url_2}}" class="btn">{{block.settings.megamenu_info_btn_2}}</a>
+                                    </div>
+                                    {% endif %}
+                                    {% if block.settings.meg_im_check_2 %}
+                                    <div class="col-md-3 col-sm-12 col-xs-12 padding-clear glass-image">
+                                        <a href="{{ block.settings.meg_im_link_22 }}">
+                                            {% if block.settings.meg_im_22 == blank %}
+                                            {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                            {% else %}
+                                            <img class="pull-right img-responsive lazyload blur-up" src="{{ block.settings.meg_im_22 | img_url: 'compact' }}" data-srcset="{% if block.settings.meg_im_22 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_22 | img_url: 'compact' }}{% endif %} 160w, {% if block.settings.meg_im_22 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_22 | img_url: 'medium' }}{% endif %} 240w, {% if block.settings.meg_im_22 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_22 | img_url: 'original' }}{% endif %} 480w" data-src="{% if block.settings.meg_im_22 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_22 | img_url: 'original' }}{% endif %}" data-sizes="auto" alt="{{ shop.name }}">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                    {% elsif block.type == "banner_product" %}
+                                    <div class="{% if block.settings.meg_im_2_check == blank %}col-lg-12{% else %} col-lg-6 {% endif %}col-md-6 col-sm-12 col-xs-12 padding-clear padding-right-15">
+                                        {% if block.settings.megamenu_colum_10_check %}
+                                        <div class="col-md-4 col-sm-6 col-xs-6 margin-bottom-30 mar-to-sm-10">
+                                            {% if block.settings.megamenu_colum_10 != blank %}
+                                            {% assign menu_10 = linklists[block.settings.megamenu_colum_10] %}
+                                            <h5 class="popover-title margin-bottom-10 margin-top-30 padding-top-0">{{ linklists[block.settings.megamenu_colum_10].title }}</h5>
+                                            <ul class="list-unstyled">
+                                                {% for mega_menu_10 in menu_10.links %}
+                                                <li class="margin-bottom-10"><a href="{{ mega_menu_10.url }}">{{mega_menu_10.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="paira-gap-3 padding-left-15">Please select navigation from <a href="/admin/themes" class="text-muted">theme option</a></p>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if block.settings.megamenu_colum_11_check %}
+                                        <div class="col-md-4 col-sm-6 col-xs-6 margin-bottom-30 padding-right-0">
+                                            {% if block.settings.megamenu_colum_11 != blank %}
+                                            {% assign menu_11 = linklists[block.settings.megamenu_colum_11] %}
+                                            <h5 class="popover-title margin-bottom-10 margin-top-30 padding-top-0">{{ linklists[block.settings.megamenu_colum_11].title }}</h5>
+                                            <ul class="list-unstyled">
+                                                {% for mega_menu_11 in menu_11.links %}
+                                                <li class="margin-bottom-10"><a href="{{ mega_menu_11.url }}">{{mega_menu_11.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="paira-gap-3 padding-left-15">Please select navigation from <a href="/admin/themes" class="text-muted">theme option</a></p>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if block.settings.megamenu_colum_12_check %}
+                                        <div class="col-md-4 col-sm-6 col-xs-6 margin-bottom-30 padding-right-0">
+                                            {% if block.settings.megamenu_colum_12 != blank %}
+                                            {% assign menu_12 = linklists[block.settings.megamenu_colum_12] %}
+                                            <h5 class="popover-title margin-bottom-10 margin-top-30 padding-top-0">{{ linklists[block.settings.megamenu_colum_12].title }}</h5>
+                                            <ul class="list-unstyled">
+                                                {% for mega_menu_12 in menu_12.links %}
+                                                <li class="margin-bottom-10"><a href="{{ mega_menu_12.url }}">{{mega_menu_12.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="paira-gap-3 padding-left-15">Please select navigation from <a href="/admin/themes" class="text-muted">theme option</a></p>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% if block.settings.meg_im_2_check %}
+                                    <div class="{% if block.settings.megamenu_colum_10_check or block.settings.megamenu_colum_11_check or block.settings.megamenu_colum_12_check %}col-lg-6{% else %} col-lg-12{% endif %} col-sm-12 col-xs-12 padding-clear padding-left-15 col-md-6 image-padding-0">
+                                        <a href="{{ block.settings.meg_im_link_2 }}">
+                                            {% if block.settings.meg_im_2 == blank %}
+                                            {{ 'lifestyle-1' | append: current | placeholder_svg_tag: 'placeholder-svg height-300' }}
+                                            {% else %}
+                                            <img class="pull-right img-responsive lazyload blur-up" src="{{ block.settings.meg_im_2 | img_url: 'compact' }}" data-srcset="{% if block.settings.meg_im_2 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_2 | img_url: 'compact' }}{% endif %} 160w, {% if block.settings.meg_im_2 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_2 | img_url: 'medium' }}{% endif %} 240w, {% if block.settings.meg_im_2 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_2 | img_url: 'original' }}{% endif %} 480w" data-src="{% if block.settings.meg_im_2 == blank %}{{ 'magamenu_img.jpg' | asset_url }}{% else %}{{ block.settings.meg_im_2 | img_url: 'original' }}{% endif %}" data-sizes="auto" alt="{{ shop.name }}">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
+                                </li>
+                            </ul>
+                            </li>
+                            {% assign mega_menus = block.settings.megamenu_name %}
+                            {% endif %}
+                            {% endfor %}
+                            {% if link.title != mega_menus %}
+                            {% if linklists[link.handle] == empty %}
+                            <li class="{% if link.active %}active{% endif %} {% if link.title == section.settings.megamenu_new %}icon_new{% endif %} {% if link.title == section.settings.megamenu_sale %}icon_sale{% endif %} {% if link.title == section.settings.megamenu_trade %}icon_trade{% endif %}">
+                                <a href="{{ link.url }}">{{ link.title }}</a>
+                            </li>
+                            {% else %}
+                            <li class="dropdown paira-dropdown {% if link.active %}active{% endif %} {% if link.title == section.settings.megamenu_new %}icon_new{% endif %} {% if link.title == section.settings.megamenu_sale %}icon_sale{% endif %} {% if link.title == section.settings.megamenu_trade %}icon_trade{% endif %}">
+                                <a href="{{ link.url }}">{{ link.title }}  <i class="paira-angle-down angle-down fa fa-angle-down"></i></a>
+                                <ul role="menu" class="dropdown-menu paira-dropdown-menu list-unstyled">
+                                    {% for l in linklists[link.handle].links %}
+                                    {% if linklists[l.handle] == empty %}
+                                    <li><a href="{{ l.url }}">{{ l.title }}</a></li>
+                                    {% else %}
+                                    <li class="dropdown-submenu">
+                                        <a href="{{ l.url }}">{{ l.title }} <i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="dropdown-menu paira-dropdown-menu">
+                                            {% for r in linklists[l.handle].links %}
+                                            {% if linklists[r.handle] == empty %}
+                                            <li><a href="{{ r.url }}">{{ r.title }}</a></li>
+                                            {% else %}
+                                            <li class="dropdown-submenu">
+                                                <a href="{{ r.url }}">{{ r.title }} <i class="fa fa-angle-down"></i></a>
+                                                <ul role="menu" class="dropdown-menu paira-dropdown-menu">
+                                                    {% for u in linklists[r.handle].links %}
+                                                    {% if linklists[u.handle] == empty %}
+                                                    <li><a href="{{ u.url }}">{{ u.title }}</a></li>
+                                                    {% else %}
+                                                    <li class="dropdown-submenu">
+                                                        <a href="{{ u.url }}">{{ u.title }} <i class="fa fa-angle-down"></i></a>
+                                                        <ul role="menu" class="dropdown-menu paira-dropdown-menu">
+                                                            {% for z in linklists[u.handle].links %}
+                                                            <li><a href="{{ z.url }}">{{ z.title }}</a></li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </li>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                            <li class="compare-cart-wish compare-cart-wish-block hidden-xs hidden-sm">
+                                <ul class="list-inline text-right margin-bottom-0">
+                                    <li class="dropdown cart-menu-body paira-cart-menu-body padding-right-0 cart-drop">
+                                        {% include 'cart-dropdown' %}
+                                    </li>
+                                </ul>
+                            </li>
+                            {% if shop.customer_accounts_enabled %}
+                            {% if section.settings.login %}
+                            <li class="hidden-lg hidden-md hidden-sm">
+                                {% if customer %}
+                                <a href="/account/logout" id="customer_logout_link" style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.geo_text_font }}px">{{ 'header.account.logout' | t }}</a>
+                                {% else %}
+                                <a href="/account/login" style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.geo_text_font }}px">{{ 'header.account.login' | t }}</a>
+                                {% endif %}
+                            </li>
+                            {% endif %}
+                            {% if section.settings.register %}
+                            {% if customer %}
+                            <li class="hidden-lg hidden-md hidden-sm"><a href="/account" style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.nav_font }}px">{{ 'header.account.account' | t }}</a></li>
+                            {% else %}
+                            <li class="hidden-lg hidden-md hidden-sm"><a href="/account/register" style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.geo_text_font }}px">{{ 'header.account.register' | t }}</a></li>
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                            {% if settings.currencies %}
+                            {% if section.settings.currencies %}
+                            <li class="courenccy hidden-md hidden-lg hidden-sm hidden-lg hidden-md hidden-sm">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm" data-toggle="dropdown" style="color: {{ section.settings.geo_text_color }}; font-size: {{ section.settings.nav_font }}px;color: {{ section.settings.middle_header_text_color }}"><span class="paira-currency-symbol"><i class="fa fa-{{ settings.default_currency | downcase }}"></i></span> <span class="paira-currency-text">{{ settings.default_currency }}</span> <i class="angle-down fa fa-angle-down"></i></button>
+                                    {% include 'currencies-switcher' %}
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                            {% if settings.compare %}
+                            {% if section.settings.compare %}
+                            <li class="hidden-lg hidden-md hidden-sm"><a href="{% if settings.compare_page == blank %}# {% else %}/pages/{{settings.compare_page}}{% endif %}" class="{% if settings.compare_page == blank %} paira-compare-null{% endif %}"><i class="fa fa-bar-chart margin-right-5"></i>{{ 'header.general.compare' | t }}</span><span class="compare"></span></a></li>
+                            {% endif %}
+                            {% endif %}
+                            {% if settings.wishlist %}
+                            {% if section.settings.wishlist %}
+                            <li class="hidden-lg hidden-md hidden-sm">
+                                <a href="{% if settings.wishlst_page == blank %}# {% else %}/pages/{{settings.wishlst_page}}{% endif %}" class="{% if settings.wishlst_page == blank %} paira-wish-null{% endif %}"><i class="fa fa-heart margin-right-5"></i>{{ 'header.general.wishlist' | t }}</a>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .header-middle {
+    background: {{ section.settings.middle_header_bg }};
+    border-bottom: 1px solid {{ section.settings.middle_header_bor }};
+    border-top: 1px solid {{ section.settings.middle_header_bor }};
+    }
+    .header-middle,.header-middle a, .navbar-default .navbar-nav>li>a{
+    color: {{ section.settings.middle_header_text_color }};
+    }
+    .header-middle a:hover, .mega-menu .navbar-nav>li.active>a, .mega-menu.navbar-default .navbar-nav>li:hover>a, .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover{
+    color: {{ section.settings.middle_header_text_ac_color }};
+    }
+    .mega-menu .navbar-nav>li.active, .mega-menu .navbar-nav>li:hover{
+        background: transparent;
+    }
+    .contact-mails a:hover {
+    color: {{ section.settings.middle_header_text_ac_color }} !important;
+    }
+    .mega-menu .navbar-nav>li>a, .cart-menu-body a {
+    font-size: {{ section.settings.nav_font }}px;
+    }
+    .phone{
+    font-size: {{ section.settings.phone_font }}px;
+    }
+    .number-mail ul {
+    border-color: {{ section.settings.middle_header_text_color | color_modify: 'alpha', 0.12 }} !important;
+    }
+    .icon_new > a:before {
+    border-top-color: {{ section.settings.back_1 }};
+    }
+    .icon_new > a:after {
+    background: {{ section.settings.back_1 }};
+    color: {{ section.settings.text_1 }};
+    }
+    .icon_sale > a:before {
+    border-top-color: {{ section.settings.back_2 }};
+    }
+    .icon_sale > a:after {
+    background: {{ section.settings.back_2 }};
+    color: {{ section.settings.text_2 }};
+    }
+    .icon_trade > a:before {
+    border-top-color: {{ section.settings.back_3 }};
+    }
+    .icon_trade > a:after {
+    background: {{ section.settings.back_3 }};
+    color: {{ section.settings.text_3 }};
+    }
+    .search-hidden {
+    background: {{ section.settings.header_top_bgs }};
+    }
+    .mobo-logo ul li a, .mobo-logo button{
+    color: {{ section.settings.mobile_menu_color }};
+    }
+    .mobo-logo ul li a:hover, .mobo-logo button:hover {
+    color: {{ section.settings.mobile_menu_color_ac }};
+    }
+    .mobo-logo button:focus, .mobo-logo button:active, .mobo-logo button.active.focus, .mobo-logo button.active:focus, .mobo-logo button.focus, .mobo-logo button:active.focus, .mobo-logo button:active:focus, .mobo-logo button:focus{
+    color: {{ section.settings.mobile_menu_color_ac }};
+    }
+    .icon_new > a:after {
+        content: "{{section.settings.megamenu_label_text}}";
+    }
+    .icon_sale > a:after {
+        content: "{{section.settings.megamenu_sale_text}}";
+    }
+    .icon_trade > a:after {
+        content: "{{section.settings.megamenu_hot_text}}";
+    }
+    #Cart_1, #menu-1, #search-img {
+    fill: {{ section.settings.middle_header_text_color }};
+    }
+    .cart-item-counts {
+        background: {{ section.settings.cart_back }};
+        color: {{ section.settings.cart_txt }};
+    }
+</style>
+{% schema %}
+{
+"name": "Navigation 3",
+"max_blocks": 10,
+"settings": [
+{
+"type": "header",
+"content": "Section Gap"
+},
+{
+"type": "checkbox",
+"id": "head_section_gap_check",
+"label": "Enable Section Gap",
+"default": false
+},
+{
+"type": "text",
+"id": "gap_height",
+"label": "Section gap (px)",
+"default": "80"
+},
+{
+"type": "header",
+"content": "Logo"
+},
+{
+"type": "checkbox",
+"id": "site_logo",
+"label": "Enable Logo",
+"default": true
+},
+{
+"type": "radio",
+"id": "select_header_logo",
+"label": "Select Logo",
+"options": [
+{
+"value": "1",
+"label": "Logo Image"
+},
+{
+"value": "2",
+"label": "Logo Text"
+}
+],
+"default": "1"
+},
+{
+"type": "image_picker",
+"id": "logo",
+"label": "Image",
+"info": "Height: 40px recommended"
+},
+{
+"type": "text",
+"id": "header_logo_text",
+"label": "Input Logo Text",
+"default": "Logo"
+},
+{
+"type": "color",
+"id": "logo_text_color",
+"label": "logo Text Color",
+"default": "#000"
+},
+{
+"type": "header",
+"content": "Navigation Color & Font Size"
+},
+{
+"type": "color",
+"id": "middle_header_bg",
+"label": "Background Color",
+"default": "#ffffff"
+},
+{
+"type": "color",
+"id": "middle_header_bor",
+"label": "Border Color",
+"default": "#e1e1e1"
+},
+{
+"type": "color",
+"id": "middle_header_text_color",
+"label": "Text Color",
+"default": "#4B4B4B"
+},
+{
+"type": "color",
+"id": "middle_header_text_ac_color",
+"label": "Active Menu Text Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "cart_back",
+"label": "Cart Count Background Color",
+"default": "#F26522"
+},
+{
+"type": "color",
+"id": "cart_txt",
+"label": "Cart Count Text Color",
+"default": "#fff"
+},
+{
+"type": "range",
+"id": "nav_font",
+"label": "Font Size",
+"min": 12,
+"max": 18,
+"default": 14
+},
+{
+"type": "header",
+"content": "Menu Label 1"
+},
+{
+"type": "text",
+"id": "megamenu_new",
+"label": "Menu Name",
+"default": "Home"
+},
+{
+"type": "text",
+"id": "megamenu_label_text",
+"label": "Label Text",
+"default": "Sale"
+},
+{
+"type": "color",
+"id": "back_1",
+"label": "Label Background Color",
+"default": "#F26522"
+},
+{
+"type": "color",
+"id": "text_1",
+"label": "Label Text Color",
+"default": "#fff"
+},
+{
+"type": "header",
+"content": "Menu label 2"
+},
+{
+"type": "text",
+"id": "megamenu_sale",
+"label": "Menu Name",
+"default": "Catalog"
+},
+{
+"type": "text",
+"id": "megamenu_sale_text",
+"label": "Label text",
+"default": "Hot"
+},
+{
+"type": "color",
+"id": "back_2",
+"label": "Background color",
+"default": "#D9121F"
+},
+{
+"type": "color",
+"id": "text_2",
+"label": "text color",
+"default": "#fff"
+},
+{
+"type": "header",
+"content": "Menu label 3"
+},
+{
+"type": "text",
+"id": "megamenu_trade",
+"label": "Menu Name"
+},
+{
+"type": "text",
+"id": "megamenu_hot_text",
+"label": "Label text",
+"default": "New"
+},
+{
+"type": "color",
+"id": "back_3",
+"label": "Background color",
+"default": "#007C2A"
+},
+{
+"type": "color",
+"id": "text_3",
+"label": "text color",
+"default": "#fff"
+},
+{
+"type": "checkbox",
+"id": "currencies",
+"label": "Enable Currency On Mobile",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "compare",
+"label": "Enable Compare On Mobile",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "wishlist",
+"label": "Enable Wishlist On Mobile",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "login",
+"label": "Enable Login On Mobile",
+"default": true
+},
+{
+"type": "paragraph",
+"content": "## If You Enable Login then must Enable Customer accounts."
+},
+{
+"type": "checkbox",
+"id": "register",
+"label": "Enable Register On Mobile",
+"default": true
+},
+{
+"type": "paragraph",
+"content": "## If You Enable Register then must Enable Customer accounts."
+},
+{
+"type": "header",
+"content": "Mega Menu"
+},
+{
+"type": "checkbox",
+"id": "megamenu_check",
+"label": "Enable Mega Menu",
+"default": true
+}
+],
+"blocks": [
+{
+"type": "menu",
+"name": "Style 1",
+"settings": [
+{
+"type": "text",
+"id": "megamenu_name",
+"label": "Mega Menu Name",
+"default": "Mega Menu",
+"info": "Please Give Here A Main Menu Name, Which One You Want To OverWrite General Menu To Mega Menu"
+},
+{
+"type": "checkbox",
+"id": "megamenu_colum_1_check",
+"label": "Enable Link List 1",
+"default": true
+},
+{
+"type": "link_list",
+"id": "megamenu_colum_1",
+"label": "Link List 1"
+},
+{
+"type": "checkbox",
+"id": "megamenu_colum_2_check",
+"label": "Enable Link List 2",
+"default": true
+},
+{
+"type": "link_list",
+"id": "megamenu_colum_2",
+"label": "Link List 2"
+},
+{
+"type": "checkbox",
+"id": "megamenu_colum_3_check",
+"label": "Enable Link List 3",
+"default": true
+},
+{
+"type": "link_list",
+"id": "megamenu_colum_3",
+"label": "Link List 3"
+},
+{
+"type": "checkbox",
+"id": "megamenu_colum_4_check",
+"label": "Enable Link List 4",
+"default": true
+},
+{
+"type": "link_list",
+"id": "megamenu_colum_4",
+"label": "Link List 4"
+},
+{
+"type": "checkbox",
+"id": "meg_imff_check",
+"label": "Enable Mega Menu Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "meg_im_11",
+"label": "Mega Menu Image",
+"info": "555 x 100px recommended."
+},
+{
+"type": "url",
+"id": "meg_im_link_11",
+"label": "Mega Menu Image Link",
+"default": "\/collections\/all"
+},
+{
+"type": "checkbox",
+"id": "meg_imff_check_1",
+"label": "Enable Mega Menu Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "meg_im_12",
+"label": "Mega Menu Image",
+"info": "555 x 100px recommended."
+},
+{
+"type": "url",
+"id": "meg_im_link_12",
+"label": "Mega Menu Image Link",
+"default": "\/collections\/all"
+}
+]
+},
+{
+"type": "product_sing",
+"name": "Style 2",
+"settings": [
+{
+"type": "text",
+"id": "megamenu_name",
+"label": "Mega Menu Name",
+"default": "Mega Menu",
+"info": "Please Give Here A Main Menu Name, Which One You Want To OverWrite General Menu To Mega Menu"
+},
+{
+"type": "checkbox",
+"id": "megamenu_info_check",
+"label": "Enable Information 1",
+"default": true
+},
+{
+"type": "text",
+"id": "megamenu_info",
+"label": "Information Heading",
+"default": "Summer Sale"
+},
+{
+"type": "richtext",
+"id": "megamenu_para",
+"label": "Information Paragraph",
+"default": "<p>Become a Retailer Insider and get 10% off your order today!</p>"
+},
+{
+"type": "text",
+"id": "megamenu_info_btn",
+"label": "Information Heading",
+"default": "Get Summer Offer"
+},
+{
+"type": "url",
+"id": "megamenu_info_btn_url",
+"label": "Mega Menu Image Link",
+"default": "\/collections\/all"
+},
+{
+"type": "checkbox",
+"id": "meg_im_check",
+"label": "Enable Mega Menu Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "meg_im",
+"label": "Mega Menu Image",
+"info": "300 x 395px recommended."
+},
+{
+"type": "url",
+"id": "meg_im_link",
+"label": "Mega Menu Image Link",
+"default": "\/collections\/all"
+},
+{
+"type": "checkbox",
+"id": "megamenu_info_2_check",
+"label": "Enable Information 2",
+"default": true
+},
+{
+"type": "text",
+"id": "megamenu_info_2",
+"label": "Information Heading",
+"default": "Winter Offer"
+},
+{
+"type": "richtext",
+"id": "megamenu_para_2",
+"label": "Information Paragraph",
+"default": "<p>Become a Retailer Insider and get 10% off your order today!</p>"
+},
+{
+"type": "text",
+"id": "megamenu_info_btn_2",
+"label": "Information Heading",
+"default": "Special Offer"
+},
+{
+"type": "url",
+"id": "megamenu_info_btn_url_2",
+"label": "Mega Menu Image Link",
+"default": "\/collections\/all"
+},
+{
+"type": "checkbox",
+"id": "meg_im_check_2",
+"label": "Enable Mega Menu Image",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "meg_im_22",
+"label": "Mega Menu Image",
+"info": "300 x 395px recommended."
+},
+{
+"type": "url",
+"id": "meg_im_link_22",
+"label": "Mega Menu Image Link",
+"default": "\/collections\/all"
+}
+]
+},
+{
+"type": "banner_product",
+"name": "Style 3",
+"settings": [
+{
+"type": "text",
+"id": "megamenu_name",
+"label": "Mega Menu Name",
+"default": "Mega Menu",
+"info": "Please Give Here A Main Menu Name, Which One You Want To OverWrite General Menu To Mega Menu"
+},
+{
+"type": "checkbox",
+"id": "megamenu_colum_10_check",
+"label": "Enable Link List 1",
+"default": true
+},
+{
+"type": "link_list",
+"id": "megamenu_colum_10",
+"label": "Link List 1"
+},
+{
+"type": "checkbox",
+"id": "megamenu_colum_11_check",
+"label": "Enable Link List 2",
+"default": true
+},
+{
+"type": "link_list",
+"id": "megamenu_colum_11",
+"label": "Link List 2"
+},
+{
+"type": "checkbox",
+"id": "megamenu_colum_12_check",
+"label": "Enable Link List 3",
+"default": true
+},
+{
+"type": "link_list",
+"id": "megamenu_colum_12",
+"label": "Link List 3"
+},
+{
+"type": "checkbox",
+"id": "meg_im_2_check",
+"label": "Enable Mega Menu Banner 2",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "meg_im_2",
+"label": "Mega Menu Banner",
+"info": "580 x 235px recommended."
+},
+{
+"type": "url",
+"id": "meg_im_link_2",
+"label": "Mega Menu Banner Link",
+"default": "\/collections\/all"
+}
+]
+}
+]
+}
+{% endschema %}

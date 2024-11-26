@@ -1,0 +1,47 @@
+<div class="discover-more">
+  <div class="container">
+    {% if section.settings.title != blank %}<h3>{{ section.settings.title}}</h3>{% endif %}
+      <ul>
+        {% for block in section.blocks %}
+          {% if block.settings.name != blank %}
+            <li><a href="{{ block.settings.url }}">{{ block.settings.name }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Discover Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Add your Title"
+      }
+    ],
+    "blocks":[
+      {
+        "type": "image",
+        "name": "info",
+        "settings": [
+            {
+              "type": "text",
+              "id": "name",
+              "label": "Add your Name"
+            },
+            {
+              "type": "url",
+              "id": "url",
+              "label": "Add your URL"
+            }
+        ]
+      }
+    ],
+    "presets":[
+      {
+        "name": "Discover Section"
+      }
+    ]
+  }
+{% endschema %}

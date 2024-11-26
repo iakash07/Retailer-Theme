@@ -1,0 +1,108 @@
+<section>
+  <div class="logo_image_section">
+    <div class="container">
+      <div class="logo_section">
+        <div class="logo_flex">
+          <div class="logo_col">
+            {% if section.settings.image1 != blank %}
+              <a href="{{ section.settings.image_url }}">
+                <img src="{{ section.settings.image1 | img_url:'master' }}">
+              </a>
+            {% endif %}
+          </div>
+          <div class="wrong_icon">
+            {% if section.settings.icon != blank %}
+              <a href="{{ section.settings.icon_url }}">
+                <span>{{ section.settings.icon }}</span>
+              </a>
+            {% endif %}
+          </div>
+          <div class="logo_col">
+            {% if section.settings.image2 != blank %}
+              <a href="{{ section.settings.image_url2 }}">
+                <img src="{{ section.settings.image2 | img_url:'master' }}">
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="image_section">
+        <div class="image_flex">
+          {% for block in section.blocks %}
+            <div class="image_box">
+              <div class="image_box_inner">
+                {% if block.settings.image != blank %}
+                  <a href="{{ block.settings.image_url }}">
+                    <img src="{{ block.settings.image | img_url:'master' }}">
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+{% schema %}
+{
+  "name": "Logo Image Section",
+  "settings": [
+    {
+      "type":"image_picker",
+      "id":"image1",
+      "label":"Add Image"
+    },
+    {
+      "type":"url",
+      "id":"image_url",
+      "label":"Add Image Url"
+    },
+    {
+      "type":"html",
+      "id":"icon",
+      "label":"Add Icon"
+    },
+    {
+      "type":"url",
+      "id":"icon_url",
+      "label":"Add Icon Url"
+    },
+    {
+      "type":"image_picker",
+      "id":"image2",
+      "label":"Add Image"
+    },
+    {
+      "type":"url",
+      "id":"image_url2",
+      "label":"Add Image Url"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_box_block",
+      "name":"Image_Box_Block",
+      "settings": [
+        {
+          "type":"image_picker",
+          "id":"image",
+          "label":"Image"
+        },
+        {
+          "type":"url",
+          "id":"image_url",
+          "label":"Image Url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name":"Logo Image Section"
+    }
+  ]
+}
+
+{% endschema %}

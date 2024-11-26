@@ -1,0 +1,50 @@
+<div class="how-its-work">
+  <div class="ctm-container">
+    {% if section.settings.img1 != blank %}
+    <div class="about-1 mb-40">
+      <img src="{{ section.settings.img1 | img_url: "master" }}" class="d-only w-100">
+      <img src="{{ section.settings.img2 | img_url: "master" }}" class="m-only w-100">
+    </div>
+    {% endif %}
+    
+    {% if section.settings.img3 != blank %}
+    <div class="about-1 mb-40">
+      <img src="{{ section.settings.img3 | img_url: "master" }}" class="d-only w-100">
+      <img src="{{ section.settings.img4 | img_url: "master" }}" class="m-only w-100">
+    </div>
+    {% endif %}
+    
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "How Its Work Section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "img1",
+        "label": "Add Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "img2",
+        "label": "Add Mobile Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "img3",
+        "label": "Add Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "img4",
+        "label": "Add Mobile Image"
+      }
+    ],
+    "presets":[
+      {
+        "name": "How Its Work Section"
+      }
+    ]
+  }
+{% endschema %}

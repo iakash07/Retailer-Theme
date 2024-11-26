@@ -1,0 +1,48 @@
+<div class="exchange-section pt-120">
+  <div class="ctm-container">
+    {% if section.settings.mtitle != blank %}
+      <h2 class="ctm-head">{{ section.settings.mtitle }}</h2>
+    {% endif %}
+    {% if section.settings.topd != blank %}
+      <div class="exchange-desc">
+        {{ section.settings.topd }}
+      </div>
+    {% endif %}
+    {% if section.settings.img != blank %}
+    <div class="exchange-img">
+        <img src="{{ section.settings.img | img_url: "master" }}">
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Exchange Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "mtitle",
+        "label": "Add Main Heading"
+      },
+      {
+        "type": "html",
+        "id": "topd",
+        "label": "Add Top Description",
+        "info": "Add Info between <p></p> Tag"
+      },
+      {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Add Image"
+      }
+    ],
+    "presets":[
+      {
+        "name": "Exchange Section"
+      }
+    ]
+  }
+{% endschema %}

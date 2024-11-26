@@ -1,0 +1,45 @@
+<!--=================== Product ===================-->
+<div class="paira-product product img">
+    <div class="overflow-h pro-im position-r display-in-b full-width">
+        <a href="{{ product.url }}" class="display-in-b full-width overflow-h">
+            <img src="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'small' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %}" alt="{{ product.title }}" class="paira-product-image img-responsive full-width lazyload blur-up" data-srcset="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'small' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 100w, {% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %} 240w" data-src="{% if product.images.size >= 1%}{{ product.featured_image | product_img_url: 'medium' }}{% else %}{{ 'empty-product.jpg' | asset_url }}{% endif %}" data-sizes="auto">
+        </a>
+        <div class="product-variant paira-collection-product-images">
+            {% if product.images.size > 0 %}
+            {% for image in product.images limit: 3 %}
+            <a href="#" class="paira-product-variant-img-small"><img src="{{ image | product_img_url: 'small' }}" data-srcset="{{ image | product_img_url: 'small' }} 100w, {{ image | product_img_url: 'medium' }} 240w" data-src="{{ image | product_img_url: 'medium' }}" data-sizes="auto" class="lazyload blur-up img-responsive center-block paira-product-image full-width product-small {% if forloop.first == true %} active{% endif %}" alt="{{ product.title }}"/></a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="sale-stock">
+        {% if product.compare_at_price_max > product.price %}
+        {% assign cal_compare_price = product.compare_at_price_max | divided_by: 100 %}
+        {% assign cal_price = product.price | divided_by: cal_compare_price %}
+        {% assign cal_price_percentage = cal_price | minus: 100 %}
+        <div class="product-sale"><span>{{ cal_price_percentage | round }}%</span></div>
+        {% endif %}
+        {% if product.variants.size <= 1 %}
+        {% for variant in product.variants %}
+        {% assign product_inventory_management = variant.inventory_management %}
+        {% assign product_inventory_policy = variant.inventory_policy %}
+        {% assign product_quantity_item = variant.inventory_quantity.product_quantity_item %}
+        {% endfor %}
+        {% endif %}
+        {% if product.variants.first.inventory_management == 'shopify' and product.variants.first.inventory_quantity <= 0 %}
+        <div class="product-stock-out"><span>{{ 'products.product.stock_out' | t }}</span></div>
+        {% endif %}
+    </div>
+    <div class="product-title-price">
+        <h2 class="margin-top-0 margin-bottom-0"><a href="{{ product.url }}" title="{{ product.title }}" class="paira-product-title">{{ product.title | truncatewords: 2, "" }}</a></h2>
+        <div class="text-left margin-top-0">
+            {% if product.compare_at_price_max > product.price %}
+            <div class="display-in-b margin-right-5"><del><span class="money">{{ product.compare_at_price | money }}</span></del></div>
+            <div class="display-in-b"><span class="money">{{ product.price | money }}</span></div>
+            {% else %}
+            <span class="money">{{ product.price | money }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="paira-list-product-des list-product-des" style="display: none">{{ product.description | strip_html | truncatewords: 100 }}</div>
+</div>
